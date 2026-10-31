@@ -45,3 +45,9 @@ The feedback came from a separate synthetic contract example; it was not derived
 ## Remaining loop to implement
 
 A production improvement workflow must select reviewed outcomes, derive context-scoped candidate lessons, test them on independent cases, reject regressions, and request authorized promotion of a version. Existing Lobu primitives can express those steps; the checks here do not claim that the project already runs them unattended.
+
+## Observed prototype latency limitation
+
+A repeated run on the shared Kubernetes prototype exceeded the evaluator's 45-second polling budget. The script run remained claimed and eventually completed about five minutes after creation. The initial timeout and failed evaluation were preserved; a later successful completion does not retroactively make the latency check pass. Fresh clean-runtime CI passed the workflow contracts. The delay's root cause has not been isolated, so bounded dispatch latency is not claimed.
+
+The feedback harness now checkpoints the committed synthetic signal receipt. A completed-window replay does not necessarily repeat the original event IDs; recovery uses that receipt or a unique exact-source lookup, not a second write or an invented success. This is test resumability, not a fix for the observed scheduler delay.

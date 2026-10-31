@@ -89,7 +89,32 @@ await check('injected_fault_reaches_real_decision', async () => {
     true,
   );
   signalId = Number(response.events_persisted?.[0]?.id);
-  assert.ok(signalId > 0);
+  const checkpoint = STATE_ROOT + 'feedback-receipt-' + Number(input.run_id) + '.json';
+  if (!Number.isSafeInteger(signalId) || signalId < 1) {
+    // A completed-window replay is a no-op, not a second publish receipt.
+    // Prefer our saved receipt; otherwise recover only the unique, current,
+    // deliberately injected synthetic output for this exact source revision.
+    try {
+      signalId = JSON.parse(await fs.readFile(checkpoint, 'utf8')).signal_event_id;
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      const recovered = await c.query(
+        "SELECT id FROM events WHERE semantic_type='market_risk_signal' AND metadata->>'model_source'='synthetic-fault-injection' AND metadata->>'evidence_event_id'='" +
+          Number(input.source_event_id) +
+          "' AND metadata->>'source_revision'='" +
+          Number(input.source_revision) +
+          "' LIMIT 2",
+      );
+      assert.equal(
+        recovered.length,
+        1,
+        'Cannot uniquely recover a committed synthetic output; do not invent a receipt',
+      );
+      signalId = Number(recovered[0].id);
+    }
+  }
+  assert.ok(Number.isSafeInteger(signalId) && signalId > 0);
+  await fs.writeFile(checkpoint, JSON.stringify({ signal_event_id: signalId }), { mode: 0o600 });
   const d = await reconcile();
   assert.equal(d.metadata.risk_score, 80);
   return { signal_event_id: signalId, decision_event_id: Number(d.id), deliberate_error: true };
