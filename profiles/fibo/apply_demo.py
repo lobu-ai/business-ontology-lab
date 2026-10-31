@@ -112,7 +112,10 @@ def readonly_schema(props, key):
 
 
 def upsert_type(client, spec):
-    old = client.call("entitySchema.getType", spec["slug"]).get("entity_type")
+    # getType can resolve an inherited public definition; only a locally owned
+    # type can be updated. A hosted workspace must create its own definition.
+    owned = client.call("entitySchema.listTypes", {"list_scope": "organization"})["entity_types"]
+    old = next((row for row in owned if row["slug"] == spec["slug"]), None)
     result = client.call("entitySchema.updateType" if old else "entitySchema.createType", spec, True)
     log("type", slug=spec["slug"], updated=bool(old))
     return result
