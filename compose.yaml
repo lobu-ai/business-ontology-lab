@@ -1,0 +1,62 @@
+services:
+  runtime:
+    image: ghcr.io/lobu-ai/lobu/preview@sha256:7191248773930ef4e68070d4e42e470952ebeb6a5a52dd1cf91534d40d8c3b0c
+    command:
+      [
+        'sh',
+        '-c',
+        'socat TCP-LISTEN:8788,fork,reuseaddr TCP:127.0.0.1:8787 & exec node packages/server/dist/server.bundle.mjs',
+      ]
+    env_file: .runtime/runtime.env
+    environment:
+      HOST: 127.0.0.1
+      PORT: '8787'
+      DATABASE_URL: file:///var/lib/lobu/data/lobu.db
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: 'true'
+      LOBU_LOCAL_INIT_ALLOW_PROXY: '0'
+    volumes:
+      - ontology_data:/var/lib/lobu/data
+    mem_limit: 4g
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:8787/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 4s
+      retries: 40
+      start_period: 20s
+  web:
+    image: ghcr.io/lobu-ai/lobu/preview@sha256:7191248773930ef4e68070d4e42e470952ebeb6a5a52dd1cf91534d40d8c3b0c
+    network_mode: service:runtime
+    working_dir: /app/packages/owletto
+    command:
+      [
+        'node',
+        '/app/node_modules/vite/bin/vite.js',
+        'preview',
+        '--host',
+        '0.0.0.0',
+        '--port',
+        '5173',
+        '--strictPort',
+      ]
+    depends_on:
+      runtime:
+        condition: service_healthy
+    mem_limit: 768m
+  gateway:
+    image: nginx:1.28-alpine
+    ports:
+      - '127.0.0.1:8787:80'
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      web:
+        condition: service_started
+volumes:
+  ontology_data:

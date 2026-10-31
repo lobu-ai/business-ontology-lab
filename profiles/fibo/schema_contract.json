@@ -1,0 +1,603 @@
+{
+  "type_slugs": [
+    "company",
+    "corporate-action",
+    "financial-instrument",
+    "identifier",
+    "identifier-scheme",
+    "jurisdiction",
+    "loan",
+    "party-role",
+    "person",
+    "portfolio"
+  ],
+  "entity_fields": {
+    "company": [
+      "demo_key",
+      "demo_suite",
+      "description",
+      "jurisdiction",
+      "jurisdiction_key",
+      "legal_form",
+      "legal_name",
+      "synthetic"
+    ],
+    "corporate-action": [
+      "action_status",
+      "action_type",
+      "announcement_date",
+      "coupon_per_unit",
+      "currency",
+      "demo_key",
+      "demo_suite",
+      "description",
+      "effective_date",
+      "instrument_key",
+      "issuer_key",
+      "ratio_denominator",
+      "ratio_numerator",
+      "record_date",
+      "synthetic"
+    ],
+    "financial-instrument": [
+      "annual_coupon_percent",
+      "coupon_frequency",
+      "coupon_type",
+      "currency",
+      "demo_key",
+      "demo_suite",
+      "face_value_per_unit",
+      "instrument_kind",
+      "issue_date",
+      "issued_units",
+      "issuer_key",
+      "issuer_role_key",
+      "maturity_date",
+      "share_class",
+      "synthetic",
+      "terms_as_of",
+      "voting_rights_per_share"
+    ],
+    "identifier": [
+      "demo_key",
+      "demo_suite",
+      "identifier_kind",
+      "identifier_value",
+      "identifies_key",
+      "scheme_key",
+      "synthetic",
+      "validity"
+    ],
+    "identifier-scheme": [
+      "demo_key",
+      "demo_suite",
+      "description",
+      "namespace",
+      "scheme_kind",
+      "synthetic"
+    ],
+    "jurisdiction": [
+      "demo_key",
+      "demo_suite",
+      "description",
+      "jurisdiction_kind",
+      "synthetic"
+    ],
+    "loan": [
+      "annual_interest_percent",
+      "borrower_key",
+      "borrower_role_key",
+      "currency",
+      "demo_key",
+      "demo_suite",
+      "guarantor_key",
+      "guarantor_role_key",
+      "lender_key",
+      "lender_role_key",
+      "maturity_date",
+      "principal_amount",
+      "rate_basis",
+      "start_date",
+      "synthetic"
+    ],
+    "party-role": [
+      "assertion_policy",
+      "context_key",
+      "demo_key",
+      "demo_suite",
+      "instrument_key",
+      "loan_key",
+      "ontology_class_iri",
+      "ontology_inference_policy",
+      "role_kind",
+      "role_player_key",
+      "share_class",
+      "source_document_key",
+      "subject_key",
+      "synthetic"
+    ],
+    "person": [
+      "demo_key",
+      "demo_suite",
+      "description",
+      "display_name",
+      "person_kind",
+      "synthetic"
+    ],
+    "portfolio": [
+      "demo_key",
+      "demo_suite",
+      "description",
+      "manager_key",
+      "owner_key",
+      "reporting_currency",
+      "strategy",
+      "synthetic"
+    ]
+  },
+  "event_fields": {
+    "control_observation": [
+      "appointable_board_seats",
+      "as_of",
+      "control_basis",
+      "controller_key",
+      "demo_suite",
+      "inference_status",
+      "logical_observation_key",
+      "mapping_version",
+      "review_status",
+      "scenario_keys",
+      "source_record_key",
+      "source_revision",
+      "source_scope",
+      "statement_slot",
+      "status",
+      "subject_key",
+      "synthetic",
+      "total_board_seats",
+      "valid_from",
+      "valid_to"
+    ],
+    "corporate_action_observation": [
+      "action_key",
+      "action_status",
+      "action_type",
+      "as_of",
+      "coupon_per_unit",
+      "currency",
+      "demo_suite",
+      "effective_date",
+      "entitlements",
+      "instrument_key",
+      "issued_units_after",
+      "issued_units_before",
+      "issuer_key",
+      "logical_observation_key",
+      "mapping_version",
+      "ratio_denominator",
+      "ratio_numerator",
+      "review_status",
+      "scenario_keys",
+      "source_record_key",
+      "source_revision",
+      "source_scope",
+      "statement_slot",
+      "status",
+      "synthetic"
+    ],
+    "holding_observation": [
+      "as_of",
+      "change_reason",
+      "corporate_action_key",
+      "demo_suite",
+      "instrument_key",
+      "logical_observation_key",
+      "mapping_version",
+      "portfolio_key",
+      "quantity",
+      "quantity_unit",
+      "review_status",
+      "scenario_keys",
+      "source_record_key",
+      "source_revision",
+      "source_scope",
+      "statement_slot",
+      "status",
+      "synthetic"
+    ],
+    "loan_observation": [
+      "annual_interest_percent",
+      "as_of",
+      "borrower_key",
+      "borrower_role_key",
+      "currency",
+      "demo_suite",
+      "guarantor_key",
+      "guarantor_role_key",
+      "lender_key",
+      "lender_role_key",
+      "loan_key",
+      "logical_observation_key",
+      "mapping_version",
+      "maturity_date",
+      "principal_amount",
+      "rate_basis",
+      "review_status",
+      "scenario_keys",
+      "source_record_key",
+      "source_revision",
+      "source_scope",
+      "start_date",
+      "statement_slot",
+      "status",
+      "synthetic"
+    ],
+    "ownership_observation": [
+      "as_of",
+      "basis",
+      "change_reason",
+      "demo_suite",
+      "instrument_key",
+      "logical_observation_key",
+      "mapping_version",
+      "owner_key",
+      "owner_role_key",
+      "percentage",
+      "review_status",
+      "scenario_keys",
+      "share_class",
+      "source_record_key",
+      "source_revision",
+      "source_scope",
+      "statement_slot",
+      "status",
+      "subject_key",
+      "synthetic"
+    ],
+    "review_decision": [
+      "actor_kind",
+      "approval_effect",
+      "as_of",
+      "decision",
+      "demo_suite",
+      "logical_observation_key",
+      "mapping_version",
+      "rationale",
+      "review_status",
+      "reviewer_key",
+      "scenario_keys",
+      "simulated",
+      "source_record_key",
+      "source_revision",
+      "source_scope",
+      "statement_slot",
+      "status",
+      "subject_observation_version_key",
+      "synthetic"
+    ],
+    "voting_observation": [
+      "as_of",
+      "basis",
+      "demo_suite",
+      "holder_key",
+      "logical_observation_key",
+      "mapping_version",
+      "percentage",
+      "review_status",
+      "scenario_keys",
+      "share_class",
+      "source_record_key",
+      "source_revision",
+      "source_scope",
+      "statement_slot",
+      "status",
+      "subject_key",
+      "synthetic"
+    ]
+  },
+  "relationship_types": [
+    {
+      "slug": "administered_by",
+      "name": "Administered by",
+      "description": "The administrator of a synthetic identifier scheme.",
+      "allowed_pairs": [
+        {
+          "source_type": "identifier-scheme",
+          "target_type": "company"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "affects_instrument",
+      "name": "Affects instrument",
+      "description": "The instrument to which a corporate action applies.",
+      "allowed_pairs": [
+        {
+          "source_type": "corporate-action",
+          "target_type": "financial-instrument"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "announced_by",
+      "name": "Announced by",
+      "description": "The issuer responsible for the corporate-action notice.",
+      "allowed_pairs": [
+        {
+          "source_type": "corporate-action",
+          "target_type": "company"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "director_of",
+      "name": "Director of",
+      "description": "A stated board role, with dates where supplied.",
+      "allowed_pairs": [
+        {
+          "source_type": "person",
+          "target_type": "company"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "employed_by",
+      "name": "Employed by",
+      "description": "A stated employment role; distinct from ownership.",
+      "allowed_pairs": [
+        {
+          "source_type": "person",
+          "target_type": "company"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "guaranteed_by",
+      "name": "Guaranteed by",
+      "description": "The guarantor role stated by the synthetic loan agreement.",
+      "allowed_pairs": [
+        {
+          "source_type": "loan",
+          "target_type": "party-role"
+        }
+      ],
+      "ontology_mapping_status": "verified_pinned_2026Q3",
+      "ontology_property_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/hasGuarantor"
+    },
+    {
+      "slug": "has_holding_in",
+      "name": "Has reported holding in",
+      "description": "Position navigation only. Quantity, date and evidence are on the holding observation.",
+      "allowed_pairs": [
+        {
+          "source_type": "portfolio",
+          "target_type": "financial-instrument"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "holds-shares-in",
+      "name": "Shareholder holds shares in issuer",
+      "description": "A Shareholder role relates to an Issuer role; percentages and evidence remain on observations.",
+      "allowed_pairs": [
+        {
+          "source_type": "party-role",
+          "target_type": "party-role"
+        }
+      ],
+      "ontology_mapping_status": "verified_pinned_2026Q3",
+      "ontology_property_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/holdsSharesIn"
+    },
+    {
+      "slug": "identifies",
+      "name": "Identifies",
+      "description": "An identifier identifies a specific retained record.",
+      "allowed_pairs": [
+        {
+          "source_type": "identifier",
+          "target_type": "company"
+        },
+        {
+          "source_type": "identifier",
+          "target_type": "financial-instrument"
+        },
+        {
+          "source_type": "identifier",
+          "target_type": "person"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "issued_by",
+      "name": "Issued by issuer role",
+      "description": "The contextual issuer role for this instrument; role-played-by identifies the legal entity.",
+      "allowed_pairs": [
+        {
+          "source_type": "financial-instrument",
+          "target_type": "party-role"
+        }
+      ],
+      "ontology_mapping_status": "verified_pinned_2026Q3",
+      "ontology_property_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/isIssuedBy"
+    },
+    {
+      "slug": "loan-has-borrower",
+      "name": "Has borrower role",
+      "description": "The borrower role in a loan agreement, distinct from the legal party playing it.",
+      "allowed_pairs": [
+        {
+          "source_type": "loan",
+          "target_type": "party-role"
+        }
+      ],
+      "ontology_mapping_status": "verified_pinned_2026Q3",
+      "ontology_property_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasBorrower"
+    },
+    {
+      "slug": "loan-has-lender",
+      "name": "Has lender role",
+      "description": "The lender role in a loan agreement, distinct from the legal party playing it.",
+      "allowed_pairs": [
+        {
+          "source_type": "loan",
+          "target_type": "party-role"
+        }
+      ],
+      "ontology_mapping_status": "verified_pinned_2026Q3",
+      "ontology_property_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasLender"
+    },
+    {
+      "slug": "managed_by",
+      "name": "Managed by",
+      "description": "A portfolio management mandate; does not imply ownership.",
+      "allowed_pairs": [
+        {
+          "source_type": "portfolio",
+          "target_type": "company"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "owned_by",
+      "name": "Portfolio owned by",
+      "description": "The portfolio's named owner, separate from its manager.",
+      "allowed_pairs": [
+        {
+          "source_type": "portfolio",
+          "target_type": "company"
+        },
+        {
+          "source_type": "portfolio",
+          "target_type": "person"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "registered_by",
+      "name": "Registered by",
+      "description": "The demo registrar maintaining the instrument record.",
+      "allowed_pairs": [
+        {
+          "source_type": "financial-instrument",
+          "target_type": "company"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "registered_in",
+      "name": "Registered in",
+      "description": "The fictional legal registration jurisdiction.",
+      "allowed_pairs": [
+        {
+          "source_type": "company",
+          "target_type": "jurisdiction"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    },
+    {
+      "slug": "role-in-context",
+      "name": "Role in context",
+      "description": "The instrument or loan in whose context the party plays this role.",
+      "allowed_pairs": [
+        {
+          "source_type": "party-role",
+          "target_type": "financial-instrument"
+        },
+        {
+          "source_type": "party-role",
+          "target_type": "loan"
+        }
+      ],
+      "ontology_mapping_status": "verified_pinned_2026Q3",
+      "ontology_property_iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/isRoleIn"
+    },
+    {
+      "slug": "role-played-by",
+      "name": "Role played by",
+      "description": "A contextual role is played by a legal company or fictional natural person.",
+      "allowed_pairs": [
+        {
+          "source_type": "party-role",
+          "target_type": "company"
+        },
+        {
+          "source_type": "party-role",
+          "target_type": "person"
+        }
+      ],
+      "ontology_mapping_status": "verified_pinned_2026Q3",
+      "ontology_property_iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/isPlayedBy"
+    },
+    {
+      "slug": "uses_identifier_scheme",
+      "name": "Uses identifier scheme",
+      "description": "The scheme defining the identifier's namespace.",
+      "allowed_pairs": [
+        {
+          "source_type": "identifier",
+          "target_type": "identifier-scheme"
+        }
+      ],
+      "ontology_mapping_status": "application_relation_pending_review",
+      "ontology_property_iri": null
+    }
+  ],
+  "required_ref_remapping": [
+    "*_key entity references become actual destination entity IDs in schema-declared *_entity_id fields",
+    "source_document_key becomes exact parent_event_id and source_event_id",
+    "subject_observation_version_key becomes exact reviewed observation event ID",
+    "preserve typed source keys in metadata for reproducibility",
+    "supersedes_key becomes exact prior source event ID"
+  ],
+  "persisted_event_common_required": [
+    "source_scope",
+    "source_record_key",
+    "statement_slot",
+    "source_revision",
+    "as_of",
+    "status",
+    "mapping_version",
+    "synthetic",
+    "source_event_id"
+  ],
+  "role_model": {
+    "base_class_iri": "https://www.omg.org/spec/Commons/PartiesAndSituations/PartyRole",
+    "player_field": "role_player_key",
+    "context_field": "context_key",
+    "role_kind_values": [
+      "issuer",
+      "shareholder",
+      "borrower",
+      "lender",
+      "guarantor"
+    ],
+    "do_not": "Do not type company directly as the contextual role. Direct event party keys are convenience references; the role references preserve the ontology distinction."
+  },
+  "review_statuses": [
+    "unreviewed",
+    "pending_review",
+    "accepted_simulated"
+  ]
+}

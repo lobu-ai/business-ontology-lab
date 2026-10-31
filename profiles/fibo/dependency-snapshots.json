@@ -1,0 +1,861 @@
+{
+  "reference_id": "fibo-2026q3",
+  "dependency_snapshots": [
+    {
+      "source_file": "dependencies/Commons/AnnotationVocabulary.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/AnnotationVocabulary.rdf",
+      "sha256": "0f31efad729e9c5dc260d4cca8cb92c69ec25a4554ead4c866903f652e3789f7",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/AnnotationVocabulary/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/BusinessAuthorizations.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/BusinessAuthorizations.rdf",
+      "sha256": "603b9985b7553c49cd5e9adfd055dab8c4fb1b3d88a6db51e031d6df9cef12d3",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/BusinessAuthorizations/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/Classifiers.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Classifiers.rdf",
+      "sha256": "766312bdb13a27cdc6fe722d5be3c815135a284dbb5e6990455cc655aecad6e9",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20240801/Classifiers/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/CodesAndCodeSets.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/CodesAndCodeSets.rdf",
+      "sha256": "272ea377f588ed30759c37a2b0455a8b04643c8114ebf35ad31656c039d09150",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20221101/CodesAndCodeSets/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/Collections.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Collections.rdf",
+      "sha256": "44450edbe870cad6fa406319ecb21fed6a27824904e865b1d683f8bfd2a03553",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20221101/Collections/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/ContextualDesignators.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/ContextualDesignators.rdf",
+      "sha256": "aa1c6c1d403a79b04b5f1cf65d1cd993b64d87aee51b9f7a3889ea06f01a96a8",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/ContextualDesignators/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/ContextualIdentifiers.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/ContextualIdentifiers.rdf",
+      "sha256": "c26dd75874f66ca5a7dcfff0285b0f0cb8f2c66f0de56190e7f1220c702a28f7",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20221101/ContextualIdentifiers/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/DatesAndTimes.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/DatesAndTimes.rdf",
+      "sha256": "29f48874c004475893202d0359ca1deb9e44e87d6e1a382e12e57c0fc86f90e7",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/DatesAndTimes/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/Designators.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Designators.rdf",
+      "sha256": "6475c00a66050560c11560c91e824118aaa4f13f9e0d62e8eddaf2eb6a447eca",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/Designators/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/Documents.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Documents.rdf",
+      "sha256": "958264c82c7011097cf6da6352464dc094a9d1cada1d37a41ff26ed763f91a5c",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/Documents/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/Identifiers.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Identifiers.rdf",
+      "sha256": "c5ed5f3551ff4d0a711bd50ff6a7388383a1cf33a27bc1661e54f6bf7a75987a",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20221101/Identifiers/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/Languages.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Languages.rdf",
+      "sha256": "5c2a08e01e24f84cba64aebfa3e6ed21e9ef6daa6a8e22c7e6b902b8c4673a2f",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/Languages/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/Locations.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Locations.rdf",
+      "sha256": "0d6a8eedb4461f4256ea61f03506e882bdadc8b1ca2024493eb6585b3e574c31",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/Locations/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/Organizations.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Organizations.rdf",
+      "sha256": "3a1ab7e936b656fff8aa8beb44d30ddc02aaa6f6eac5353d4157e355ef164eb7",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/Organizations/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/PartiesAndSituations.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/PartiesAndSituations.rdf",
+      "sha256": "1c207e4f04e51fee7d06bbee1e5c53ae90f04374da3568e0470699d8f20cc1f3",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/PartiesAndSituations/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/QuantitiesAndUnits.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/QuantitiesAndUnits.rdf",
+      "sha256": "b1fbe90e6c4b23cd7c7485fbe06b94d373b598ece83f074c05b82b8bcc399d7f",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20240801/QuantitiesAndUnits/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/RegistrationAuthorities.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/RegistrationAuthorities.rdf",
+      "sha256": "38562388ef6790635abc5b09eee644a60a659544520b1f93a333ed3e50460991",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/RegistrationAuthorities/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/RegulatoryAgencies.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/RegulatoryAgencies.rdf",
+      "sha256": "cd309406734bb8ba01a5626d1af7b5c8dc6bb3ab3a275e3faac791e5dd460d55",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/RegulatoryAgencies/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/RolesAndCompositions.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/RolesAndCompositions.rdf",
+      "sha256": "81d40576c2afa3f1a9fabd0b08f67a31e1a82bead9467782d8450d7b331275fc",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20230801/RolesAndCompositions/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/SitesAndFacilities.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/SitesAndFacilities.rdf",
+      "sha256": "9c4672f52a8a6e1ce743af6110a0e3cd8229cd5120e8e21936f253d786fb72ac",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/Facilities/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/StructuredCollections.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/StructuredCollections.rdf",
+      "sha256": "288c3d5f047ccda3ee1c48c81ac462829182aa943f83003317b4038714a29430",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20250801/StructuredCollections/"
+      ]
+    },
+    {
+      "source_file": "dependencies/Commons/TextDatatype.rdf",
+      "source_url": "https://www.omg.org/spec/Commons/20250801/TextDatatype.rdf",
+      "sha256": "d29a6e24bffb67fd6a4fe9955880fb9e8bd2f858a12d3e846fc45fd571bd8314",
+      "version_iris": [
+        "https://www.omg.org/spec/Commons/20221101/TextDatatype/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/CountryRepresentation.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/CountryRepresentation.rdf",
+      "sha256": "9f4cb2a7880e4d064adacd8edbf37a82d7e44016b964b60f1096f07c52584287",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/CountryRepresentation/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/ISO3166-1-CountryCodes.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/ISO3166-1-CountryCodes.rdf",
+      "sha256": "58c609df159f063c8f13c7aab508487c10d0337306a7bf85023d105ee77c26c4",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/ISO3166-1-CountryCodes/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/ISO3166-2-SubdivisionCodes.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/ISO3166-2-SubdivisionCodes.rdf",
+      "sha256": "e41d8a7df4401e12e7ffd7b97cf88bbbf1b7084ed5287db858d1fddcdcec53b6",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/ISO3166-2-SubdivisionCodes/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-AD.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AD.rdf",
+      "sha256": "d09ea30bd70029f7c4269f56c467a7ce7a430787d9c115f04b6b9d6bbe9d68ba",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AD/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-AG.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AG.rdf",
+      "sha256": "728c9489bd7d644487aae41f78e9bbaf331fbd91f38d28e8912402b2f2c4d441",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AG/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-AL.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AL.rdf",
+      "sha256": "91581ad323705b4be3935db555857f13106e9bb2bdbbded84226d4126383adff",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AL/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-AS.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AS.rdf",
+      "sha256": "36fd06a41e76a3f60eee71752abf934bf9bd4def38eae6047c1c5a14520b6c7b",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AS/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-AT.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AT.rdf",
+      "sha256": "ff98a1740345eb4b03047458da0922356eb6f3f0b804181326dd2983442f8f09",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-AT/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-BA.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BA.rdf",
+      "sha256": "3cebec5ca3fdea6c18ab56dbceb9acc789179081dc91752a2963164ec6e35ed2",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BA/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-BB.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BB.rdf",
+      "sha256": "205229316a3c3d75cc4e039c213376b285acea61f2567de398c51ff0ac2f2369",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BB/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-BE.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BE.rdf",
+      "sha256": "13fc0d8cfd79d16d31edd47f488933002a6329497c227d662bb9079eadc203d4",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BE/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-BG.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BG.rdf",
+      "sha256": "27098194a75f501a093cf715a933022183111f776ee9345daaf13973c0f68bba",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BG/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-BQ.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BQ.rdf",
+      "sha256": "2b61c626a619c57dae93a9e2a68c103e2672dd8c16b882904aaccba9602307bf",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BQ/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-BS.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BS.rdf",
+      "sha256": "aa93f7bba4185118ae4b09f327203a4144df71055b6470e0613a10984f1b6a4d",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BS/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-BY.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BY.rdf",
+      "sha256": "69a3f138cb8e69a4c2a79ec59f9075f202a7ee8f4a7ab9ed55e2c08b3bcf8f53",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BY/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-BZ.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BZ.rdf",
+      "sha256": "404d5dec32fc89fa767a76b4c53c6fe989c23f456b521cc0f62145b371f8711b",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-BZ/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CA.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CA.rdf",
+      "sha256": "b7315235e5f5a684a66dcb3e6e0665bbe9ee16db41f2b7c6bd2409faa42fa944",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CA/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CH.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CH.rdf",
+      "sha256": "8636dc8640d734f679bd2ddceb96497667f0f8beff0e011654172508be473646",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CH/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CR.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CR.rdf",
+      "sha256": "2c092d110597656f3de3bba1ba9f179d93910d2ce5442cd51c9f18148a897b3b",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CR/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CU.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CU.rdf",
+      "sha256": "643e653417b78d9d136f105afdea8fe0884e70e56da5153f8941435978231723",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CU/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-CZ.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CZ.rdf",
+      "sha256": "eeb89b28e68d000bddb126bf101147c294507694c3eaf461226571fd36390e5d",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-CZ/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-DE.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-DE.rdf",
+      "sha256": "e320314568872b8a68e6f194e1109c0ef66fe5d391573a50bbc685bc410e9a32",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-DE/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-DK.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-DK.rdf",
+      "sha256": "f3fbf8fea3315215251bd85eb40c15866cb9f4380828f49c5d4fc42a55b56325",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-DK/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-DM.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-DM.rdf",
+      "sha256": "dc5777480da73c50783a29258b29f8e0858d4a675756e188da4cb04d64c32ceb",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-DM/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-DO.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-DO.rdf",
+      "sha256": "308726e7c8a583fdb28e79b786e6e7a5008e7eeb42052be14ff01c8fd2d3cda8",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-DO/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-EE.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-EE.rdf",
+      "sha256": "25b9b3a181c984c2575b60967a2f13ab25bfa3010a6d014393a54e2b55b62ece",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-EE/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-ES.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-ES.rdf",
+      "sha256": "3f61316072bb21c9d50556d356d4fb79f2f76536e8fa5ffbf75d970b8a02f7b8",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-ES/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-FI.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-FI.rdf",
+      "sha256": "87ceb66a715c87b35455027535033b6890ff33217b8499b2f4cc51f6c955df87",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-FI/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-FR.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-FR.rdf",
+      "sha256": "a4687a0402f7e0e906adfb6bcf05d779e0df04c313d9dc034ed45391fb4246e1",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-FR/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GB.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GB.rdf",
+      "sha256": "06ff860b0cd067a9e4db472d48568207385172dfacadd2a2bf12fb389158feab",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GB/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GD.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GD.rdf",
+      "sha256": "eefd8c3179e5e01293a2251bc7ff3a9b913ba5a124dfecd7e84ff7c3647a7edd",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GD/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GG.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GG.rdf",
+      "sha256": "eacb7195fd88baf0d243425028c5e6161cf11df4df3c356122ac4c0789b3dc6a",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GG/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GL.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GL.rdf",
+      "sha256": "4df020845093ffed39718d6cbef46ff64df1ce3730a5fa9294c8c85f6581404e",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GL/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GP.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GP.rdf",
+      "sha256": "c56275e89158a5d75f453ccb27dda11cba913a400910235ca912eec267b1fcb1",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GP/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GR.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GR.rdf",
+      "sha256": "1b3899627454f1fbe85f34fd4c9b71f9539a1591cd805bf32a801a5ed0ec2d47",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GR/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-GT.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GT.rdf",
+      "sha256": "06082c2eb8de9ea047b1cad68b13a0bff5c4555d932dfaf90636d3b9599672ed",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-GT/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-HN.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-HN.rdf",
+      "sha256": "73e70dd1db5506a6621efb4df8337fc858f78026a9e653cc376ba92d1f2c22b2",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-HN/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-HR.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-HR.rdf",
+      "sha256": "1fb2a814ad75c2fefbeb4e0e810b92068d0314052b28fc9668662e9814f6f436",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-HR/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-HT.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-HT.rdf",
+      "sha256": "0e886945bdf2bd12cb9882ce62b434bd634e0cf8599e2063b5b64befa76d9da7",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-HT/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-HU.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-HU.rdf",
+      "sha256": "52f3617f45aeb4291e4362152a24e74c8857fab3edae07a217bece1950509007",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-HU/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-IE.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-IE.rdf",
+      "sha256": "05c98bcc9957971f704492d51041344f0767bbd9fa565184d92411f91985f351",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-IE/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-IS.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-IS.rdf",
+      "sha256": "3a9422b7689cc1474553bae8ed2ee54a4a32041ccd4ab5a9bbd57c5ad79f974e",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-IS/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-IT.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-IT.rdf",
+      "sha256": "95faa919f9f5a51b014dff42a71892159f0d9a8e33c42419f62fb43d55055672",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-IT/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-KN.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-KN.rdf",
+      "sha256": "4c97ed9b619cb4e66c2b12f854ee3f4d00780d5754971a1a9ae230c8c3b6332b",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-KN/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-KY.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-KY.rdf",
+      "sha256": "31428fcdce282bd3b16fce50dc7fa6e6c977f38b19bc68092ffc393f677e1551",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-KY/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-LC.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LC.rdf",
+      "sha256": "239ec740dd78045fecb431c63667acab2a75d973313fc5bd88f653b5bb886235",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LC/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-LI.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LI.rdf",
+      "sha256": "f050b184767932e6398481e1ae3f4065a7396031158fc5c1864dffbfbc927d8b",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LI/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-LT.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LT.rdf",
+      "sha256": "cb14ecba61b25793f0c6dfb0c44ac0a8c5c9c997f0529ac6a6a21f97fecb7c41",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LT/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-LU.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LU.rdf",
+      "sha256": "0e8cec5373a1312c7675bc617c2cafc58fa5a8eba83a07c4f4936746cf1bb794",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LU/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-LV.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LV.rdf",
+      "sha256": "8b038256552be150a5c5ec9eddf46af0497db9e001efaf932c2a54438f8269d7",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-LV/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-MC.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MC.rdf",
+      "sha256": "9c9e291dcb64055c59475c6f27878c50b653e02b6442b56e2530cef5f13390fd",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MC/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-MD.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MD.rdf",
+      "sha256": "2abf2edebb830e18449d67a34be4f42e8c693dc3f10c33ee21f553d1d2bf64dd",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MD/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-ME.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-ME.rdf",
+      "sha256": "85202425b281fb07c50b2a89bd37c0d7c9328394679b4a5eea113d569d3a75ef",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-ME/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-MF.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MF.rdf",
+      "sha256": "36c33910d8a614174a8064e5ce53e45845b5cc3105a2f754d246cfd5b0fbfb78",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MF/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-MK.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MK.rdf",
+      "sha256": "cef00792b7d8d59cdf2aace517fd2be9adf0a25299bd961d691360a1f2ffeb82",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MK/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-MP.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MP.rdf",
+      "sha256": "aa0213f56b69b8f613ecb884259ed8f210e2b9a2a1af8b405b16cb9b5cc4ddd8",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MP/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-MT.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MT.rdf",
+      "sha256": "e39adc3cca94705941672ba4c76cc4939be02f5b482f0b97cdcd49667dc49904",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MT/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-MX.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MX.rdf",
+      "sha256": "e2b83e0f7d45dafadc1fd578b3ff2749d3790222da50b178c59353b425c81fe6",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-MX/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-NI.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-NI.rdf",
+      "sha256": "014e077d051e2760edba0ecb3a7f65a8b805d73d197fc38b59e6c933bf8fc0ca",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-NI/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-NL.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-NL.rdf",
+      "sha256": "67e59bc9d378fa08820f3a60faa2d596aaa9fb0f0ecf8d2c5eed93e7b6b89340",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-NL/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-NO.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-NO.rdf",
+      "sha256": "43053671851c9f9f7a089c0d6b7c30ae7905e60e41a3c2e28df23151abc75a6b",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-NO/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-PA.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-PA.rdf",
+      "sha256": "969e414b774e9ab3c09c87b31874049c44ea5ace99a3765cb9c45f957941ea1e",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-PA/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-PL.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-PL.rdf",
+      "sha256": "560a4ec896c7f00237f26313595d8cbed5ca1e2a06e85f1b53c4b70626d7e356",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-PL/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-PM.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-PM.rdf",
+      "sha256": "1206123a3fa9df9fc78d40f56bf965484a0ef4f1ea618b8e08bb8196f03f21dc",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-PM/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-PT.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-PT.rdf",
+      "sha256": "c7f4483b3e93ef18c942d0533154881581b9d7beffae2f3f3748b40f75d901fa",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-PT/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-RO.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-RO.rdf",
+      "sha256": "17c3cbadec5eb8fb87a799d76901b90fe1e92da9a5ea22dd344f7e92a1888f2b",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-RO/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-RS.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-RS.rdf",
+      "sha256": "bca1514d0f8bc0079fdbabaca5ac7a51cf91d3327d6bde8f70f4604d99daabf8",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-RS/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-RU.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-RU.rdf",
+      "sha256": "7659bb21020922608f489721add93bd9da4bc85be8184339ce4b70da88adc1e1",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-RU/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-SE.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SE.rdf",
+      "sha256": "225f8cdf346f6c1cb82aea77c627350c928a11583215d18678e98d62f00ac49e",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SE/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-SI.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SI.rdf",
+      "sha256": "b066a3500a199843331ccbe4f5ee13b866ff0c41cfc9d3c225ac34a95622e1fc",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SI/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-SJ.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SJ.rdf",
+      "sha256": "3854396585165c5ee85618f509d34d76b31cb1da504fc00606329ff98183f4a6",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SJ/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-SK.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SK.rdf",
+      "sha256": "a203f9238d27f77a10e763c8f60d73e09d03e28e15759147cc1fe3d86e9e107b",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SK/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-SM.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SM.rdf",
+      "sha256": "f37fdc0c873075cf30e47dbda781e57d08ced3af56532b58b21fd95d1c1f6ab2",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SM/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-SV.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SV.rdf",
+      "sha256": "ad11f33c90fce429f3dbd19f5b6c1d628b35db9096f3a4c8677f562b56d535b1",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-SV/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-TC.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-TC.rdf",
+      "sha256": "4c61360df86403c1706026b6491d06e94114200574fe583af8b8b9e9159addd7",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-TC/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-TT.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-TT.rdf",
+      "sha256": "3b87d102cf5bd0a83787834e82e9afeea588666c405a33be7192b1192950dcde",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-TT/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-UA.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-UA.rdf",
+      "sha256": "2b60b2b153885ae00d3c0ea117104ef6c879470c1d7f5e31d712778345820c25",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-UA/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-UM.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-UM.rdf",
+      "sha256": "f8b16654524f91375093af35f660cbcd288e8e52c5dc9118a4212a2bbcae98bf",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-UM/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-US.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-US.rdf",
+      "sha256": "9c802d73b0e7be412b56552c56cfe6457d55aa32d55d71fa39f54a35c3add681",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-US/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-VC.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-VC.rdf",
+      "sha256": "d233fe447a1ed4d021ed6cec755036cde98a049fb92b9ccfef854efa5f7d738c",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-VC/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-VG.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-VG.rdf",
+      "sha256": "20384664632dd42cfa1016984d3d5ba0abefc293e4e3db8708399c895f2da766",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-VG/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/Regions/ISO3166-2-SubdivisionCodes-VI.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-VI.rdf",
+      "sha256": "3c6c0b2c1f078cab69595f5b08137c68305f3bf0e8e83e3218b7f3495d658698",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/Regions/ISO3166-2-SubdivisionCodes-VI/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Countries/UN-M49-RegionCodes.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Countries/UN-M49-RegionCodes.rdf",
+      "sha256": "bfa5fa91adb40f30fa2a06a3d7ff0859e9b15c0de3e42d3eae9b61d16a4a8732",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Countries/UN-M49-RegionCodes/"
+      ]
+    },
+    {
+      "source_file": "dependencies/MVF/MultipleVocabularyFacility.rdf",
+      "source_url": "https://www.omg.org/spec/MVF/20251101/MultipleVocabularyFacility.rdf",
+      "sha256": "0bf3b4b174716b9c9e3c3033e3e4620d0e6fe16693f131f123b8a1cd4134e722",
+      "version_iris": [
+        "https://www.omg.org/spec/MVF/20251101/MultipleVocabularyFacility/"
+      ]
+    },
+    {
+      "source_file": "dependencies/LCC/Languages/LanguageRepresentation.rdf",
+      "source_url": "https://www.omg.org/spec/LCC/20211101/Languages/LanguageRepresentation.rdf",
+      "sha256": "534744f6bedd336ca86702dc880bc185064b78674bd7b748752d16f6a69de7b5",
+      "version_iris": [
+        "https://www.omg.org/spec/LCC/20211101/Languages/LanguageRepresentation/"
+      ]
+    }
+  ]
+}

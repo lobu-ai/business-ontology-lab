@@ -1,0 +1,214 @@
+{
+  "suite": "financial-ontology-demo-v2",
+  "scenarios": [
+    {
+      "key": "conflicting-sources",
+      "title": "Compare conflicting ownership reports",
+      "focus_key": "company:demo-beacon",
+      "focus_slug": "demo-beacon",
+      "question": "How much Beacon ordinary equity does Atlas own, and which sources disagree?",
+      "expected": {
+        "active_ordinary_reports": [
+          {
+            "source_scope": "demo-registry",
+            "percentage": 45,
+            "baseline": true
+          },
+          {
+            "source_scope": "demo-analyst-research",
+            "percentage": 47
+          }
+        ],
+        "retracted_report": {
+          "source_scope": "demo-vendor",
+          "percentage": 60,
+          "baseline": true
+        },
+        "separate_preferred_report": 20,
+        "as_of": "2025-12-31",
+        "canonical_percentage": null
+      },
+      "must_not": [
+        "Average 45 and 47 into a canonical 46%",
+        "Treat withdrawn 60% as active",
+        "Combine preferred 20% with ordinary equity percentages"
+      ]
+    },
+    {
+      "key": "equity-voting-control",
+      "title": "Separate equity, voting rights and control",
+      "focus_key": "company:demo-beacon",
+      "focus_slug": "demo-beacon",
+      "question": "Why can the data say 45% equity, 72% voting rights and a board-appointment agreement at the same time?",
+      "expected": {
+        "registry_equity_percent": 45,
+        "voting_percent": 72,
+        "control_basis": "board_appointment_agreement",
+        "appointable_seats": 5,
+        "total_seats": 7,
+        "control_review_status": "pending_review",
+        "voting_to_control_inference": false
+      },
+      "must_not": [
+        "Replace equity percentage with voting percentage",
+        "Infer verified control solely from >50% of a percentage",
+        "Call a pending review an approval"
+      ]
+    },
+    {
+      "key": "indirect-paths",
+      "title": "Trace indirect interests without inventing certainty",
+      "focus_key": "company:demo-ember-labs",
+      "focus_slug": "demo-ember-labs",
+      "question": "Which reported paths connect Atlas to Ember, and how does Beacon's disagreement affect an illustrative exposure calculation?",
+      "expected": {
+        "direct_atlas_ember_percent": 10,
+        "beacon_ember_percent": 60,
+        "registry_branch": {
+          "atlas_beacon_percent": 45,
+          "indirect_percent": 27,
+          "conditional_direct_plus_indirect_percent": 37
+        },
+        "analyst_branch": {
+          "atlas_beacon_percent": 47,
+          "indirect_percent": 28.2,
+          "conditional_direct_plus_indirect_percent": 38.2
+        },
+        "calculation_is": "illustration conditional on comparable ordinary-equity scope, date and non-overlapping paths",
+        "ultimate_beneficial_owner_asserted": false,
+        "control_asserted_by_calculation": false
+      },
+      "must_not": [
+        "Publish 37% or 38.2% as reconciled legal ownership",
+        "Automatically infer control or an ultimate beneficial owner",
+        "Treat unlisted holders as zero"
+      ]
+    },
+    {
+      "key": "split-and-holdings",
+      "title": "Follow a share split into portfolio holdings",
+      "focus_key": "portfolio:demo-growth-portfolio",
+      "focus_slug": "demo-growth-portfolio",
+      "question": "What changed when Beacon split its ordinary shares 2-for-1?",
+      "expected": {
+        "effective_date": "2026-01-02",
+        "growth_ordinary_before": 1000,
+        "growth_ordinary_after": 2000,
+        "treasury_ordinary_before": 25000,
+        "treasury_ordinary_after": 50000,
+        "growth_preferred_last_reported": 500,
+        "preferred_affected": false,
+        "percentage_changed_by_split_alone": false,
+        "valuation_claimed": false
+      },
+      "must_not": [
+        "Double preferred-share quantities",
+        "Retract unchanged positions omitted from a partial amendment",
+        "Call the position adjustment an earlier source error",
+        "Infer a market price"
+      ]
+    },
+    {
+      "key": "instruments-and-loans",
+      "title": "Connect issuers, portfolios, loans and payments",
+      "focus_key": "company:demo-cedar-energy",
+      "focus_slug": "demo-cedar-energy",
+      "question": "How is Cedar connected to Fjord, the income portfolio, and its bond coupon?",
+      "expected": {
+        "loan_lender": "company:demo-fjord-finance",
+        "loan_borrower": "company:demo-cedar-energy",
+        "loan_principal_usd": 2000000,
+        "loan_fixed_annual_interest_percent": 4.5,
+        "loan_maturity": "2030-06-30",
+        "bond_issuer": "company:demo-cedar-energy",
+        "bond_annual_coupon_percent": 4,
+        "bond_face_per_unit_usd": 1000,
+        "semiannual_coupon_per_unit_usd": 20,
+        "income_units_on_payment_notice": 10,
+        "income_coupon_entitlement_usd": 200,
+        "portfolio_manager": "company:demo-grove-asset-management",
+        "portfolio_owner": "person:demo-taylor-stone"
+      },
+      "must_not": [
+        "Treat the portfolio manager as owner of the client's securities",
+        "Treat the bond and the separate loan as the same contract",
+        "Infer equity ownership from being a lender",
+        "Type a legal company directly as a Borrower, Lender, Issuer or Shareholder; the company plays a contextual role"
+      ]
+    },
+    {
+      "key": "correction-and-review",
+      "title": "Inspect a correction and its review trail",
+      "focus_key": "company:demo-cedar-energy",
+      "focus_slug": "demo-cedar-energy",
+      "question": "Was Cedar's 78% to 80% change a transaction, and who reviewed it?",
+      "expected": {
+        "vendor_initial_percent": 78,
+        "vendor_corrected_percent": 80,
+        "change_reason": "source_correction",
+        "stable_observation_identity": true,
+        "independent_registry_percent": 80,
+        "review_status": "accepted_simulated",
+        "reviewer": "person:demo-jamie-park",
+        "actual_user_approval": false,
+        "beacon_analyst_review_status": "pending_review"
+      },
+      "must_not": [
+        "Invent a 2% purchase transaction",
+        "Rewrite the independent registry report",
+        "Present simulated review as actual user approval"
+      ]
+    }
+  ],
+  "counts": {
+    "entity_count": 98,
+    "entities_by_type": {
+      "jurisdiction": 3,
+      "company": 8,
+      "person": 4,
+      "identifier-scheme": 4,
+      "financial-instrument": 9,
+      "loan": 2,
+      "portfolio": 3,
+      "corporate-action": 2,
+      "identifier": 38,
+      "party-role": 25
+    },
+    "relationship_count": 199,
+    "relationships_by_type": {
+      "registered_in": 8,
+      "identifies": 38,
+      "uses_identifier_scheme": 38,
+      "issued_by": 9,
+      "registered_by": 9,
+      "director_of": 6,
+      "employed_by": 4,
+      "managed_by": 3,
+      "owned_by": 3,
+      "has_holding_in": 7,
+      "loan-has-lender": 2,
+      "loan-has-borrower": 2,
+      "guaranteed_by": 1,
+      "affects_instrument": 2,
+      "announced_by": 2,
+      "administered_by": 4,
+      "role-played-by": 25,
+      "role-in-context": 25,
+      "holds-shares-in": 11
+    },
+    "document_version_count": 18,
+    "document_logical_count": 15,
+    "observation_version_count": 35,
+    "observation_logical_count": 32,
+    "observations_by_kind": {
+      "ownership_observation": 13,
+      "voting_observation": 3,
+      "control_observation": 3,
+      "holding_observation": 9,
+      "loan_observation": 2,
+      "corporate_action_observation": 2,
+      "review_decision": 3
+    },
+    "existing_baseline_additional_versions": 4
+  }
+}

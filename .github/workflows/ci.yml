@@ -1,0 +1,61 @@
+name: Verify ontology project
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 26]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm test
+      - run: npm run check
+      - run: npm run validate
+      - run: npm run format:check
+  runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      LOBU_LOCAL_INIT: '1'
+      LOBU_BASE_URL: http://127.0.0.1:8787
+      LOBU_ORG: ontology-ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/runtime-env.mjs
+      - run: docker compose up -d --wait --wait-timeout 240
+      - run: npm run bootstrap
+      - run: npm run verify:live
+      - run: npm run verify:governance
+      - run: npm run verify:access
+      - run: npm run verify:ordering
+      - name: Replay installation without local identity state
+        run: |
+          rm -f .runtime/ontology-ci/state.json
+          npm run bootstrap
+          npm run verify:readonly
+      - name: Restart and verify persistence
+        run: |
+          docker compose restart runtime
+          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:8787/api/health >/dev/null && break; sleep 2; done
+          npm run verify:readonly
+      - name: Show runtime status on failure
+        if: failure()
+        run: docker compose ps
+      - name: Stop disposable runtime
+        if: always()
+        run: docker compose down -v

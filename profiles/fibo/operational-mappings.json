@@ -1,0 +1,2566 @@
+{
+  "reference_id": "fibo-2026q3",
+  "release_tag": "master_2026Q3",
+  "commit_sha": "2d73435a4419b66b7c9f44cb9763e35fe8ac7890",
+  "classes": [
+    {
+      "demo_concept": "legal_entity",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "legal person that is a partnership, corporation, or other organization having the capacity to negotiate contracts, assume financial obligations, and pay off debts, organized under the laws of some jurisdiction",
+      "definitions": [
+        "legal person that is a partnership, corporation, or other organization having the capacity to negotiate contracts, assume financial obligations, and pay off debts, organized under the laws of some jurisdiction"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "label": "legal entity",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/Organizations",
+      "module_iri": "https://www.omg.org/spec/Commons/Organizations/",
+      "namespace": "https://www.omg.org/spec/Commons/Organizations/",
+      "parents": [
+        "_:d65837522fba0184a_cb20584fd9d5fecaea418d8b58c293d06307dddcf3680f248e74605f86fab26f8a5",
+        "_:d90c23f8733686885_cb155a6ca381bb9f08122ab42b98f9505a19792e4bca2f6cf9cf356ca8262cf3b0e",
+        "_:d97419d1aca62addf_cb1504f255a16913860ca10c02918a4dcab1539b65faf29b43c7edd62dbb40af6d6",
+        "_:d97419d1aca62addf_cb1f921569c3aa1152e5a4092ad41ca8f46ead2f781c9108b70e8ac8b28796bcb61",
+        "_:d97419d1aca62addf_cb2050776fa91ed2814266502c086eafcc7d2d3d6d69113ed99518f42db56f84827",
+        "_:d97419d1aca62addf_cb22c9a935e85ce0f4e973716cfadae885bc99329516a504ce2c847a0326e942be6",
+        "_:d97419d1aca62addf_cb2773f8ea78651ed0c068a16598927b762a7a58f23ee82296fef8be6e110177384",
+        "_:d97419d1aca62addf_cb296c49ecfb15cd12c4968a5caf061b894f1711aaa87303523916ef7010aa9a11c",
+        "_:d97419d1aca62addf_cb2b862555e6d29beffc762125a2869931f7003c9e28a413bc2d134659e2a3d5d74",
+        "_:dda02c6dbbc553e57_cb1e49ffbd11773d14b58314230a7528df96207c04d6a1bcac75e2027338da0c218",
+        "_:dda02c6dbbc553e57_cb27e7fd68bd708d10ebd931e2b2bc966f17a3c2e2303b30d15d203e94b1efbca94",
+        "_:de6d9f67e71514d04_cb1dc4e40f8b35281c98c893b25e5c7615bfb17b1e9ccf3c0828411382a7e4a6779",
+        "_:de6d9f67e71514d04_cbe5706348cd4b51c186ffb02055ca50af5a6c2aac0ff3b9581f0338c6cac06564",
+        "https://www.omg.org/spec/Commons/Organizations/FormalOrganization",
+        "https://www.omg.org/spec/Commons/Organizations/LegalPerson"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d65837522fba0184a_cb20584fd9d5fecaea418d8b58c293d06307dddcf3680f248e74605f86fab26f8a5",
+        "_:d90c23f8733686885_cb155a6ca381bb9f08122ab42b98f9505a19792e4bca2f6cf9cf356ca8262cf3b0e",
+        "_:d97419d1aca62addf_cb1504f255a16913860ca10c02918a4dcab1539b65faf29b43c7edd62dbb40af6d6",
+        "_:d97419d1aca62addf_cb1f921569c3aa1152e5a4092ad41ca8f46ead2f781c9108b70e8ac8b28796bcb61",
+        "_:d97419d1aca62addf_cb2050776fa91ed2814266502c086eafcc7d2d3d6d69113ed99518f42db56f84827",
+        "_:d97419d1aca62addf_cb22c9a935e85ce0f4e973716cfadae885bc99329516a504ce2c847a0326e942be6",
+        "_:d97419d1aca62addf_cb2773f8ea78651ed0c068a16598927b762a7a58f23ee82296fef8be6e110177384",
+        "_:d97419d1aca62addf_cb296c49ecfb15cd12c4968a5caf061b894f1711aaa87303523916ef7010aa9a11c",
+        "_:d97419d1aca62addf_cb2b862555e6d29beffc762125a2869931f7003c9e28a413bc2d134659e2a3d5d74",
+        "_:dda02c6dbbc553e57_cb1e49ffbd11773d14b58314230a7528df96207c04d6a1bcac75e2027338da0c218",
+        "_:dda02c6dbbc553e57_cb27e7fd68bd708d10ebd931e2b2bc966f17a3c2e2303b30d15d203e94b1efbca94",
+        "_:de6d9f67e71514d04_cb1dc4e40f8b35281c98c893b25e5c7615bfb17b1e9ccf3c0828411382a7e4a6779",
+        "_:de6d9f67e71514d04_cbe5706348cd4b51c186ffb02055ca50af5a6c2aac0ff3b9581f0338c6cac06564"
+      ],
+      "source_file": "dependencies/Commons/Organizations.rdf",
+      "source_files": [
+        "BE/LegalEntities/FormalBusinessOrganizations.rdf",
+        "BE/LegalEntities/LEIEntities.rdf",
+        "BE/LegalEntities/LegalPersons.rdf",
+        "FBC/FunctionalEntities/BusinessRegistries.rdf",
+        "dependencies/Commons/Organizations.rdf",
+        "dependencies/Commons/RegulatoryAgencies.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Organizations.rdf",
+      "synonyms": [
+        "artificial person",
+        "juridical entity",
+        "juridical person",
+        "juristic person"
+      ],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "person",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "individual human being, with consciousness of self",
+      "definitions": [
+        "individual human being, with consciousness of self"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/Person",
+      "label": "person",
+      "maturity": "Release",
+      "module_code": "FND/AgentsAndPeople/People",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/",
+      "parents": [
+        "_:df92403b53a5a3164_cb1e0c91e74f48268e5f23581d4cf85b1d5159b6f6ed16cc5308acacf062b2f1fb1",
+        "_:df92403b53a5a3164_cb1e477a20009107c78220bd43da3f3521b27949faff1fd14c36017633e9f033626",
+        "_:df92403b53a5a3164_cb22dfacd2197ef04254a192461f1f37ffff933dd4a7da566cbc0268652c91f65c2",
+        "_:df92403b53a5a3164_cb27e2f9577a6bbee7216f82e2c1264e504af104018e583c3a5447cdd036c8ded86",
+        "_:df92403b53a5a3164_cb29ade103b58276d0c893b007f58c4dbac8211b234c5a0c4f3dd750eeaf5e9eb45",
+        "_:df92403b53a5a3164_cb2a3e57bbdfd0079e4842c974c92272be7a02d2c4bd358a4230acc20c1354224f0",
+        "_:df92403b53a5a3164_cb2b8fbde3814d7f9c751a444b802caec54527bf816c7b339f62631591ed47d335c",
+        "_:df92403b53a5a3164_cb2f9dcd791deaccd88b0c46e084af3e71916955d349eca6d33b67997e327af1445",
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/Party"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:df92403b53a5a3164_cb1e0c91e74f48268e5f23581d4cf85b1d5159b6f6ed16cc5308acacf062b2f1fb1",
+        "_:df92403b53a5a3164_cb1e477a20009107c78220bd43da3f3521b27949faff1fd14c36017633e9f033626",
+        "_:df92403b53a5a3164_cb22dfacd2197ef04254a192461f1f37ffff933dd4a7da566cbc0268652c91f65c2",
+        "_:df92403b53a5a3164_cb27e2f9577a6bbee7216f82e2c1264e504af104018e583c3a5447cdd036c8ded86",
+        "_:df92403b53a5a3164_cb29ade103b58276d0c893b007f58c4dbac8211b234c5a0c4f3dd750eeaf5e9eb45",
+        "_:df92403b53a5a3164_cb2a3e57bbdfd0079e4842c974c92272be7a02d2c4bd358a4230acc20c1354224f0",
+        "_:df92403b53a5a3164_cb2b8fbde3814d7f9c751a444b802caec54527bf816c7b339f62631591ed47d335c",
+        "_:df92403b53a5a3164_cb2f9dcd791deaccd88b0c46e084af3e71916955d349eca6d33b67997e327af1445"
+      ],
+      "source_file": "FND/AgentsAndPeople/People.rdf",
+      "source_files": [
+        "FND/AgentsAndPeople/People.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/AgentsAndPeople/People.rdf",
+      "synonyms": [
+        "natural person"
+      ],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "country",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "geopolitical entity representing a distinct territorial body or political entity or dependent territory",
+      "definitions": [
+        "geopolitical entity representing a distinct territorial body or political entity or dependent territory"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/Locations/Country",
+      "label": "country",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/Locations",
+      "module_iri": "https://www.omg.org/spec/Commons/Locations/",
+      "namespace": "https://www.omg.org/spec/Commons/Locations/",
+      "parents": [
+        "_:dedd6bed914e829bd_cb2a3243e7595e3db411b2bfd23a82def65edd2337115dd853f97c36127a06c2e3f",
+        "https://www.omg.org/spec/Commons/Locations/GeopoliticalEntity"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:dedd6bed914e829bd_cb2a3243e7595e3db411b2bfd23a82def65edd2337115dd853f97c36127a06c2e3f"
+      ],
+      "source_file": "dependencies/Commons/Locations.rdf",
+      "source_files": [
+        "dependencies/Commons/Locations.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Locations.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "jurisdiction",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "power of a court or regulatory agency to adjudicate cases, issue orders, and interpret and apply the law with respect to some specific geographic area",
+      "definitions": [
+        "power of a court or regulatory agency to adjudicate cases, issue orders, and interpret and apply the law with respect to some specific geographic area"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/RegulatoryAgencies/Jurisdiction",
+      "label": "jurisdiction",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/RegulatoryAgencies",
+      "module_iri": "https://www.omg.org/spec/Commons/RegulatoryAgencies/",
+      "namespace": "https://www.omg.org/spec/Commons/RegulatoryAgencies/",
+      "parents": [
+        "_:d65837522fba0184a_cb15434396f2202a3f571da7bb80a5a065d9bd862dbd99e0b32d6684e426dd5612c",
+        "https://www.omg.org/spec/Commons/ContextualDesignators/Context"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d65837522fba0184a_cb15434396f2202a3f571da7bb80a5a065d9bd862dbd99e0b32d6684e426dd5612c"
+      ],
+      "source_file": "dependencies/Commons/RegulatoryAgencies.rdf",
+      "source_files": [
+        "dependencies/Commons/RegulatoryAgencies.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/RegulatoryAgencies.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "identifier",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "sequence of characters uniquely identifying that with which it is associated",
+      "definitions": [
+        "sequence of characters uniquely identifying that with which it is associated"
+      ],
+      "deprecated": false,
+      "disjoint": [
+        "https://www.omg.org/spec/Commons/Designators/Name"
+      ],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "label": "identifier",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/Identifiers",
+      "module_iri": "https://www.omg.org/spec/Commons/Identifiers/",
+      "namespace": "https://www.omg.org/spec/Commons/Identifiers/",
+      "parents": [
+        "_:d99bc996c5916185d_cb0",
+        "_:d99bc996c5916185d_cb7b56b4b1e2b97c487a5a441c2c22c1550f1941a6aee35ae649bfdaba2a4b768",
+        "https://www.omg.org/spec/Commons/Designators/Designation"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d99bc996c5916185d_cb0",
+        "_:d99bc996c5916185d_cb7b56b4b1e2b97c487a5a441c2c22c1550f1941a6aee35ae649bfdaba2a4b768"
+      ],
+      "source_file": "dependencies/Commons/Identifiers.rdf",
+      "source_files": [
+        "dependencies/Commons/Identifiers.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Identifiers.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "legal_entity_identifier",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "an organization identifier that uniquely identifies a legal person as defined in ISO 17442",
+      "definitions": [
+        "an organization identifier that uniquely identifies a legal person as defined in ISO 17442"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "BE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/LegalEntityIdentifier",
+      "label": "legal entity identifier",
+      "maturity": "Release",
+      "module_code": "BE/LegalEntities/LEIEntities",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/",
+      "parents": [
+        "_:dda02c6dbbc553e57_cb228f50abb95d20e293e2f4acc1c1afe797b04557307819c21429ff3342728f14d",
+        "_:dda02c6dbbc553e57_cb2853eaab80633128f6bd0dd3587124bfc954a5aa736d304e1be7121e3babb0c36",
+        "https://www.omg.org/spec/Commons/Organizations/OrganizationIdentifier",
+        "https://www.omg.org/spec/Commons/RegistrationAuthorities/RegisteredIdentifier"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:dda02c6dbbc553e57_cb228f50abb95d20e293e2f4acc1c1afe797b04557307819c21429ff3342728f14d",
+        "_:dda02c6dbbc553e57_cb2853eaab80633128f6bd0dd3587124bfc954a5aa736d304e1be7121e3babb0c36"
+      ],
+      "source_file": "BE/LegalEntities/LEIEntities.rdf",
+      "source_files": [
+        "BE/LegalEntities/LEIEntities.rdf",
+        "FBC/FunctionalEntities/BusinessRegistries.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/BE/LegalEntities/LEIEntities.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "international_securities_identification_number",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "security identifier that is defined as specified in ISO 6166, Securities and related financial instruments -- International securities identification numbering system (ISIN)",
+      "definitions": [
+        "security identifier that is defined as specified in ISO 6166, Securities and related financial instruments -- International securities identification numbering system (ISIN)"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "SEC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/InternationalSecuritiesIdentificationNumber",
+      "label": "international securities identification number",
+      "maturity": "Release",
+      "module_code": "SEC/Securities/SecuritiesIdentification",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/",
+      "parents": [
+        "_:d5707ab4c2fe00dee_cb19f420844030d10256a53b0a75629cfeb7256e8c486dbbc521b9efcb23e5543be",
+        "_:d5707ab4c2fe00dee_cb2198883c8ddcdc78a829457a8a321c1ed83c38e15835dd09bdd65419c348be162",
+        "https://spec.edmcouncil.org/fibo/ontology/SEC/Securities/SecuritiesIdentification/SecurityIdentifier",
+        "https://www.omg.org/spec/Commons/ContextualIdentifiers/StructuredIdentifier"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d5707ab4c2fe00dee_cb19f420844030d10256a53b0a75629cfeb7256e8c486dbbc521b9efcb23e5543be",
+        "_:d5707ab4c2fe00dee_cb2198883c8ddcdc78a829457a8a321c1ed83c38e15835dd09bdd65419c348be162"
+      ],
+      "source_file": "SEC/Securities/SecuritiesIdentification.rdf",
+      "source_files": [
+        "SEC/Securities/SecuritiesIdentification.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/SEC/Securities/SecuritiesIdentification.rdf",
+      "synonyms": [
+        "ISIN"
+      ],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "party_role",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "role played by an organization or individual that may be time bound",
+      "definitions": [
+        "role played by an organization or individual that may be time bound"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/PartiesAndSituations/PartyRole",
+      "label": "party role",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/PartiesAndSituations",
+      "module_iri": "https://www.omg.org/spec/Commons/PartiesAndSituations/",
+      "namespace": "https://www.omg.org/spec/Commons/PartiesAndSituations/",
+      "parents": [
+        "_:db05554b46ad37030_cb1d8aa28ab37afd3a57890b0a538fa92feda319d7731ee000609d1ee386d6dc038",
+        "_:db05554b46ad37030_cb2b6a445d9482e85ea5205aefbe00d20eb10558c84626289af393a7f1a06fbdf87",
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/AgentRole"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:db05554b46ad37030_cb1d8aa28ab37afd3a57890b0a538fa92feda319d7731ee000609d1ee386d6dc038",
+        "_:db05554b46ad37030_cb2b6a445d9482e85ea5205aefbe00d20eb10558c84626289af393a7f1a06fbdf87"
+      ],
+      "source_file": "dependencies/Commons/PartiesAndSituations.rdf",
+      "source_files": [
+        "dependencies/Commons/PartiesAndSituations.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/PartiesAndSituations.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "issuer_role",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "role of a party that makes (or proposes to make) one or more financial instruments available in some well-defined, typically formal way",
+      "definitions": [
+        "role of a party that makes (or proposes to make) one or more financial instruments available in some well-defined, typically formal way"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/Issuer",
+      "label": "issuer",
+      "maturity": "Release",
+      "module_code": "FBC/FinancialInstruments/FinancialInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/",
+      "parents": [
+        "_:d0ab688197f7ac4e8_cb17a9cac2a743814c55bdbf906596b783a134943933371f68892db6a47be22eafc",
+        "_:d0ab688197f7ac4e8_cb331ba64a3884f854b7079bd2b16cff8ce1f66bdc819540938e868b31f880a21d5",
+        "_:da49dbfdb012a2b7a_cb2d93a10129cdb4253436a224bb93c875dc9e79099120a5a73fee60c26805203c5",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/ContractPrincipal"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d0ab688197f7ac4e8_cb17a9cac2a743814c55bdbf906596b783a134943933371f68892db6a47be22eafc",
+        "_:d0ab688197f7ac4e8_cb331ba64a3884f854b7079bd2b16cff8ce1f66bdc819540938e868b31f880a21d5",
+        "_:da49dbfdb012a2b7a_cb2d93a10129cdb4253436a224bb93c875dc9e79099120a5a73fee60c26805203c5"
+      ],
+      "source_file": "FBC/FinancialInstruments/FinancialInstruments.rdf",
+      "source_files": [
+        "FBC/FinancialInstruments/FinancialInstruments.rdf",
+        "SEC/Securities/SecuritiesIssuance.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/FinancialInstruments/FinancialInstruments.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "share_issuer_role",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "issuer of securities that represent an ownership interest in something",
+      "definitions": [
+        "issuer of securities that represent an ownership interest in something"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "SEC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/ShareIssuer",
+      "label": "share issuer",
+      "maturity": "Release",
+      "module_code": "SEC/Equities/EquityInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "parents": [
+        "_:dfb7d806f46d5b54d_cb27bcd7978bd99dc95938adfab0b70dbf7933b4d73d0c4b931b31f7dc8b68045c8",
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/Issuer"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:dfb7d806f46d5b54d_cb27bcd7978bd99dc95938adfab0b70dbf7933b4d73d0c4b931b31f7dc8b68045c8"
+      ],
+      "source_file": "SEC/Equities/EquityInstruments.rdf",
+      "source_files": [
+        "SEC/Equities/EquityInstruments.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/SEC/Equities/EquityInstruments.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "shareholder_role",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "party that owns shares in and has rights and responsibilities with respect to some asset, provided in exchange for investment",
+      "definitions": [
+        "party that owns shares in and has rights and responsibilities with respect to some asset, provided in exchange for investment"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "BE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "label": "shareholder",
+      "maturity": "Release",
+      "module_code": "BE/OwnershipAndControl/CorporateOwnership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/OwnershipParties/ConstitutionalOwner",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/Counterparty"
+      ],
+      "range": [],
+      "restrictions": [],
+      "source_file": "BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "source_files": [
+        "BE/OwnershipAndControl/CorporateOwnership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "synonyms": [
+        "stockholder"
+      ],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "beneficial_owner_role",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "party that enjoys the benefits of ownership (such as receipt of income) of something even though its ownership (title) may be in the name of another party (called a nominee or registered owner)",
+      "definitions": [
+        "party that enjoys the benefits of ownership (such as receipt of income) of something even though its ownership (title) may be in the name of another party (called a nominee or registered owner)"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "BE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/BeneficialOwner",
+      "label": "beneficial owner",
+      "maturity": "Release",
+      "module_code": "BE/OwnershipAndControl/CorporateOwnership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "parents": [
+        "_:d0fed9e2f1ccdc7ee_cb2e491438908dc8848a26440c937a0d3d9124521190132a04c43a975eaf208250e",
+        "_:db038161a8bba076b_cb33e40f4d80ad83d06705a1920ca5fe26767349cd7dfac040c4198ff76de3d8cf5",
+        "_:db038161a8bba076b_cb34e90e0f5a5a878d28d60d56ec6efeedbbe14ee342bd87cf31b42cd737a29b146",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Owner"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d0fed9e2f1ccdc7ee_cb2e491438908dc8848a26440c937a0d3d9124521190132a04c43a975eaf208250e",
+        "_:db038161a8bba076b_cb33e40f4d80ad83d06705a1920ca5fe26767349cd7dfac040c4198ff76de3d8cf5",
+        "_:db038161a8bba076b_cb34e90e0f5a5a878d28d60d56ec6efeedbbe14ee342bd87cf31b42cd737a29b146"
+      ],
+      "source_file": "BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "source_files": [
+        "BE/OwnershipAndControl/CorporateOwnership.rdf",
+        "BE/OwnershipAndControl/Executives.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "borrower_role",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "party to a credit agreement that is obligated to repay the amount borrowed (principal) with interest and other fees according to the terms of the instrument",
+      "definitions": [
+        "party to a credit agreement that is obligated to repay the amount borrowed (principal) with interest and other fees according to the terms of the instrument"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Borrower",
+      "label": "borrower",
+      "maturity": "Release",
+      "module_code": "FBC/DebtAndEquities/Debt",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "parents": [
+        "_:da8cd15d034b29d86_cb10036b6b64350d4c8992a6fcaa37e6d2384d292a7616fb23f9f48919dfd58f522",
+        "_:da8cd15d034b29d86_cb26f718d33ebdb71729f5028e3262f94cb14c4ef22e94aa6a3bf081fe067cd54a8",
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Debtor",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/ContractParty",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/ProductsAndServices/ProductsAndServices/Customer"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:da8cd15d034b29d86_cb10036b6b64350d4c8992a6fcaa37e6d2384d292a7616fb23f9f48919dfd58f522",
+        "_:da8cd15d034b29d86_cb26f718d33ebdb71729f5028e3262f94cb14c4ef22e94aa6a3bf081fe067cd54a8"
+      ],
+      "source_file": "FBC/DebtAndEquities/Debt.rdf",
+      "source_files": [
+        "FBC/DebtAndEquities/Debt.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/DebtAndEquities/Debt.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "lender_role",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "a party that extends credit or money to a borrower with the expectation of being repaid, usually with interest",
+      "definitions": [
+        "a party that extends credit or money to a borrower with the expectation of being repaid, usually with interest"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Lender",
+      "label": "lender",
+      "maturity": "Release",
+      "module_code": "FBC/DebtAndEquities/Debt",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "parents": [
+        "_:da8cd15d034b29d86_cb1099d9377a7b4aa27cea87b47984e49d3f5bb97dde5cc76b01f57f8d817c70c86",
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Creditor",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/ContractParty"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:da8cd15d034b29d86_cb1099d9377a7b4aa27cea87b47984e49d3f5bb97dde5cc76b01f57f8d817c70c86"
+      ],
+      "source_file": "FBC/DebtAndEquities/Debt.rdf",
+      "source_files": [
+        "FBC/DebtAndEquities/Debt.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/DebtAndEquities/Debt.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "guarantor_role",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "party that guarantees, endorses, or provides indemnity for some obligation on behalf of some other party",
+      "definitions": [
+        "party that guarantees, endorses, or provides indemnity for some obligation on behalf of some other party"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/Guarantor",
+      "label": "guarantor",
+      "maturity": "Release",
+      "module_code": "FBC/DebtAndEquities/Guaranty",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/",
+      "parents": [
+        "_:db9a5926f95018d5f_cb18ccf891121aab0e5764367f9bfd660e468926e68af96b680588b03ad2fdbb158",
+        "_:db9a5926f95018d5f_cb282c2dd78cd2d631bc140ea85889ded894aea80fd5e771bf8196e01a13230123f",
+        "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/ControlParties/DeJureControllingInterestParty",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/ContractThirdParty"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:db9a5926f95018d5f_cb18ccf891121aab0e5764367f9bfd660e468926e68af96b680588b03ad2fdbb158",
+        "_:db9a5926f95018d5f_cb282c2dd78cd2d631bc140ea85889ded894aea80fd5e771bf8196e01a13230123f"
+      ],
+      "source_file": "FBC/DebtAndEquities/Guaranty.rdf",
+      "source_files": [
+        "FBC/DebtAndEquities/Guaranty.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/DebtAndEquities/Guaranty.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "financial_instrument",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "written contract that gives rise to both a financial asset of one entity and a financial liability of another entity",
+      "definitions": [
+        "written contract that gives rise to both a financial asset of one entity and a financial liability of another entity"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/FinancialInstrument",
+      "label": "financial instrument",
+      "maturity": "Release",
+      "module_code": "FBC/FinancialInstruments/FinancialInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/",
+      "parents": [
+        "_:d0ab688197f7ac4e8_cb1eb207ba1c97e63b05e9caf2c5215c89a4f8d748d70454f2fb3cd53ba761fe848",
+        "_:d0ab688197f7ac4e8_cb2455a61e080ce70389667809177034deb5413acdb192c8804e43ddc4f979862f8",
+        "_:d0ab688197f7ac4e8_cb24701417d93459cc52e5d471ae7b669e922b533bc64eed50cc87198e01a71cf64",
+        "_:d0ab688197f7ac4e8_cb271fe8b906de092e307b96a8c031945f942cbdd871e6da2afb5cfa6d85d332b50",
+        "_:d0ab688197f7ac4e8_cb2879a8719cfdba1e549240c56c3ff82c0266ce11fca74ca462665c24b10f3032b",
+        "_:d0ab688197f7ac4e8_cb2b9b7dd073cf27be50ca2f026d93509a4e036f85ecf86e20de1d76fadec52874c",
+        "_:d3957374a843faf26_cb23e45ea1bf4afcc1b11e3e9a297a58d5345d0561ebe9ac7464b19715694c9005d",
+        "_:da49dbfdb012a2b7a_cb2bdde47f9efd2047ab9558e356ff530032eae485f3dbae79096c36a14fa45d70a",
+        "_:dfe365998918349cb_cb21257dcf1748779c5546a05d9488534e61d8f12a3d03cc0c60f11dca1ea481f6b",
+        "_:dfe365998918349cb_cb220f2f1cb70736dbd7ac231ad1aee3096ab440d89c90c355c2b88326ff65d509f",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/WrittenContract"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d0ab688197f7ac4e8_cb1eb207ba1c97e63b05e9caf2c5215c89a4f8d748d70454f2fb3cd53ba761fe848",
+        "_:d0ab688197f7ac4e8_cb2455a61e080ce70389667809177034deb5413acdb192c8804e43ddc4f979862f8",
+        "_:d0ab688197f7ac4e8_cb24701417d93459cc52e5d471ae7b669e922b533bc64eed50cc87198e01a71cf64",
+        "_:d0ab688197f7ac4e8_cb271fe8b906de092e307b96a8c031945f942cbdd871e6da2afb5cfa6d85d332b50",
+        "_:d0ab688197f7ac4e8_cb2879a8719cfdba1e549240c56c3ff82c0266ce11fca74ca462665c24b10f3032b",
+        "_:d0ab688197f7ac4e8_cb2b9b7dd073cf27be50ca2f026d93509a4e036f85ecf86e20de1d76fadec52874c",
+        "_:d3957374a843faf26_cb23e45ea1bf4afcc1b11e3e9a297a58d5345d0561ebe9ac7464b19715694c9005d",
+        "_:da49dbfdb012a2b7a_cb2bdde47f9efd2047ab9558e356ff530032eae485f3dbae79096c36a14fa45d70a",
+        "_:dfe365998918349cb_cb21257dcf1748779c5546a05d9488534e61d8f12a3d03cc0c60f11dca1ea481f6b",
+        "_:dfe365998918349cb_cb220f2f1cb70736dbd7ac231ad1aee3096ab440d89c90c355c2b88326ff65d509f"
+      ],
+      "source_file": "FBC/FinancialInstruments/FinancialInstruments.rdf",
+      "source_files": [
+        "FBC/FinancialInstruments/FinancialInstruments.rdf",
+        "SEC/Securities/SecuritiesClassification.rdf",
+        "SEC/Securities/SecuritiesIssuance.rdf",
+        "SEC/Securities/SecuritiesRestrictions.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/FinancialInstruments/FinancialInstruments.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "share",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "financial instrument that signifies a unit of equity ownership in a corporation, or a unit of ownership in a mutual fund, or interest in a general or limited partnership, or a unit of ownership in a structured product, such as a real estate investment trust",
+      "definitions": [
+        "financial instrument that signifies a unit of equity ownership in a corporation, or a unit of ownership in a mutual fund, or interest in a general or limited partnership, or a unit of ownership in a structured product, such as a real estate investment trust"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "SEC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/Share",
+      "label": "share",
+      "maturity": "Release",
+      "module_code": "SEC/Equities/EquityInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "parents": [
+        "_:dfb7d806f46d5b54d_cb205dd15a8b2fa7a6e9fbf55f18b01956657b8b9cdd488a704801a856bb4733913",
+        "_:dfb7d806f46d5b54d_cb21dcb0ba83d7ceddf3b0dfac8c5ddfaf3d2c9ab265cb842debec18f8c9223b948",
+        "_:dfb7d806f46d5b54d_cb290bb8e4cddb826a53e40500a4c54f83de6f2731a0719353f5fb76d93e17fc520",
+        "_:dfb7d806f46d5b54d_cb2b6f1d5de43fd10f41e4aec9c1f21fc27d2ccc0f23dbcb13cf3ad90d29a9ef868",
+        "_:dfb7d806f46d5b54d_cb2d0543a9d4810320e45dd9059a49147a9534cdcc1509caa9a0c9e06b690d621d6",
+        "_:dfb7d806f46d5b54d_cb2d45c1024c6f660cffe854fa01ae3b9c1b60d76a31d6e9598982aa1c1afe5c7a6",
+        "_:dfb7d806f46d5b54d_cb2dd33f19fe675817b259e8c76c97c04ce5eb3aadf2c5bf71596a6ad7135adf08a",
+        "_:dfb7d806f46d5b54d_cb2e212250460583ef920d08902442d95b3fc7f7edd4526c2e08a206ab62e155570",
+        "_:dfb7d806f46d5b54d_cb2e3072c606f2cdefee6790301bec3b16cc989508ca624ef4a571cd163554ed7b6",
+        "_:dfb7d806f46d5b54d_cb2e4bdf4234d110b7b93ac8fefe8acb048216caa1f650f6387e0bede0b7e9b8cec",
+        "_:dfb7d806f46d5b54d_cb34bfb7477fc9daf68656e71bae8a6774bc47b28bfcda0ee352bff98d605b1482d",
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/EquityInstrument"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:dfb7d806f46d5b54d_cb205dd15a8b2fa7a6e9fbf55f18b01956657b8b9cdd488a704801a856bb4733913",
+        "_:dfb7d806f46d5b54d_cb21dcb0ba83d7ceddf3b0dfac8c5ddfaf3d2c9ab265cb842debec18f8c9223b948",
+        "_:dfb7d806f46d5b54d_cb290bb8e4cddb826a53e40500a4c54f83de6f2731a0719353f5fb76d93e17fc520",
+        "_:dfb7d806f46d5b54d_cb2b6f1d5de43fd10f41e4aec9c1f21fc27d2ccc0f23dbcb13cf3ad90d29a9ef868",
+        "_:dfb7d806f46d5b54d_cb2d0543a9d4810320e45dd9059a49147a9534cdcc1509caa9a0c9e06b690d621d6",
+        "_:dfb7d806f46d5b54d_cb2d45c1024c6f660cffe854fa01ae3b9c1b60d76a31d6e9598982aa1c1afe5c7a6",
+        "_:dfb7d806f46d5b54d_cb2dd33f19fe675817b259e8c76c97c04ce5eb3aadf2c5bf71596a6ad7135adf08a",
+        "_:dfb7d806f46d5b54d_cb2e212250460583ef920d08902442d95b3fc7f7edd4526c2e08a206ab62e155570",
+        "_:dfb7d806f46d5b54d_cb2e3072c606f2cdefee6790301bec3b16cc989508ca624ef4a571cd163554ed7b6",
+        "_:dfb7d806f46d5b54d_cb2e4bdf4234d110b7b93ac8fefe8acb048216caa1f650f6387e0bede0b7e9b8cec",
+        "_:dfb7d806f46d5b54d_cb34bfb7477fc9daf68656e71bae8a6774bc47b28bfcda0ee352bff98d605b1482d"
+      ],
+      "source_file": "SEC/Equities/EquityInstruments.rdf",
+      "source_files": [
+        "SEC/Equities/EquityInstruments.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/SEC/Equities/EquityInstruments.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "common_share",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "share that signifies a unit of ownership in a corporation and represents a claim on part of the corporation's assets and earnings",
+      "definitions": [
+        "share that signifies a unit of ownership in a corporation and represents a claim on part of the corporation's assets and earnings"
+      ],
+      "deprecated": false,
+      "disjoint": [
+        "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/PreferredShare"
+      ],
+      "domain": [],
+      "domain_code": "SEC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/CommonShare",
+      "label": "common share",
+      "maturity": "Release",
+      "module_code": "SEC/Equities/EquityInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "parents": [
+        "_:dfb7d806f46d5b54d_cb363f78a7bf521a48425a3ede516890767444d8d40d783fd336a21d75f7a547164",
+        "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/Share"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:dfb7d806f46d5b54d_cb363f78a7bf521a48425a3ede516890767444d8d40d783fd336a21d75f7a547164"
+      ],
+      "source_file": "SEC/Equities/EquityInstruments.rdf",
+      "source_files": [
+        "SEC/Equities/EquityInstruments.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/SEC/Equities/EquityInstruments.rdf",
+      "synonyms": [
+        "ordinary share"
+      ],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "preferred_share",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "share that pays dividends at a specified rate and has preference over common shares in the payment of dividends and liquidation of corporate assets",
+      "definitions": [
+        "share that pays dividends at a specified rate and has preference over common shares in the payment of dividends and liquidation of corporate assets"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "SEC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/PreferredShare",
+      "label": "preferred share",
+      "maturity": "Release",
+      "module_code": "SEC/Equities/EquityInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "parents": [
+        "_:dfb7d806f46d5b54d_cb19740b6e37f3e700d91cc0949f981b194266f3f2902fa6395baa6b66dc346f52a",
+        "_:dfb7d806f46d5b54d_cb1ec1c437e2bc17e0dbc44c0c5d0f1d12bd2520a2380da49add85cf2b7b326cf8e",
+        "_:dfb7d806f46d5b54d_cb2d25d5c4f067107effc21e44a720a09d852d96943036b9c07ecb87a01edf4e059",
+        "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/Share"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:dfb7d806f46d5b54d_cb19740b6e37f3e700d91cc0949f981b194266f3f2902fa6395baa6b66dc346f52a",
+        "_:dfb7d806f46d5b54d_cb1ec1c437e2bc17e0dbc44c0c5d0f1d12bd2520a2380da49add85cf2b7b326cf8e",
+        "_:dfb7d806f46d5b54d_cb2d25d5c4f067107effc21e44a720a09d852d96943036b9c07ecb87a01edf4e059"
+      ],
+      "source_file": "SEC/Equities/EquityInstruments.rdf",
+      "source_files": [
+        "SEC/Equities/EquityInstruments.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/SEC/Equities/EquityInstruments.rdf",
+      "synonyms": [
+        "preference share"
+      ],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "bond",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "tradable debt instrument representing a loan in which the issuer owes the holder(s) a debt",
+      "definitions": [
+        "tradable debt instrument representing a loan in which the issuer owes the holder(s) a debt"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "SEC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/Bond",
+      "label": "bond",
+      "maturity": "Release",
+      "module_code": "SEC/Debt/Bonds",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/",
+      "parents": [
+        "_:dacce10d6084349de_cb2a72bad9667d04a7d1040ae275c880d8a924ce5e417e0e19f85dae6174d284c6c",
+        "_:dacce10d6084349de_cb3378cc9744d1488de7385d073353e3692a1ee0bbfafc073124f9606fbdb13aedf",
+        "_:dacce10d6084349de_cb353fe64a96400a3845789b76d84fbd6055ec6118b9c081a6b887d0cad3c3f4947",
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/CreditAgreementRepaidAtMaturity",
+        "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/DebtInstruments/TradableDebtInstrument"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:dacce10d6084349de_cb2a72bad9667d04a7d1040ae275c880d8a924ce5e417e0e19f85dae6174d284c6c",
+        "_:dacce10d6084349de_cb3378cc9744d1488de7385d073353e3692a1ee0bbfafc073124f9606fbdb13aedf",
+        "_:dacce10d6084349de_cb353fe64a96400a3845789b76d84fbd6055ec6118b9c081a6b887d0cad3c3f4947"
+      ],
+      "source_file": "SEC/Debt/Bonds.rdf",
+      "source_files": [
+        "SEC/Debt/Bonds.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/SEC/Debt/Bonds.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "loan",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "debt instrument whereby one party extends money or credit to another party (or parties) with the understanding that the borrowed money will be repaid according to the terms of the contract",
+      "definitions": [
+        "debt instrument whereby one party extends money or credit to another party (or parties) with the understanding that the borrowed money will be repaid according to the terms of the contract"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "LOAN",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/Loan",
+      "label": "loan",
+      "maturity": "Release",
+      "module_code": "LOAN/LoansGeneral/Loans",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/",
+      "parents": [
+        "_:dcfafe6e93a0ee77e_cb167020fddb8b04e56c87c54b1879227e4b69b79b10f06f25b204929914bb8fc48",
+        "_:dcfafe6e93a0ee77e_cb16d6e9db81c204ceeebdfdf6c84da983d8ada613c6b6de5d10e355c4102f10e36",
+        "_:dcfafe6e93a0ee77e_cb189567d05b8036d227ea960458742f43d31211ec17ee8f9fc80bdc57993397194",
+        "_:dcfafe6e93a0ee77e_cb1933c54402ba447720e7bedc50c52f0af4354b08a885737162dab2e2ed220c32b",
+        "_:dcfafe6e93a0ee77e_cb1ae4b0c3fd943789c96f63ecdb5d336e08ce62f7b937271c13e8e30e8dbbc117b",
+        "_:dcfafe6e93a0ee77e_cb1b6be3a3aa593790c5485b464c6fa15b89614776a4ebc5ad5d32ea1836b4c057c",
+        "_:dcfafe6e93a0ee77e_cb1e6e15197c58d2187eceed0051794d2799db65b36f402bb07016636bede5f02fd",
+        "_:dcfafe6e93a0ee77e_cb222a1417fff6708e41fb01d84ad23043f31b60436579f256135cc74024c1de33f",
+        "_:dcfafe6e93a0ee77e_cb23ae4baf776b8e7e8b3cb1a3d7753746769de7c47cc5e1e065331e77352863144",
+        "_:dcfafe6e93a0ee77e_cb25eae4110e99ed1626709f0e081f027224157c10c74989cb00a398d1377ab0898",
+        "_:dcfafe6e93a0ee77e_cb27718bffc4ca7a8112a0b3c56613b8110dccd15004598ca9ed3b2a2b2c808f055",
+        "_:dd9153a7883120a3a_cb15bd9865af6c739569caaadc255b870ecf4dec4c2f304d3fe8aae1112497797e0",
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/CreditAgreementRepaidPeriodically",
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/DebtInstrument"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:dcfafe6e93a0ee77e_cb167020fddb8b04e56c87c54b1879227e4b69b79b10f06f25b204929914bb8fc48",
+        "_:dcfafe6e93a0ee77e_cb16d6e9db81c204ceeebdfdf6c84da983d8ada613c6b6de5d10e355c4102f10e36",
+        "_:dcfafe6e93a0ee77e_cb189567d05b8036d227ea960458742f43d31211ec17ee8f9fc80bdc57993397194",
+        "_:dcfafe6e93a0ee77e_cb1933c54402ba447720e7bedc50c52f0af4354b08a885737162dab2e2ed220c32b",
+        "_:dcfafe6e93a0ee77e_cb1ae4b0c3fd943789c96f63ecdb5d336e08ce62f7b937271c13e8e30e8dbbc117b",
+        "_:dcfafe6e93a0ee77e_cb1b6be3a3aa593790c5485b464c6fa15b89614776a4ebc5ad5d32ea1836b4c057c",
+        "_:dcfafe6e93a0ee77e_cb1e6e15197c58d2187eceed0051794d2799db65b36f402bb07016636bede5f02fd",
+        "_:dcfafe6e93a0ee77e_cb222a1417fff6708e41fb01d84ad23043f31b60436579f256135cc74024c1de33f",
+        "_:dcfafe6e93a0ee77e_cb23ae4baf776b8e7e8b3cb1a3d7753746769de7c47cc5e1e065331e77352863144",
+        "_:dcfafe6e93a0ee77e_cb25eae4110e99ed1626709f0e081f027224157c10c74989cb00a398d1377ab0898",
+        "_:dcfafe6e93a0ee77e_cb27718bffc4ca7a8112a0b3c56613b8110dccd15004598ca9ed3b2a2b2c808f055",
+        "_:dd9153a7883120a3a_cb15bd9865af6c739569caaadc255b870ecf4dec4c2f304d3fe8aae1112497797e0"
+      ],
+      "source_file": "LOAN/LoansGeneral/Loans.rdf",
+      "source_files": [
+        "LOAN/LoansGeneral/Loans.rdf",
+        "LOAN/LoansSpecific/LoanProducts.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/LOAN/LoansGeneral/Loans.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "portfolio",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "collection of holdings assembled and maintained as a unit for management purposes to achieve strategic objectives",
+      "definitions": [
+        "collection of holdings assembled and maintained as a unit for management purposes to achieve strategic objectives"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Portfolio",
+      "label": "portfolio",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Ownership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "parents": [
+        "_:d62f8914dcbd94ea2_cb1790038ab607c7ed87f0c1fa4e5bbe0d29ff9e6eb1f695f6d1413940df0dc3615",
+        "_:d62f8914dcbd94ea2_cb18e504400a5b7cfbb2d6fb45db7f99efbbdb2937e92087f40ebf9f4bf65f1aa08",
+        "_:df885a821a9ba4600_cb38c02f0fd00cf1dc1121d2d23388ad8026920fd897a01f9465afd190d0bc55e3b",
+        "_:df885a821a9ba4600_cb3960427b7bf055a707b4837b92dceb1afadf04f7a87ba60ebf5bda4f2c0c32f3d",
+        "https://www.omg.org/spec/Commons/Collections/Collection"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d62f8914dcbd94ea2_cb1790038ab607c7ed87f0c1fa4e5bbe0d29ff9e6eb1f695f6d1413940df0dc3615",
+        "_:d62f8914dcbd94ea2_cb18e504400a5b7cfbb2d6fb45db7f99efbbdb2937e92087f40ebf9f4bf65f1aa08",
+        "_:df885a821a9ba4600_cb38c02f0fd00cf1dc1121d2d23388ad8026920fd897a01f9465afd190d0bc55e3b",
+        "_:df885a821a9ba4600_cb3960427b7bf055a707b4837b92dceb1afadf04f7a87ba60ebf5bda4f2c0c32f3d"
+      ],
+      "source_file": "FND/OwnershipAndControl/Ownership.rdf",
+      "source_files": [
+        "FBC/ProductsAndServices/FinancialProductsAndServices.rdf",
+        "FND/OwnershipAndControl/Ownership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Ownership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "holding",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "owned financial interest consisting of legal or beneficial ownership of an asset or security that confers economic rights on its owner",
+      "definitions": [
+        "owned financial interest consisting of legal or beneficial ownership of an asset or security that confers economic rights on its owner"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Holding",
+      "label": "holding",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Ownership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "parents": [
+        "_:d62f8914dcbd94ea2_cb283308b68b15fcd679500b83e253e7bc7f603d8b0261fa3b663197bc59feb8516",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Asset"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d62f8914dcbd94ea2_cb283308b68b15fcd679500b83e253e7bc7f603d8b0261fa3b663197bc59feb8516"
+      ],
+      "source_file": "FND/OwnershipAndControl/Ownership.rdf",
+      "source_files": [
+        "FND/OwnershipAndControl/Ownership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Ownership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "shareholding",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "ownership interest in the equity of a company, represented by shares that confer financial rights and governance privileges",
+      "definitions": [
+        "ownership interest in the equity of a company, represented by shares that confer financial rights and governance privileges"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "BE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholding",
+      "label": "shareholding",
+      "maturity": "Release",
+      "module_code": "BE/OwnershipAndControl/CorporateOwnership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "parents": [
+        "_:db038161a8bba076b_cb27e7a328c0b7862c04f05398c3b2c0f9a8e572860575084e9ae93755c3f13f716",
+        "_:dfb7d806f46d5b54d_cb1ff72f10370081f5fa24cc262a5d1e6b4346294d7cd6c225446f13ed0c95fff21",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/FinancialAsset"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:db038161a8bba076b_cb27e7a328c0b7862c04f05398c3b2c0f9a8e572860575084e9ae93755c3f13f716",
+        "_:dfb7d806f46d5b54d_cb1ff72f10370081f5fa24cc262a5d1e6b4346294d7cd6c225446f13ed0c95fff21"
+      ],
+      "source_file": "BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "source_files": [
+        "BE/OwnershipAndControl/CorporateOwnership.rdf",
+        "SEC/Equities/EquityInstruments.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "ownership_context",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "situation in which some party holds the legal title to something (explicitly or implicitly) and has the right to transfer that title and/or possession",
+      "definitions": [
+        "situation in which some party holds the legal title to something (explicitly or implicitly) and has the right to transfer that title and/or possession"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Ownership",
+      "label": "ownership",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Ownership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "parents": [
+        "_:d62f8914dcbd94ea2_cb15922f302b1a1336a53523a3bacc31658619c3f018460690f64310a4364e465ca",
+        "_:d62f8914dcbd94ea2_cb1ba0eafff4e5accdc86b883f266b2c526426f290effeb7cfbb2155fff6e9b0ede",
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/Situation"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:d62f8914dcbd94ea2_cb15922f302b1a1336a53523a3bacc31658619c3f018460690f64310a4364e465ca",
+        "_:d62f8914dcbd94ea2_cb1ba0eafff4e5accdc86b883f266b2c526426f290effeb7cfbb2155fff6e9b0ede"
+      ],
+      "source_file": "FND/OwnershipAndControl/Ownership.rdf",
+      "source_files": [
+        "FND/OwnershipAndControl/Ownership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Ownership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "beneficial_ownership_context",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "situation linking party that enjoys the benefits of ownership (such as receipt of income) of something even though its ownership (title) may be in the name of another party (called a nominee or registered owner) to the asset that they own",
+      "definitions": [
+        "situation linking party that enjoys the benefits of ownership (such as receipt of income) of something even though its ownership (title) may be in the name of another party (called a nominee or registered owner) to the asset that they own"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "BE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/BeneficialOwnership",
+      "label": "beneficial ownership",
+      "maturity": "Release",
+      "module_code": "BE/OwnershipAndControl/CorporateOwnership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "parents": [
+        "_:db038161a8bba076b_cb15edc2b69298d8935793e9fcb0d43c19184e2c1695d49a2afdedb84309cbadd87",
+        "_:db038161a8bba076b_cb198d6764b750bec40573603358e6fdfcdb461e0eb15167bc423b313252c9a0e74",
+        "_:db038161a8bba076b_cbf8552c0a54bfc705d5ef335d73fce94b3a72709e97f45f9403c23729ca8d6a56",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Ownership"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:db038161a8bba076b_cb15edc2b69298d8935793e9fcb0d43c19184e2c1695d49a2afdedb84309cbadd87",
+        "_:db038161a8bba076b_cb198d6764b750bec40573603358e6fdfcdb461e0eb15167bc423b313252c9a0e74",
+        "_:db038161a8bba076b_cbf8552c0a54bfc705d5ef335d73fce94b3a72709e97f45f9403c23729ca8d6a56"
+      ],
+      "source_file": "BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "source_files": [
+        "BE/OwnershipAndControl/CorporateOwnership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "control_context",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "situation in which some party has the power to direct or strongly influence the direction of the management and policies related to something",
+      "definitions": [
+        "situation in which some party has the power to direct or strongly influence the direction of the management and policies related to something"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/Control",
+      "label": "control",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Control",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/",
+      "parents": [
+        "_:da760fa7c9e75e38d_cb162a1f2d887c7f679c453639f3a7f1a58a86b74345c50f4e5e8ff582fcb3f54a2",
+        "_:da760fa7c9e75e38d_cb1c7338619db92d1de225e75fbfc2975787af8e85a4f0fa2d030005bfaecaec57b",
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/Situation"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:da760fa7c9e75e38d_cb162a1f2d887c7f679c453639f3a7f1a58a86b74345c50f4e5e8ff582fcb3f54a2",
+        "_:da760fa7c9e75e38d_cb1c7338619db92d1de225e75fbfc2975787af8e85a4f0fa2d030005bfaecaec57b"
+      ],
+      "source_file": "FND/OwnershipAndControl/Control.rdf",
+      "source_files": [
+        "FND/OwnershipAndControl/Control.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Control.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "corporate_action",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "action carried out by or specifically relating to a legal entity that may affect the securities it issues and may have a material impact on its stakeholders, such as shareholders and creditors",
+      "definitions": [
+        "action carried out by or specifically relating to a legal entity that may affect the securities it issues and may have a material impact on its stakeholders, such as shareholders and creditors"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "CAE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActions/CorporateAction",
+      "label": "corporate action",
+      "maturity": "Release",
+      "module_code": "CAE/CorporateEvents/CorporateActions",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActions/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActions/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActions/Action"
+      ],
+      "range": [],
+      "restrictions": [],
+      "source_file": "CAE/CorporateEvents/CorporateActions.rdf",
+      "source_files": [
+        "CAE/CorporateEvents/CorporateActions.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/CAE/CorporateEvents/CorporateActions.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "cash_dividend_action",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "corporate action that distributes cash to shareholders in proportion to their equity holding",
+      "definitions": [
+        "corporate action that distributes cash to shareholders in proportion to their equity holding"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "CAE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/CashDividendAction",
+      "label": "cash dividend action",
+      "maturity": "Provisional",
+      "module_code": "CAE/CorporateEvents/SecurityRelatedCorporateActions",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActions/MandatoryCorporateAction"
+      ],
+      "range": [],
+      "restrictions": [],
+      "source_file": "CAE/CorporateEvents/SecurityRelatedCorporateActions.rdf",
+      "source_files": [
+        "CAE/CorporateEvents/SecurityRelatedCorporateActions.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/CAE/CorporateEvents/SecurityRelatedCorporateActions.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "stock_split",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "corporate action involving an increase in a corporation's number of outstanding equities without any change in the shareholder's equity or the aggregate market value at the time of the split",
+      "definitions": [
+        "corporate action involving an increase in a corporation's number of outstanding equities without any change in the shareholder's equity or the aggregate market value at the time of the split"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "CAE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/StockSplit",
+      "label": "stock split",
+      "maturity": "Provisional",
+      "module_code": "CAE/CorporateEvents/SecurityRelatedCorporateActions",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/",
+      "parents": [
+        "_:db03c0126b1e975fc_cb167129edfb280d412e7212731541b54b409ce597ebd712d68a28ff3ae2736866c",
+        "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActions/MandatoryCorporateAction"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:db03c0126b1e975fc_cb167129edfb280d412e7212731541b54b409ce597ebd712d68a28ff3ae2736866c"
+      ],
+      "source_file": "CAE/CorporateEvents/SecurityRelatedCorporateActions.rdf",
+      "source_files": [
+        "CAE/CorporateEvents/SecurityRelatedCorporateActions.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/CAE/CorporateEvents/SecurityRelatedCorporateActions.rdf",
+      "synonyms": [
+        "change in nominal value",
+        "subdivision"
+      ],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "currency",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "medium of exchange value, defined by reference to the geographical location of the monetary authorities responsible for it",
+      "definitions": [
+        "medium of exchange value, defined by reference to the geographical location of the monetary authorities responsible for it"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/Currency",
+      "label": "currency",
+      "maturity": "Release",
+      "module_code": "FND/Accounting/CurrencyAmount",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/",
+      "parents": [
+        "_:de20cfcb84b6069f8_cb19ac14c96d3cad428fd9a04ba444ca1263a0a13c6547c8b9f247f582a21fff9e6",
+        "_:de20cfcb84b6069f8_cb1b5a6bfb9ac20d38f755233e24cfeeaa026bd364fbce87d692b16afead0f67436",
+        "_:de20cfcb84b6069f8_cb2475f742ad412853f8edb27b8ca366672be9dde41fa3ccd85a3127c44e1e88d76",
+        "_:de20cfcb84b6069f8_cb346109e5891a5e8be217d2cdf2b062e88156f04ca954713b10d0fd3e879b990b6",
+        "https://www.omg.org/spec/Commons/QuantitiesAndUnits/MeasurementUnit"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:de20cfcb84b6069f8_cb19ac14c96d3cad428fd9a04ba444ca1263a0a13c6547c8b9f247f582a21fff9e6",
+        "_:de20cfcb84b6069f8_cb1b5a6bfb9ac20d38f755233e24cfeeaa026bd364fbce87d692b16afead0f67436",
+        "_:de20cfcb84b6069f8_cb2475f742ad412853f8edb27b8ca366672be9dde41fa3ccd85a3127c44e1e88d76",
+        "_:de20cfcb84b6069f8_cb346109e5891a5e8be217d2cdf2b062e88156f04ca954713b10d0fd3e879b990b6"
+      ],
+      "source_file": "FND/Accounting/CurrencyAmount.rdf",
+      "source_files": [
+        "FND/Accounting/CurrencyAmount.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/Accounting/CurrencyAmount.rdf",
+      "synonyms": [
+        "currency unit",
+        "monetary unit"
+      ],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "monetary_amount",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "measure that is an amount of money specified in monetary units",
+      "definitions": [
+        "measure that is an amount of money specified in monetary units"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/MonetaryAmount",
+      "label": "monetary amount",
+      "maturity": "Release",
+      "module_code": "FND/Accounting/CurrencyAmount",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/",
+      "parents": [
+        "_:de20cfcb84b6069f8_cb21b85be17759f82b2e2dbaf94510e47e9cf44c705ebd2b571c73685da26353f94",
+        "_:de20cfcb84b6069f8_cb24ec07f12099c326138385c3a7eaff4f2cd3cd14c23ac82e0b2c9834e89b8a8d8",
+        "https://www.omg.org/spec/Commons/QuantitiesAndUnits/ScalarQuantityValue"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:de20cfcb84b6069f8_cb21b85be17759f82b2e2dbaf94510e47e9cf44c705ebd2b571c73685da26353f94",
+        "_:de20cfcb84b6069f8_cb24ec07f12099c326138385c3a7eaff4f2cd3cd14c23ac82e0b2c9834e89b8a8d8"
+      ],
+      "source_file": "FND/Accounting/CurrencyAmount.rdf",
+      "source_files": [
+        "FND/Accounting/CurrencyAmount.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/Accounting/CurrencyAmount.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "contract",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "voluntary, deliberate agreement between competent parties to which the parties agree to be legally bound, and for which the parties provide valuable consideration",
+      "definitions": [
+        "voluntary, deliberate agreement between competent parties to which the parties agree to be legally bound, and for which the parties provide valuable consideration"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/Contract",
+      "label": "contract",
+      "maturity": "Release",
+      "module_code": "FND/Agreements/Contracts",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/",
+      "parents": [
+        "_:da15b4b712c1cf30a_cb17272cd9281892441fce18d7f774a8b2aeaf9bacac53ffb29e37158b5ba0f97cd",
+        "_:da15b4b712c1cf30a_cb1ea6c5905d30afa2503028550b846c010958abbf680a4f0516e1cead7b5979e07",
+        "_:da15b4b712c1cf30a_cb22df1556750bb106d11d8ce282a31187d5bc2d4243fbc6a9a127997c8539291bd",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Agreements/Agreement"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:da15b4b712c1cf30a_cb17272cd9281892441fce18d7f774a8b2aeaf9bacac53ffb29e37158b5ba0f97cd",
+        "_:da15b4b712c1cf30a_cb1ea6c5905d30afa2503028550b846c010958abbf680a4f0516e1cead7b5979e07",
+        "_:da15b4b712c1cf30a_cb22df1556750bb106d11d8ce282a31187d5bc2d4243fbc6a9a127997c8539291bd"
+      ],
+      "source_file": "FND/Agreements/Contracts.rdf",
+      "source_files": [
+        "FND/Agreements/Contracts.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/Agreements/Contracts.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    },
+    {
+      "demo_concept": "swap",
+      "kind": "classes",
+      "characteristics": [],
+      "definition": "derivative instrument whereby counterparties agree to exchange periodic streams of cash flows or liabilities from two different financial instruments with each other",
+      "definitions": [
+        "derivative instrument whereby counterparties agree to exchange periodic streams of cash flows or liabilities from two different financial instruments with each other"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "DER",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/Swap",
+      "label": "swap",
+      "maturity": "Release",
+      "module_code": "DER/DerivativesContracts/Swaps",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/DER/DerivativesContracts/Swaps/",
+      "parents": [
+        "_:da64a6eab6fc4db6d_cb21c8b01e0e82c4b54415a9f2243a33debc617c3b00448bba5a49a936cf39d4982",
+        "_:da64a6eab6fc4db6d_cb220a9d95b7fe95756d51d3b13a0fedf0031091fba85b6ceae2e73c15b59e45a7c",
+        "_:da64a6eab6fc4db6d_cb25dd970e89caeea8d7556193d85a31c015cf81c842ab1552b23d4fd6fb5367e7d",
+        "_:da64a6eab6fc4db6d_cb2e09af79c1c8eba0eca68f9d3edb8a393bfe594735feca3f0e34b519b38e1ba65",
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/DerivativeInstrument"
+      ],
+      "range": [],
+      "restrictions": [
+        "_:da64a6eab6fc4db6d_cb21c8b01e0e82c4b54415a9f2243a33debc617c3b00448bba5a49a936cf39d4982",
+        "_:da64a6eab6fc4db6d_cb220a9d95b7fe95756d51d3b13a0fedf0031091fba85b6ceae2e73c15b59e45a7c",
+        "_:da64a6eab6fc4db6d_cb25dd970e89caeea8d7556193d85a31c015cf81c842ab1552b23d4fd6fb5367e7d",
+        "_:da64a6eab6fc4db6d_cb2e09af79c1c8eba0eca68f9d3edb8a393bfe594735feca3f0e34b519b38e1ba65"
+      ],
+      "source_file": "DER/DerivativesContracts/Swaps.rdf",
+      "source_files": [
+        "DER/DerivativesContracts/Swaps.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/DER/DerivativesContracts/Swaps.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#Class"
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "demo_relation": "role_played_by_party",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates something or someone, such as a person, organization, or other thing filling a role",
+      "definitions": [
+        "indicates something or someone, such as a person, organization, or other thing filling a role"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://www.omg.org/spec/Commons/RolesAndCompositions/Role"
+      ],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [
+        "https://www.omg.org/spec/Commons/RolesAndCompositions/playsRole"
+      ],
+      "iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/isPlayedBy",
+      "label": "is played by",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/RolesAndCompositions",
+      "module_iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/",
+      "namespace": "https://www.omg.org/spec/Commons/RolesAndCompositions/",
+      "parents": [],
+      "range": [],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/RolesAndCompositions.rdf",
+      "source_files": [
+        "dependencies/Commons/RolesAndCompositions.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/RolesAndCompositions.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "role_in_context",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "identifies something, such as a composition, situation, or contract, involving the role",
+      "definitions": [
+        "identifies something, such as a composition, situation, or contract, involving the role"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://www.omg.org/spec/Commons/RolesAndCompositions/Role"
+      ],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [
+        "https://www.omg.org/spec/Commons/RolesAndCompositions/hasRole"
+      ],
+      "iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/isRoleIn",
+      "label": "is role in",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/RolesAndCompositions",
+      "module_iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/",
+      "namespace": "https://www.omg.org/spec/Commons/RolesAndCompositions/",
+      "parents": [],
+      "range": [],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/RolesAndCompositions.rdf",
+      "source_files": [
+        "dependencies/Commons/RolesAndCompositions.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/RolesAndCompositions.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "party_plays_role",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates a part that someone or something plays under some circumstance",
+      "definitions": [
+        "indicates a part that someone or something plays under some circumstance"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/playsRole",
+      "label": "plays role",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/RolesAndCompositions",
+      "module_iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/",
+      "namespace": "https://www.omg.org/spec/Commons/RolesAndCompositions/",
+      "parents": [],
+      "range": [
+        "https://www.omg.org/spec/Commons/RolesAndCompositions/Role"
+      ],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/RolesAndCompositions.rdf",
+      "source_files": [
+        "dependencies/Commons/RolesAndCompositions.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/RolesAndCompositions.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "loan_has_borrower_role",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "relates a contract, such as a debt instrument or credit agreement, to one or more parties that are incurring the debt",
+      "definitions": [
+        "relates a contract, such as a debt instrument or credit agreement, to one or more parties that are incurring the debt"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasBorrower",
+      "label": "has borrower",
+      "maturity": "Release",
+      "module_code": "FBC/DebtAndEquities/Debt",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/hasContractParty"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Borrower"
+      ],
+      "restrictions": [],
+      "source_file": "FBC/DebtAndEquities/Debt.rdf",
+      "source_files": [
+        "FBC/DebtAndEquities/Debt.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/DebtAndEquities/Debt.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "loan_has_lender_role",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "relates a contract, such as a debt instrument or credit agreement, to one or more parties that are financing the debt",
+      "definitions": [
+        "relates a contract, such as a debt instrument or credit agreement, to one or more parties that are financing the debt"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasLender",
+      "label": "has lender",
+      "maturity": "Release",
+      "module_code": "FBC/DebtAndEquities/Debt",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/hasContractParty"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Lender"
+      ],
+      "restrictions": [],
+      "source_file": "FBC/DebtAndEquities/Debt.rdf",
+      "source_files": [
+        "FBC/DebtAndEquities/Debt.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/DebtAndEquities/Debt.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "issuer_has_shareholder_role",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates a party that holds shares in the issuer",
+      "definitions": [
+        "indicates a party that holds shares in the issuer"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/Issuer"
+      ],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/hasShareholder",
+      "label": "has shareholder",
+      "maturity": "Release",
+      "module_code": "FBC/FinancialInstruments/FinancialInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/isAffectedBy"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder"
+      ],
+      "restrictions": [],
+      "source_file": "FBC/FinancialInstruments/FinancialInstruments.rdf",
+      "source_files": [
+        "FBC/FinancialInstruments/FinancialInstruments.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/FinancialInstruments/FinancialInstruments.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "shareholder_holds_shares_in_issuer_role",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "specifies the issuer in which a shareholder holds an equity position",
+      "definitions": [
+        "specifies the issuer in which a shareholder holds an equity position"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder"
+      ],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/hasShareholder"
+      ],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/holdsSharesIn",
+      "label": "holds shares in",
+      "maturity": "Release",
+      "module_code": "FBC/FinancialInstruments/FinancialInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/actsOn"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/Issuer"
+      ],
+      "restrictions": [],
+      "source_file": "FBC/FinancialInstruments/FinancialInstruments.rdf",
+      "source_files": [
+        "FBC/FinancialInstruments/FinancialInstruments.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/FinancialInstruments/FinancialInstruments.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "financial_instrument_issued_by",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates a functional entity or party responsible for circulating, distributing, or publishing something",
+      "definitions": [
+        "indicates a functional entity or party responsible for circulating, distributing, or publishing something"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/isIssuedBy",
+      "label": "is issued by",
+      "maturity": "Release",
+      "module_code": "FND/Relations/Relations",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/Organizations/isProvidedBy"
+      ],
+      "range": [],
+      "restrictions": [],
+      "source_file": "FND/Relations/Relations.rdf",
+      "source_files": [
+        "FND/Relations/Relations.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/Relations/Relations.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "ownership_has_owner_role",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "identifies the actor that holds title to the asset in an ownership situation",
+      "definitions": [
+        "identifies the actor that holds title to the asset in an ownership situation"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Ownership"
+      ],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/isOwningParty"
+      ],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/hasOwningParty",
+      "label": "has owning party",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Ownership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/hasActor"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Owner"
+      ],
+      "restrictions": [],
+      "source_file": "FND/OwnershipAndControl/Ownership.rdf",
+      "source_files": [
+        "FND/OwnershipAndControl/Ownership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Ownership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "ownership_has_owned_asset",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates the asset in an ownership situation",
+      "definitions": [
+        "indicates the asset in an ownership situation"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Ownership"
+      ],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/isOwnedAsset"
+      ],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/hasOwnedAsset",
+      "label": "has owned asset",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Ownership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/hasUndergoer"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Asset"
+      ],
+      "restrictions": [],
+      "source_file": "FND/OwnershipAndControl/Ownership.rdf",
+      "source_files": [
+        "FND/OwnershipAndControl/Ownership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Ownership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "party_owns",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates something that a party holds title to and may possess",
+      "definitions": [
+        "indicates something that a party holds title to and may possess"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/Party"
+      ],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/owns",
+      "label": "owns",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Ownership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/playsActiveRoleThatDirectlyAffects"
+      ],
+      "range": [],
+      "restrictions": [],
+      "source_file": "FND/OwnershipAndControl/Ownership.rdf",
+      "source_files": [
+        "FND/OwnershipAndControl/Ownership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Ownership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "asset_has_beneficial_owner_role",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates the party that retains rights in the asset they own in a beneficial ownership situation",
+      "definitions": [
+        "indicates the party that retains rights in the asset they own in a beneficial ownership situation"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Asset"
+      ],
+      "domain_code": "BE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/hasBeneficialOwner",
+      "label": "has beneficial owner",
+      "maturity": "Release",
+      "module_code": "BE/OwnershipAndControl/CorporateOwnership",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/isAssetOf"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/BeneficialOwner"
+      ],
+      "restrictions": [],
+      "source_file": "BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "source_files": [
+        "BE/OwnershipAndControl/CorporateOwnership.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/BE/OwnershipAndControl/CorporateOwnership.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "control_has_controlling_party",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates the actor in the context of a control situation",
+      "definitions": [
+        "indicates the actor in the context of a control situation"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/Control"
+      ],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/hasPartyInControl",
+      "label": "has party in control",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Control",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/hasActor"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/ControllingParty"
+      ],
+      "restrictions": [],
+      "source_file": "FND/OwnershipAndControl/Control.rdf",
+      "source_files": [
+        "FND/OwnershipAndControl/Control.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Control.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "control_involves_controlled_thing",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates something controlled in the context of a control situation",
+      "definitions": [
+        "indicates something controlled in the context of a control situation"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/Control"
+      ],
+      "domain_code": "FND",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/involvesControlledThing",
+      "label": "involves controlled thing",
+      "maturity": "Release",
+      "module_code": "FND/OwnershipAndControl/Control",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/PartiesAndSituations/hasUndergoer"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Control/ControlledThing"
+      ],
+      "restrictions": [],
+      "source_file": "FND/OwnershipAndControl/Control.rdf",
+      "source_files": [
+        "FND/OwnershipAndControl/Control.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FND/OwnershipAndControl/Control.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "identifier_identifies_entity",
+      "kind": "properties",
+      "characteristics": [
+        "http://www.w3.org/2002/07/owl#FunctionalProperty"
+      ],
+      "definition": "recognizes or establishes identity within some context",
+      "definitions": [
+        "recognizes or establishes identity within some context"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://www.omg.org/spec/Commons/Identifiers/Identifier"
+      ],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/Identifiers/identifies",
+      "label": "identifies",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/Identifiers",
+      "module_iri": "https://www.omg.org/spec/Commons/Identifiers/",
+      "namespace": "https://www.omg.org/spec/Commons/Identifiers/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/Designators/denotes"
+      ],
+      "range": [],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/Identifiers.rdf",
+      "source_files": [
+        "dependencies/Commons/Identifiers.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Identifiers.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#FunctionalProperty",
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "entity_identified_by_identifier",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "has an identifier that is unique within some context",
+      "definitions": [
+        "has an identifier that is unique within some context"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [
+        "https://www.omg.org/spec/Commons/Identifiers/identifies"
+      ],
+      "iri": "https://www.omg.org/spec/Commons/Identifiers/isIdentifiedBy",
+      "label": "is identified by",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/Identifiers",
+      "module_iri": "https://www.omg.org/spec/Commons/Identifiers/",
+      "namespace": "https://www.omg.org/spec/Commons/Identifiers/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/Designators/isSignifiedBy"
+      ],
+      "range": [
+        "https://www.omg.org/spec/Commons/Identifiers/Identifier"
+      ],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/Identifiers.rdf",
+      "source_files": [
+        "dependencies/Commons/Identifiers.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Identifiers.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "identifier_string_value",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "associates unique combination of alphanumeric characters corresponding to a designator for something",
+      "definitions": [
+        "associates unique combination of alphanumeric characters corresponding to a designator for something"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/Designators/hasTag",
+      "label": "has tag",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/Designators",
+      "module_iri": "https://www.omg.org/spec/Commons/Designators/",
+      "namespace": "https://www.omg.org/spec/Commons/Designators/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/TextDatatype/hasTextValue"
+      ],
+      "range": [
+        "http://www.w3.org/2001/XMLSchema#string"
+      ],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/Designators.rdf",
+      "source_files": [
+        "dependencies/Commons/Designators.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Designators.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#DatatypeProperty"
+      ]
+    },
+    {
+      "demo_relation": "organization_domiciled_in_geopolitical_entity",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates the principal place where an entity conducts business within some country, such as where its headquarters is located",
+      "definitions": [
+        "indicates the principal place where an entity conducts business within some country, such as where its headquarters is located"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://www.omg.org/spec/Commons/Organizations/FormalOrganization"
+      ],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/Organizations/isDomiciledIn",
+      "label": "is domiciled in",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/Organizations",
+      "module_iri": "https://www.omg.org/spec/Commons/Organizations/",
+      "namespace": "https://www.omg.org/spec/Commons/Organizations/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/Locations/hasRegion"
+      ],
+      "range": [
+        "https://www.omg.org/spec/Commons/Locations/GeopoliticalEntity"
+      ],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/Organizations.rdf",
+      "source_files": [
+        "dependencies/Commons/Organizations.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Organizations.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "legal_entity_recognized_in_jurisdiction",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates the jurisdiction in which a legal person is considered competent to enter into a contract, conduct business, or participate in other activities, or in which an agreement may be acknowledged and possibly enforceable",
+      "definitions": [
+        "indicates the jurisdiction in which a legal person is considered competent to enter into a contract, conduct business, or participate in other activities, or in which an agreement may be acknowledged and possibly enforceable"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "_:d90c23f8733686885_cb68067f2b743e19efb21ee5d853c3161b0666d622a2f0455c63f429b69f182231"
+      ],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/RegulatoryAgencies/isRecognizedIn",
+      "label": "is recognized in",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/RegulatoryAgencies",
+      "module_iri": "https://www.omg.org/spec/Commons/RegulatoryAgencies/",
+      "namespace": "https://www.omg.org/spec/Commons/RegulatoryAgencies/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/RegulatoryAgencies/isGovernedBy"
+      ],
+      "range": [
+        "https://www.omg.org/spec/Commons/RegulatoryAgencies/Jurisdiction"
+      ],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/RegulatoryAgencies.rdf",
+      "source_files": [
+        "BE/LegalEntities/LegalPersons.rdf",
+        "dependencies/Commons/RegulatoryAgencies.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/RegulatoryAgencies.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "portfolio_has_member",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "includes, as a discrete element",
+      "definitions": [
+        "includes, as a discrete element"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "Commons",
+      "equivalent": [],
+      "external": true,
+      "inverse": [],
+      "iri": "https://www.omg.org/spec/Commons/Collections/hasMember",
+      "label": "has member",
+      "maturity": "external-standard",
+      "module_code": "https://www.omg.org/spec/Commons/Collections",
+      "module_iri": "https://www.omg.org/spec/Commons/Collections/",
+      "namespace": "https://www.omg.org/spec/Commons/Collections/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/Collections/comprises"
+      ],
+      "range": [],
+      "restrictions": [],
+      "source_file": "dependencies/Commons/Collections.rdf",
+      "source_files": [
+        "dependencies/Commons/Collections.rdf"
+      ],
+      "source_url": "https://www.omg.org/spec/Commons/20250801/Collections.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "has_ownership_percentage",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "the percentage ownership interest in the owned entity owned by owning entity, if known",
+      "definitions": [
+        "the percentage ownership interest in the owned entity owned by owning entity, if known"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "BE",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/hasOwnershipPercentage",
+      "label": "has ownership percentage",
+      "maturity": "Release",
+      "module_code": "BE/LegalEntities/LEIEntities",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/BE/LegalEntities/LEIEntities/isQuantifiedBy"
+      ],
+      "range": [
+        "http://www.w3.org/2001/XMLSchema#decimal"
+      ],
+      "restrictions": [],
+      "source_file": "BE/LegalEntities/LEIEntities.rdf",
+      "source_files": [
+        "BE/LegalEntities/LEIEntities.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/BE/LegalEntities/LEIEntities.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#DatatypeProperty"
+      ]
+    },
+    {
+      "demo_relation": "share_has_dividend",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "relates a share to a dividend that applies to that share, or that the share may pay",
+      "definitions": [
+        "relates a share to a dividend that applies to that share, or that the share may pay"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/Share"
+      ],
+      "domain_code": "SEC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/hasDividend",
+      "label": "has dividend",
+      "maturity": "Release",
+      "module_code": "SEC/Equities/EquityInstruments",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/Classifiers/isClassifiedBy"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/Dividend"
+      ],
+      "restrictions": [],
+      "source_file": "SEC/Equities/EquityInstruments.rdf",
+      "source_files": [
+        "SEC/Equities/EquityInstruments.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/SEC/Equities/EquityInstruments.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "loan_has_principal_amount",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates the nominal amount of the loan that must be paid at or before maturity",
+      "definitions": [
+        "indicates the nominal amount of the loan that must be paid at or before maturity"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "LOAN",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/hasPrincipalAmount",
+      "label": "has principal amount",
+      "maturity": "Release",
+      "module_code": "LOAN/LoansGeneral/Loans",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasPrincipal",
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/hasMonetaryAmount"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/MonetaryAmount"
+      ],
+      "restrictions": [],
+      "source_file": "LOAN/LoansGeneral/Loans.rdf",
+      "source_files": [
+        "LOAN/LoansGeneral/Loans.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/LOAN/LoansGeneral/Loans.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "debt_has_interest_rate",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "relates something, such as an agreement, or debt instrument, to the rate (typically annual) of interest that is to be paid by the debtor to the creditor on the debt",
+      "definitions": [
+        "relates something, such as an agreement, or debt instrument, to the rate (typically annual) of interest that is to be paid by the debtor to the creditor on the debt"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasInterestRate",
+      "label": "has interest rate",
+      "maturity": "Release",
+      "module_code": "FBC/DebtAndEquities/Debt",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/QuantitiesAndUnits/hasQuantityValue"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/InterestRate"
+      ],
+      "restrictions": [],
+      "source_file": "FBC/DebtAndEquities/Debt.rdf",
+      "source_files": [
+        "FBC/DebtAndEquities/Debt.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/DebtAndEquities/Debt.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "debt_has_maturity_date",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "indicates the date on which the principal amount of an instrument is due to be repaid to the investor and interest or coupon payments stop, and/or the date on which the instrument may be redeemed",
+      "definitions": [
+        "indicates the date on which the principal amount of an instrument is due to be repaid to the investor and interest or coupon payments stop, and/or the date on which the instrument may be redeemed"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasMaturityDate",
+      "label": "has maturity date",
+      "maturity": "Release",
+      "module_code": "FBC/DebtAndEquities/Debt",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/",
+      "parents": [
+        "https://www.omg.org/spec/Commons/DatesAndTimes/hasEndDate",
+        "https://www.omg.org/spec/Commons/DatesAndTimes/hasExplicitDate"
+      ],
+      "range": [
+        "https://www.omg.org/spec/Commons/DatesAndTimes/ExplicitDate"
+      ],
+      "restrictions": [],
+      "source_file": "FBC/DebtAndEquities/Debt.rdf",
+      "source_files": [
+        "FBC/DebtAndEquities/Debt.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/DebtAndEquities/Debt.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    },
+    {
+      "demo_relation": "loan_has_guarantor_role",
+      "kind": "properties",
+      "characteristics": [],
+      "definition": "relates the guarantor to the contract for which they are providing a guaranty",
+      "definitions": [
+        "relates the guarantor to the contract for which they are providing a guaranty"
+      ],
+      "deprecated": false,
+      "disjoint": [],
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/Contract"
+      ],
+      "domain_code": "FBC",
+      "equivalent": [],
+      "external": false,
+      "inverse": [],
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/hasGuarantor",
+      "label": "has guarantor",
+      "maturity": "Release",
+      "module_code": "FBC/DebtAndEquities/Guaranty",
+      "module_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/",
+      "namespace": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/",
+      "parents": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/hasThirdParty"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/Guarantor"
+      ],
+      "restrictions": [],
+      "source_file": "FBC/DebtAndEquities/Guaranty.rdf",
+      "source_files": [
+        "FBC/DebtAndEquities/Guaranty.rdf"
+      ],
+      "source_url": "https://raw.githubusercontent.com/edmcouncil/fibo/2d73435a4419b66b7c9f44cb9763e35fe8ac7890/FBC/DebtAndEquities/Guaranty.rdf",
+      "synonyms": [],
+      "types": [
+        "http://www.w3.org/2002/07/owl#ObjectProperty"
+      ]
+    }
+  ],
+  "modeling_notes": [
+    "A real-world party, contextual role, ownership/control situation, financial instrument, and source claim are distinct identities.",
+    "Shareholding is a FinancialAsset; Ownership is a Situation. A temporal ownership observation is evidence about them, not automatically either OWL class.",
+    "hasShareholder/holdsSharesIn connect Issuer and Shareholder roles. Use isPlayedBy to connect roles to legal entities or persons.",
+    "hasBorrower/hasLender target Borrower/Lender roles. Connect their actors by isPlayedBy and their loan context by isRoleIn.",
+    "CorporateAction is in a Release ontology; CashDividendAction and StockSplit are in a Provisional ontology and must retain that maturity.",
+    "isDomiciledIn targets a GeopoliticalEntity; isRecognizedIn targets a Jurisdiction. Country and jurisdiction are not automatically interchangeable.",
+    "Use source-scoped claims and explicit conflict/retraction handling for different provider observations; OWL vocabulary alone does not define data-quality precedence or truth selection.",
+    "Do not infer legal control solely from equity percentage. Any percentage threshold in the demo is a named, separately testable local scenario rule.",
+    "MonetaryAmount, InterestRate and ExplicitDate are structured ontology objects, not an assertion that a scalar field implements every inherited restriction.",
+    "Identifier hasTag stores its string value; identifies links identifier to its referent; synthetic demo identifiers should be explicitly marked.",
+    "A mapped property IRI documents intended semantics. Full OWL consistency/classification has not been executed by this loader."
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "image": "ghcr.io/lobu-ai/lobu/preview@sha256:7191248773930ef4e68070d4e42e470952ebeb6a5a52dd1cf91534d40d8c3b0c",
+  "node_runtime": "22.23.4",
+  "reference": "Existing verified Lobu runtime; project supports Node 22/24 and 26+",
+  "catalog_release": "master_2026Q3",
+  "catalog_commit": "2d73435a4419b66b7c9f44cb9763e35fe8ac7890"
+}

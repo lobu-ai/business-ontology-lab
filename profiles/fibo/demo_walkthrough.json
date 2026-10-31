@@ -1,0 +1,157 @@
+{
+  "title": "Financial Ontology Lab demonstration",
+  "suite": "financial-ontology-demo-v2",
+  "purpose": "Show a connected financial model with explicit party roles, competing source claims, exact evidence revisions and an inspectable FIBO reference catalog.",
+  "data_notice": "All business parties, people, jurisdictions, identifiers, instruments and financial facts are fictional. DEMO identifier schemes do not claim to be real LEIs, ISINs or registrations. The source documents are deliberately synthetic evidence fixtures.",
+  "prerequisite": {
+    "installation_mode": "Extends an existing local ontology demo organization; this installer is not a complete fresh-organization bootstrap.",
+    "required_existing_entities": ["company:demo-atlas", "company:demo-beacon"],
+    "required_existing_baseline": [
+      {
+        "mapping_version": "ownership-demo-v1",
+        "source_scope": "demo-registry",
+        "source_record_key": "annual-2025",
+        "statement_slot": "equity",
+        "history": "Registry equity report corrected from 40% to 45%.",
+        "current": {"percentage": 45, "status": "reported", "source_revision": "r2", "as_of": "2025-12-31"}
+      },
+      {
+        "mapping_version": "ownership-demo-v1",
+        "source_scope": "demo-vendor",
+        "source_record_key": "report-2025",
+        "statement_slot": "equity",
+        "history": "Vendor 60% report subsequently withdrawn.",
+        "current": {"percentage": 60, "status": "retracted", "source_revision": "r2", "as_of": "2025-12-31"}
+      }
+    ],
+    "reuse_policy": "Keep the existing v1 entities and evidence history. The v2 fixture extends them; it does not duplicate or rewrite the original history."
+  },
+  "workspace_views": [
+    {
+      "key": "finance-demo",
+      "name": "Financial ontology lab",
+      "workspace_route": "data/-/views/finance-demo",
+      "purpose": "Start with the scenario cards, live observation summary, operational coverage and reference catalog coverage."
+    },
+    {
+      "key": "ownership-evidence",
+      "name": "Financial network & evidence",
+      "workspace_route": "data/-/views/ownership-evidence",
+      "purpose": "Explore source-specific ownership, voting, control, holdings, loan and corporate-action observations; inspect exact evidence and revision history."
+    },
+    {
+      "key": "ontology-explorer",
+      "name": "FIBO ontology explorer",
+      "workspace_route": "data/-/views/ontology-explorer",
+      "purpose": "Browse pinned ontology classes, properties, individuals, modules and asserted RDF statements, including OWL restrictions."
+    }
+  ],
+  "navigation": {
+    "route_scope": "Routes are relative to the active organization workspace. No runtime entity or event IDs are embedded in this guide.",
+    "open_records": "Use scenario cards or the entity index to resolve domain keys to the current organization's records.",
+    "observation_history": "Use the Financial network & evidence workspace view to inspect observations and their history. Its exact-event route is data/-/views/ownership-evidence?event_id={event_id}, where the application supplies the selected event ID at runtime.",
+    "host_workaround": "Native event-attached custom views were removed because that host rendered blank. Observation inspection therefore uses the workspace route. Native source-event evidence pages continue to open normally.",
+    "native_source_evidence": "Follow each observation's evidence link to its exact source document revision; do not substitute the latest revision of a different source."
+  },
+  "counts": {
+    "domain_entities": 98,
+    "entity_types": {"company": 8, "person": 4, "jurisdiction": 3, "identifier-scheme": 4, "identifier": 38, "financial-instrument": 9, "loan": 2, "portfolio": 3, "corporate-action": 2, "party-role": 25},
+    "structural_relationships": 199,
+    "navigation_mapping_and_evidence_relationships": 209,
+    "total_native_relationships": 408,
+    "current_observations": 34,
+    "current_v2_observations": 32,
+    "current_v1_observations": 2,
+    "new_v2_observation_versions": 35,
+    "total_observation_versions_including_v1": 39,
+    "new_v2_source_versions": 18,
+    "total_source_versions_including_v1": 22,
+    "current_portfolio_positions": 7,
+    "count_notes": "The 34 current observations include the retracted vendor report and simulated review records. Current identities, historical versions and graph links are separate measures. The 199 structural links are a subset of the 408 native links."
+  },
+  "ontology_scope": {
+    "reference_release": "master_2026Q3",
+    "reference_commit": "2d73435a4419b66b7c9f44cb9763e35fe8ac7890",
+    "reference_source": "https://github.com/edmcouncil/fibo/tree/2d73435a4419b66b7c9f44cb9763e35fe8ac7890",
+    "specification_site": "https://spec.edmcouncil.org/",
+    "reference_coverage": "The installed catalog contains the full pinned asserted reference import, including classes, properties, individuals, ontology modules and RDF statements. Inspect the catalog manifest for exact counts, provenance and import-closure status.",
+    "operational_coverage": "The live business model implements a selected connected slice: parties and contextual roles, legal registration and identifiers, share ownership, voting and board-appointment claims, equity and bonds, portfolio positions, loans and two corporate actions.",
+    "reasoning_boundary": "The system stores and displays asserted ontology statements and explicit application mappings. It does not run an OWL reasoner or claim automatic entailment validation. A browsable restriction is not an executed business rule.",
+    "important_distinction": "A company or person plays a contextual role. Shareholder, Issuer, Borrower, Lender and Guarantor are modeled as role records; they are not synonyms for a company. Claim percentages and review states remain attached to source observations."
+  },
+  "recommended_order": ["conflicting-sources", "equity-voting-control", "indirect-paths", "split-and-holdings", "instruments-and-loans", "correction-and-review", "reference-exploration"],
+  "scenarios": [
+    {
+      "key": "conflicting-sources",
+      "title": "Compare independent ownership reports",
+      "focus_key": "company:demo-beacon",
+      "question": "How much Beacon ordinary equity does Atlas own, and which sources disagree?",
+      "steps": ["Open the Beacon scenario from Financial ontology lab.", "Inspect the equity observations with retracted claims visible.", "Open the registry, analyst and vendor evidence to compare source revisions."],
+      "expected": {"registry_ordinary_percent": 45, "analyst_ordinary_percent": 47, "vendor_ordinary_percent": 60, "vendor_status": "retracted", "separate_preferred_percent": 20, "as_of": "2025-12-31", "canonical_percent": null},
+      "explanation": "Registry and analyst remain independent active claims. The withdrawn vendor claim remains inspectable in history. Preferred equity is a separate share class.",
+      "avoid": ["Averaging the active reports into 46%", "Treating the withdrawn 60% as active", "Adding preferred and ordinary percentages"]
+    },
+    {
+      "key": "equity-voting-control",
+      "title": "Separate equity, voting rights and control evidence",
+      "focus_key": "company:demo-beacon",
+      "question": "Why can 45% equity, 72% voting rights and a board-appointment agreement all appear?",
+      "steps": ["Keep Beacon as the focus and inspect Equity, Voting and Control claim types.", "Open the voting register and board-appointment agreement.", "Observe the separate source basis and pending review state."],
+      "expected": {"registry_equity_percent": 45, "voting_rights_percent": 72, "appointable_board_seats": 5, "total_board_seats": 7, "control_basis": "board_appointment_agreement", "control_review_status": "pending_review"},
+      "explanation": "The claims describe different rights. The board-appointment assertion comes from a synthetic agreement; it is not inferred from an equity threshold.",
+      "avoid": ["Substituting voting percentage for equity percentage", "Calling a pending review an approval", "Inferring verified control from a percentage alone"]
+    },
+    {
+      "key": "indirect-paths",
+      "title": "Trace indirect interests while preserving uncertainty",
+      "focus_key": "company:demo-ember-labs",
+      "question": "How does the disagreement about Beacon affect Atlas's reported paths to Ember?",
+      "steps": ["Open Ember and trace Atlas's direct path and its path through Beacon.", "Compare the registry and analyst alternatives for the Atlas-to-Beacon step.", "Present any multiplication as a conditional illustration with its assumptions."],
+      "expected": {"atlas_direct_ember_percent": 10, "beacon_ember_percent": 60, "registry_path_indirect_percent": 27, "registry_conditional_total_percent": 37, "analyst_path_indirect_percent": 28.2, "analyst_conditional_total_percent": 38.2},
+      "explanation": "The calculations assume comparable ordinary-equity scope and date and non-overlapping paths. They illustrate the effect of competing evidence; they do not reconcile the sources.",
+      "avoid": ["Presenting 37% or 38.2% as established legal ownership", "Deriving control or an ultimate beneficial owner automatically", "Treating unknown holders as zero"]
+    },
+    {
+      "key": "split-and-holdings",
+      "title": "Follow a corporate action into dated positions",
+      "focus_key": "portfolio:demo-growth-portfolio",
+      "question": "What changes when Beacon splits ordinary shares two-for-one?",
+      "steps": ["Open Growth Portfolio and inspect the ordinary-share position history.", "Compare the original position with the dated split amendment and issuer notice.", "Confirm the preferred position and other positions remain available."],
+      "expected": {"effective_date": "2026-01-02", "growth_ordinary_before": 1000, "growth_ordinary_after": 2000, "treasury_ordinary_before": 25000, "treasury_ordinary_after": 50000, "growth_preferred_unchanged": 500, "current_positions": 7},
+      "explanation": "The quantity change is a corporate-action adjustment. The amendments update only the named ordinary-share positions. A split alone does not change a holder's percentage or establish a market value.",
+      "avoid": ["Doubling preferred quantities", "Withdrawing positions omitted from a partial amendment", "Calling the adjustment a correction of an earlier reporting error", "Inferring prices or valuation"]
+    },
+    {
+      "key": "instruments-and-loans",
+      "title": "Connect issuer roles, securities, portfolios and loan parties",
+      "focus_key": "company:demo-cedar-energy",
+      "question": "How does Cedar connect to Fjord, the income portfolio and a bond payment?",
+      "steps": ["Open Cedar and follow its loan and bond relationships.", "Inspect borrower, lender and issuer role records and their party players.", "Open Income Portfolio, its bond holding and the coupon notice; distinguish portfolio owner from manager."],
+      "expected": {"lender_key": "company:demo-fjord-finance", "borrower_key": "company:demo-cedar-energy", "loan_principal_usd": 2000000, "loan_fixed_annual_interest_percent": 4.5, "loan_maturity": "2030-06-30", "bond_annual_coupon_percent": 4, "bond_face_value_per_unit_usd": 1000, "semiannual_coupon_per_unit_usd": 20, "income_bond_units": 10, "income_coupon_entitlement_usd": 200, "portfolio_owner_key": "person:demo-taylor-stone", "portfolio_manager_key": "company:demo-grove-asset-management"},
+      "explanation": "The bond and loan are separate instruments/contracts. The coupon notice explicitly records the synthetic payment. A portfolio management mandate does not transfer the client's ownership to its manager.",
+      "avoid": ["Treating the loan and bond as one contract", "Inferring equity ownership from a lender role", "Treating the manager as owner of client holdings"]
+    },
+    {
+      "key": "correction-and-review",
+      "title": "Inspect source correction and review lineage",
+      "focus_key": "company:demo-cedar-energy",
+      "question": "Was the vendor's 78% to 80% change a transaction, and what does the review mean?",
+      "steps": ["Open the vendor Cedar observation and inspect both exact versions.", "Compare its corrected 80% report with the independent registry 80% report.", "Open the review record and confirm the unresolved Beacon analyst claim remains pending."],
+      "expected": {"vendor_initial_percent": 78, "vendor_corrected_percent": 80, "change_reason": "source_correction", "independent_registry_percent": 80, "review_status": "accepted_simulated", "reviewer_key": "person:demo-jamie-park", "approval_effect": "none", "beacon_analyst_review_status": "pending_review"},
+      "explanation": "The source corrected the same statement. Stable source tuple and logical observation key plus supersedes links establish application-level continuity. The review is fictional demo evidence and executes no real approval.",
+      "avoid": ["Inventing a 2% purchase", "Rewriting the independent registry report", "Presenting the simulated review as actual user approval", "Claiming manual records necessarily have a native automation identity_key"]
+    }
+  ],
+  "reference_exploration": {
+    "key": "reference-exploration",
+    "workspace_route": "data/-/views/ontology-explorer",
+    "steps": ["Open the full ontology explorer from the overview.", "Find Shareholder, ShareIssuer, Borrower and Lender; inspect their definitions, source ontologies and asserted relationships.", "Inspect isPlayedBy, isRoleIn, holdsSharesIn and hasBorrower to compare ontology meaning with live role records.", "Open asserted RDF statements and inspect an OWL restriction or blank-node structure.", "Return to the overview and state the distinction between reference coverage, selected live business workflows and the absence of an OWL reasoner."],
+    "expected": "The full pinned asserted reference is inspectable, while the operational dataset remains an explicit, selected application slice."
+  },
+  "verification": {
+    "publisher": "publish_views.py accepts only the three bundled .view.tsx files and requests server compilation through views.set({source_code}). A server-accepted response is not a claim of browser rendering verification.",
+    "live_verifier": "verify_live_demo.py checks current records, exact event versions, role/player links, native relationship IDs and all six scenario expectations. Use --require-manifest for the final verification.",
+    "read_only_boundary": "Live verification does not replay writes or execute approvals. Idempotency evidence consists of unique current logical records, manifest IDs and native relationship tuples.",
+    "completion_evidence": "Use the saved verification JSON and separate browser checks to substantiate the final demo status."
+  }
+}

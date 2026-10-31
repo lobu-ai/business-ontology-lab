@@ -1,0 +1,11 @@
+{
+  "resource_class": "entity_schema",
+  "effects": {
+    "create_type": "approval",
+    "update_type": "approval",
+    "delete_type": "deny",
+    "create_relationship_type": "approval",
+    "update_relationship_type": "approval",
+    "delete_relationship_type": "deny"
+  }
+}

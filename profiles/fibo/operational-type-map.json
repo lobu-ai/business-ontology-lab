@@ -1,0 +1,757 @@
+{
+  "reference_id": "fibo-2026q3",
+  "fixture_suite": "financial-ontology-demo-v2",
+  "type_defaults": {
+    "company": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+    "person": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/Person",
+    "jurisdiction": "https://www.omg.org/spec/Commons/RegulatoryAgencies/Jurisdiction",
+    "identifier": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+    "identifier-scheme": "https://www.omg.org/spec/Commons/Identifiers/IdentificationScheme",
+    "financial-instrument": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/FinancialInstrument",
+    "loan": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/Loan",
+    "portfolio": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Portfolio",
+    "party-role": "https://www.omg.org/spec/Commons/PartiesAndSituations/PartyRole",
+    "corporate-action": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/CorporateActions/CorporateAction"
+  },
+  "conditional_overrides": [
+    {
+      "type": "financial-instrument",
+      "when": {
+        "instrument_kind": "bond"
+      },
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/Bond"
+    },
+    {
+      "type": "financial-instrument",
+      "when": {
+        "instrument_kind": "equity",
+        "share_class": "ordinary"
+      },
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/CommonShare"
+    },
+    {
+      "type": "financial-instrument",
+      "when": {
+        "instrument_kind": "equity",
+        "share_class": "preferred"
+      },
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/PreferredShare"
+    },
+    {
+      "type": "corporate-action",
+      "when": {
+        "action_type": "stock_split"
+      },
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/StockSplit"
+    },
+    {
+      "type": "corporate-action",
+      "when": {
+        "action_type": "coupon_payment"
+      },
+      "iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/InterestPaymentAction"
+    }
+  ],
+  "role_fallbacks": {
+    "shareholder": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+    "issuer": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/Issuer",
+    "borrower": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Borrower",
+    "lender": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Lender",
+    "guarantor": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/Guarantor"
+  },
+  "role_override_policy": "Prefer entity.metadata.ontology_class_iri after checking it exists in catalog; equity issuer roles use ShareIssuer rather than generic Issuer.",
+  "entities": [
+    {
+      "key": "jurisdiction:demo-northland",
+      "type": "jurisdiction",
+      "class_iri": "https://www.omg.org/spec/Commons/RegulatoryAgencies/Jurisdiction",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "jurisdiction:demo-eastmere",
+      "type": "jurisdiction",
+      "class_iri": "https://www.omg.org/spec/Commons/RegulatoryAgencies/Jurisdiction",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "jurisdiction:demo-southport",
+      "type": "jurisdiction",
+      "class_iri": "https://www.omg.org/spec/Commons/RegulatoryAgencies/Jurisdiction",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "company:demo-atlas",
+      "type": "company",
+      "class_iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "company:demo-beacon",
+      "type": "company",
+      "class_iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "company:demo-cedar-energy",
+      "type": "company",
+      "class_iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "company:demo-delta-logistics",
+      "type": "company",
+      "class_iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "company:demo-ember-labs",
+      "type": "company",
+      "class_iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "company:demo-fjord-finance",
+      "type": "company",
+      "class_iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "company:demo-grove-asset-management",
+      "type": "company",
+      "class_iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "company:demo-harbor-registrar",
+      "type": "company",
+      "class_iri": "https://www.omg.org/spec/Commons/Organizations/LegalEntity",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "person:demo-morgan-vale",
+      "type": "person",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/Person",
+      "maturity": "Release"
+    },
+    {
+      "key": "person:demo-taylor-stone",
+      "type": "person",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/Person",
+      "maturity": "Release"
+    },
+    {
+      "key": "person:demo-alex-reed",
+      "type": "person",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/Person",
+      "maturity": "Release"
+    },
+    {
+      "key": "person:demo-jamie-park",
+      "type": "person",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/People/Person",
+      "maturity": "Release"
+    },
+    {
+      "key": "identifier-scheme:demo-company-register",
+      "type": "identifier-scheme",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/IdentificationScheme",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier-scheme:demo-security-register",
+      "type": "identifier-scheme",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/IdentificationScheme",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier-scheme:demo-party-register",
+      "type": "identifier-scheme",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/IdentificationScheme",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier-scheme:demo-workspace-key",
+      "type": "identifier-scheme",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/IdentificationScheme",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "financial-instrument:demo-beacon-ordinary",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/CommonShare",
+      "maturity": "Release"
+    },
+    {
+      "key": "financial-instrument:demo-beacon-preferred",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/PreferredShare",
+      "maturity": "Release"
+    },
+    {
+      "key": "financial-instrument:demo-cedar-ordinary",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/CommonShare",
+      "maturity": "Release"
+    },
+    {
+      "key": "financial-instrument:demo-atlas-ordinary",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/CommonShare",
+      "maturity": "Release"
+    },
+    {
+      "key": "financial-instrument:demo-delta-ordinary",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/CommonShare",
+      "maturity": "Release"
+    },
+    {
+      "key": "financial-instrument:demo-ember-ordinary",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/CommonShare",
+      "maturity": "Release"
+    },
+    {
+      "key": "financial-instrument:demo-grove-ordinary",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/CommonShare",
+      "maturity": "Release"
+    },
+    {
+      "key": "financial-instrument:demo-cedar-green-bond",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/Bond",
+      "maturity": "Release"
+    },
+    {
+      "key": "financial-instrument:demo-fjord-senior-bond",
+      "type": "financial-instrument",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Debt/Bonds/Bond",
+      "maturity": "Release"
+    },
+    {
+      "key": "loan:demo-cedar-expansion-loan",
+      "type": "loan",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/Loan",
+      "maturity": "Release"
+    },
+    {
+      "key": "loan:demo-delta-working-capital-loan",
+      "type": "loan",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/LOAN/LoansGeneral/Loans/Loan",
+      "maturity": "Release"
+    },
+    {
+      "key": "portfolio:demo-growth-portfolio",
+      "type": "portfolio",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Portfolio",
+      "maturity": "Release"
+    },
+    {
+      "key": "portfolio:demo-income-portfolio",
+      "type": "portfolio",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Portfolio",
+      "maturity": "Release"
+    },
+    {
+      "key": "portfolio:demo-atlas-treasury-portfolio",
+      "type": "portfolio",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/OwnershipAndControl/Ownership/Portfolio",
+      "maturity": "Release"
+    },
+    {
+      "key": "corporate-action:demo-beacon-split-2026",
+      "type": "corporate-action",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/StockSplit",
+      "maturity": "Provisional"
+    },
+    {
+      "key": "corporate-action:demo-cedar-coupon-2026-01",
+      "type": "corporate-action",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/CAE/CorporateEvents/SecurityRelatedCorporateActions/InterestPaymentAction",
+      "maturity": "Provisional"
+    },
+    {
+      "key": "identifier:demo-atlas-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-atlas-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-beacon-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-beacon-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-cedar-energy-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-cedar-energy-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-delta-logistics-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-delta-logistics-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-ember-labs-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-ember-labs-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-fjord-finance-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-fjord-finance-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-grove-asset-management-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-grove-asset-management-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-harbor-registrar-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-harbor-registrar-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-beacon-ordinary-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-beacon-ordinary-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-beacon-preferred-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-beacon-preferred-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-cedar-ordinary-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-cedar-ordinary-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-atlas-ordinary-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-atlas-ordinary-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-delta-ordinary-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-delta-ordinary-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-ember-ordinary-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-ember-ordinary-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-grove-ordinary-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-grove-ordinary-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-cedar-green-bond-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-cedar-green-bond-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-fjord-senior-bond-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-fjord-senior-bond-workspace",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-morgan-vale-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-taylor-stone-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-alex-reed-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "identifier:demo-jamie-park-registration",
+      "type": "identifier",
+      "class_iri": "https://www.omg.org/spec/Commons/Identifiers/Identifier",
+      "maturity": "external-standard"
+    },
+    {
+      "key": "party-role:demo-issuer-beacon-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/ShareIssuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-issuer-beacon-preferred",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/ShareIssuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-issuer-cedar-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/ShareIssuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-issuer-atlas-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/ShareIssuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-issuer-delta-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/ShareIssuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-issuer-ember-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/ShareIssuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-issuer-grove-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/SEC/Equities/EquityInstruments/ShareIssuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-issuer-cedar-green-bond",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/Issuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-issuer-fjord-senior-bond",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/Issuer",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-atlas-cedar-energy-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-atlas-delta-logistics-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-cedar-energy-delta-logistics-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-beacon-ember-labs-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-atlas-ember-labs-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-morgan-vale-atlas-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-taylor-stone-atlas-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-alex-reed-ember-labs-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-fjord-finance-grove-asset-management-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-atlas-beacon-preferred",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-shareholder-atlas-beacon-ordinary",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-borrower-cedar-expansion-loan",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Borrower",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-lender-cedar-expansion-loan",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Lender",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-borrower-delta-working-capital-loan",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Borrower",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-lender-delta-working-capital-loan",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Lender",
+      "maturity": "Release"
+    },
+    {
+      "key": "party-role:demo-guarantor-delta-working-capital-loan",
+      "type": "party-role",
+      "class_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/Guarantor",
+      "maturity": "Release"
+    }
+  ],
+  "verified_relationship_mappings": [
+    {
+      "slug": "guaranteed_by",
+      "property_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/hasGuarantor",
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/FND/Agreements/Contracts/Contract"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Guaranty/Guarantor"
+      ]
+    },
+    {
+      "slug": "holds-shares-in",
+      "property_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/holdsSharesIn",
+      "domain": [
+        "https://spec.edmcouncil.org/fibo/ontology/BE/OwnershipAndControl/CorporateOwnership/Shareholder"
+      ],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/Issuer"
+      ]
+    },
+    {
+      "slug": "issued_by",
+      "property_iri": "https://spec.edmcouncil.org/fibo/ontology/FND/Relations/Relations/isIssuedBy",
+      "domain": [],
+      "range": []
+    },
+    {
+      "slug": "loan-has-borrower",
+      "property_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasBorrower",
+      "domain": [],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Borrower"
+      ]
+    },
+    {
+      "slug": "loan-has-lender",
+      "property_iri": "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/hasLender",
+      "domain": [],
+      "range": [
+        "https://spec.edmcouncil.org/fibo/ontology/FBC/DebtAndEquities/Debt/Lender"
+      ]
+    },
+    {
+      "slug": "role-in-context",
+      "property_iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/isRoleIn",
+      "domain": [
+        "https://www.omg.org/spec/Commons/RolesAndCompositions/Role"
+      ],
+      "range": []
+    },
+    {
+      "slug": "role-played-by",
+      "property_iri": "https://www.omg.org/spec/Commons/RolesAndCompositions/isPlayedBy",
+      "domain": [
+        "https://www.omg.org/spec/Commons/RolesAndCompositions/Role"
+      ],
+      "range": []
+    }
+  ],
+  "application_navigation_only": [
+    "administered_by",
+    "affects_instrument",
+    "announced_by",
+    "director_of",
+    "employed_by",
+    "has_holding_in",
+    "identifies",
+    "managed_by",
+    "owned_by",
+    "registered_by",
+    "registered_in",
+    "uses_identifier_scheme"
+  ],
+  "optional_verified_additions": [
+    {
+      "slug": "identifies",
+      "property_iri": "https://www.omg.org/spec/Commons/Identifiers/identifies",
+      "status": "semantics_match; currently unmapped in fixture"
+    }
+  ],
+  "claim_navigation_only": [
+    "claim-about-subject",
+    "claim-owner",
+    "claim-owner-role",
+    "claim-supported-by-evidence",
+    "record-mapped-to-ontology-class"
+  ],
+  "class_mapping_cautions": [
+    "Synthetic identifiers are generic Identifier, not LegalEntityIdentifier or ISIN; their scheme text explicitly rejects official code claims.",
+    "Fictional jurisdiction nodes are mapped as legal contexts; do not also assert Country or GeopoliticalEntity solely from jurisdiction_kind=fictional_country.",
+    "coupon_payment corporate action maps to InterestPaymentAction (Provisional), not CashDividendAction; stock_split maps to StockSplit (Provisional).",
+    "has_holding_in from portfolio to instrument is application navigation, not ontology hasMember: portfolio membership properly concerns holdings or positions.",
+    "Ownership/holding/control observations are source claims. Do not map those event records directly to Shareholding, Holding, Ownership or Control solely by matching their names.",
+    "The source-specific claim lifecycle remains authoritative for revisions/retractions/reviews. Static role/navigation links do not resolve conflicting claims or establish accepted ownership/control.",
+    "Schema x-ontology-iri is documentation; ontology-class links represent selected application mappings, not owl:sameAs or proof of all inherited OWL restrictions.",
+    "Persist relationship type ontology_property_iri/status into schema annotations or a mapping manifest; current apply_demo.py model() drops those two fixture fields."
+  ],
+  "audit": {
+    "entities_checked": 98,
+    "relationships_checked": 199,
+    "role_endpoint_issues": [],
+    "missing_class_or_property_iris": []
+  }
+}
