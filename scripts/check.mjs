@@ -1,3 +1,6 @@
+await Promise.all(
+  ['compose.yaml', 'runtime.lock.json', 'deploy/nginx.conf'].map((file) => fs.access(file)),
+);
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';

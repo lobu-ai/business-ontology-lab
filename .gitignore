@@ -10,3 +10,7 @@ __pycache__/
 .DS_Store
 coverage/
 *.log
+
+# This deployment configuration is intentional source, even with global *.conf ignores.
+!deploy/
+!deploy/nginx.conf
