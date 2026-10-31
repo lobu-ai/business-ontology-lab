@@ -37,7 +37,7 @@ The live contract test deliberately injects a wrong answer into synthetic data. 
 - A candidate Automation version can be staged without replacing the active version.
 - Evaluation outcomes can be stored as native entities, typed links and evidence events. The test writes those records and verifies readback.
 
-The external-agent handoff now retains native feedback, past reactions and extraction schemas while excluding completion credentials. Deterministic validation checks the exact source scope, record key, revision and subject. The decision policy also quarantines mismatched source qualifiers when a writer bypasses the handoff helper.
+The external-agent handoff now retains native feedback, past reactions and extraction schemas while excluding completion credentials. Deterministic validation checks the exact source scope, record key, revision and subject. The decision policy also quarantines mismatched source qualifiers when a writer bypasses the handoff helper. Ambiguous current statements produce a review decision instead of aborting and leaving an earlier recommendation unchanged.
 
 A paired real-model smoke test evaluated 16 independent synthetic notices. Baseline and feedback-aware calls each passed 16/16 classification and exact-attribution checks. This is no measured improvement: the baseline already passed every case. One run per arm on a small hand-authored set does not demonstrate production accuracy, statistical superiority or sustained self-improvement. Expected labels were withheld from both calls.
 

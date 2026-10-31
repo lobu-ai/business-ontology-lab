@@ -18,7 +18,7 @@ The source-binding test writes deliberately misattributed claims through the nat
 
 Successful feedback evaluation creates a native market-evaluation record, a market-evaluates-seller relationship and a result event linked to the seller, order and exact corrected evidence. Its checks can be queried through ordinary Lobu APIs. Failure results are also saved before the feedback test exits. Model-quality reports may be attached to the same evaluation graph; local JSON alone is not represented as a graph write.
 
-The October 31 evaluation ran on the Kubernetes prototype: 13 lifecycle checks, 7 feedback/graph checks and 3 live source-binding checks passed. Six source-binding regression tests failed against the prior policy and passed after the policy fix. The offline suite now has 42 passing tests.
+The October 31 evaluation ran on the Kubernetes prototype: 13 lifecycle checks, 7 feedback/graph checks and 4 live source-binding checks passed. Six source-binding regression tests failed against the prior policy and passed after the policy fix. The offline suite now has 51 passing tests.
 
 ## Model quality, separately
 

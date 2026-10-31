@@ -54,3 +54,19 @@ export function validateSignalForSource(signal, source) {
     throw new Error('Invalid risk/retraction output');
   return signal;
 }
+
+/** Test-fixture grading only. Never inject these expected labels into a model prompt. */
+export function validateFixtureSignal(signal, scenario) {
+  const expected =
+    scenario === 'suspicious'
+      ? { risk_score: 80, status: 'reported' }
+      : scenario === 'correction'
+        ? { risk_score: 0, status: 'retracted' }
+        : null;
+  if (!expected) throw new Error('Unknown synthetic scenario');
+  if (
+    signal.metadata.risk_score !== expected.risk_score ||
+    signal.metadata.status !== expected.status
+  )
+    throw new Error('Model response failed the synthetic scenario expectation; not published');
+}

@@ -81,3 +81,14 @@ test('a model cannot remove review or retain risk on a withdrawn statement', () 
   x.metadata.status = 'retracted';
   assert.throws(() => validateSignalForSource(x, source));
 });
+
+test('a wrong fixture response is graded before publication without changing its answer', async () => {
+  const { validateFixtureSignal } = await import('../profiles/marketplace/agent-input.mjs');
+  const x = signal();
+  assert.throws(() => validateFixtureSignal(x, 'correction'), /not published/);
+  assert.equal(x.metadata.risk_score, 80);
+  assert.equal(x.metadata.status, 'reported');
+  x.metadata.risk_score = 0;
+  x.metadata.status = 'retracted';
+  assert.doesNotThrow(() => validateFixtureSignal(x, 'correction'));
+});

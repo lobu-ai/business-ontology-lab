@@ -24,6 +24,7 @@ for (const [field, value] of [
   ['source_scope', 'synthetic-wrong-scope'],
   ['source_record_key', 'synthetic-wrong-record'],
   ['source_revision', source.metadata.source_revision + 1],
+  ['duplicate_statement', null],
 ]) {
   let savedId;
   try {
@@ -40,7 +41,7 @@ for (const [field, value] of [
       reason: 'Deliberately invalid synthetic attribution for a contract test.',
       review_required: true,
       model_source: 'synthetic-fault-injection',
-      [field]: value,
+      ...(field === 'duplicate_statement' ? {} : { [field]: value }),
     };
     savedId = eventId(
       await c.save({
@@ -56,7 +57,10 @@ for (const [field, value] of [
     assert.equal(d.metadata.risk_score, 0);
     assert.equal(d.metadata.disposition, 'review');
     assert.ok(!d.metadata.evidence_event_ids.includes(savedId));
-    assert.match(d.metadata.reasons.join(' '), /Invalid evidence attribution/);
+    assert.match(
+      d.metadata.reasons.join(' '),
+      /Invalid evidence attribution|Ambiguous current statements/,
+    );
     checks.push({ name: 'direct-' + field + '-quarantined', passed: true });
   } finally {
     if (savedId) await c.call('knowledge.delete', savedId, true);
@@ -78,7 +82,7 @@ await c.save({
   semantic_type: 'content',
   title: 'Source-binding evaluation',
   content:
-    'Three deliberately malformed source identities were excluded from canonical decisions by the deterministic policy.',
+    'Malformed source identities and duplicate current statements were excluded from canonical decisions by the deterministic policy.',
   entity_ids: [s.entities['northwind-demo'], s.entities['order-lamp']],
   metadata: { record_type: 'evaluation_result', synthetic: true, ...report },
   idempotency_key: 'source-binding-report:' + Date.now(),

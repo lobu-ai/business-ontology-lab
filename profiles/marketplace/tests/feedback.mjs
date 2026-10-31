@@ -269,7 +269,7 @@ await check('evaluation_adds_queryable_native_graph_evidence', async () => {
       metadata: {
         suite: 'feedback-graph-v1',
         synthetic: true,
-        status: 'verified',
+        status: 'running',
         feedback_event_ids: feedbackIds,
       },
     },
@@ -297,7 +297,7 @@ await check('evaluation_adds_queryable_native_graph_evidence', async () => {
     idempotency_key: marker + ':results',
     metadata: {
       synthetic: true,
-      record_type: 'evaluation_result',
+      record_type: 'evaluation_probe',
       suite: 'feedback-graph-v1',
       checks,
       original_signal_event_id: signalId,
@@ -339,6 +339,25 @@ const report = {
     production_policy_promoted: false,
   },
 };
+const graph = checks.find(
+  (x) => x.name === 'evaluation_adds_queryable_native_graph_evidence',
+).detail;
+await c.call(
+  'entities.update',
+  { entity_id: graph.evaluation_entity_id, metadata: { status: 'verified' } },
+  true,
+);
+const complete = await c.save({
+  semantic_type: 'content',
+  title: 'Completed synthetic feedback evaluation',
+  content:
+    'All seven synthetic feedback and graph contract checks passed; no model-quality uplift is claimed.',
+  entity_ids: [graph.evaluation_entity_id, s.entities['northwind-demo'], s.entities['order-lamp']],
+  parent_event_id: graph.result_event_id,
+  idempotency_key: marker + ':completed',
+  metadata: { record_type: 'evaluation_result', synthetic: true, ...report },
+});
+report.graph_result_event_id = eventId(complete);
 await writeReport('feedback-graph', report);
 await fs.writeFile(
   STATE_ROOT + 'feedback-context.json',

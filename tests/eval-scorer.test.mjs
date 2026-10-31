@@ -44,3 +44,36 @@ test('missing, extra and duplicate case outputs fail', () => {
   assert.equal(scoreCases([c], { signals: [row(), row()] }).passed, false);
   assert.equal(scoreCases([c], { signals: [row(), { ...row(), case_id: 'extra' }] }).passed, false);
 });
+
+test('scorer CLI fails a bad response even from a path containing spaces and hash', async () => {
+  const { mkdtemp, mkdir, copyFile, writeFile, rm } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const path = await import('node:path');
+  const { spawnSync } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const root = await mkdtemp(path.join(tmpdir(), 'ontology score #'));
+  try {
+    const scorerDir = path.join(root, 'evals/supplier-risk');
+    const helperDir = path.join(root, 'profiles/marketplace');
+    await mkdir(scorerDir, { recursive: true });
+    await mkdir(helperDir, { recursive: true });
+    await copyFile(
+      fileURLToPath(new URL('../evals/supplier-risk/score.mjs', import.meta.url)),
+      path.join(scorerDir, 'score.mjs'),
+    );
+    await copyFile(
+      fileURLToPath(new URL('../profiles/marketplace/agent-input.mjs', import.meta.url)),
+      path.join(helperDir, 'agent-input.mjs'),
+    );
+    await writeFile(path.join(scorerDir, 'cases.json'), JSON.stringify({ cases: [c] }));
+    const response = path.join(root, 'response.json');
+    await writeFile(response, JSON.stringify({ signals: [] }));
+    const run = spawnSync(process.execPath, [path.join(scorerDir, 'score.mjs'), response], {
+      encoding: 'utf8',
+    });
+    assert.equal(run.status, 1);
+    assert.equal(JSON.parse(run.stdout).passed, false);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});

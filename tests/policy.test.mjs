@@ -140,8 +140,12 @@ test('already shipped order is not a new fulfillment recommendation', () =>
     }).disposition,
     'review',
   ));
-test('ambiguous duplicate current statement fails loudly', () =>
-  assert.throws(() => decide([claim(11, 1), claim(12, 1)], [doc(1)]), /Ambiguous/));
+test('ambiguous duplicate current statements produce review rather than leave a stale decision', () => {
+  const d = decide([claim(11, 1), claim(12, 1)], [doc(1)]);
+  assert.equal(d.disposition, 'review');
+  assert.match(d.reasons.join(' '), /Ambiguous/);
+  assert.deepEqual(d.evidence_event_ids, []);
+});
 test('negative stock and malformed risk are not trusted', () => {
   assert.throws(() => decide([claim(11, 1, -1)], [doc(1)]), /Invalid stock/);
   const bad = risk(30, 3);
@@ -200,3 +204,24 @@ test('a risk claim cannot invent a different statement slot', () => {
   assert.equal(d.risk_score, 0);
   assert.equal(d.disposition, 'review');
 });
+
+for (const [field, value] of [
+  ['quantity', undefined],
+  ['quantity', 'three'],
+  ['quantity', 0],
+  ['order_key', ''],
+  ['sku', undefined],
+  ['seller_key', undefined],
+  ['status', 'unknown'],
+]) {
+  test('invalid order ' + field + ' ' + String(value) + ' cannot become eligible', () => {
+    assert.throws(
+      () =>
+        decide([claim(11, 1)], [doc(1)], {
+          ...order,
+          metadata: { ...order.metadata, [field]: value },
+        }),
+      /Invalid order/,
+    );
+  });
+}

@@ -61,6 +61,13 @@ export function stockObservation(row, version) {
  */
 export function deriveDecision(order, claimRows, sourceRows, version) {
   const m = metadata(order.metadata);
+  for (const field of ['order_key', 'sku', 'seller_key'])
+    if (typeof m[field] !== 'string' || !m[field].trim()) throw new Error('Invalid order ' + field);
+  if (!Number.isSafeInteger(m.quantity) || m.quantity < 1)
+    throw new Error('Invalid order quantity');
+  if (!['placed', 'review', 'shipped', 'cancelled', 'returned'].includes(m.status))
+    throw new Error('Invalid order status');
+
   const claims = claimRows.map((r) => ({ ...r, id: Number(r.id), metadata: metadata(r.metadata) }));
   const sources = sourceRows.map((r) => ({
     ...r,
@@ -83,7 +90,7 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
         (r.semantic_type === 'market_risk_signal' && r.metadata.seller_key === m.seller_key)),
   );
   const sourcesById = new Map(relevantSources.map((row) => [row.id, row.metadata]));
-  const selected = candidates.filter((row) => {
+  const validated = candidates.filter((row) => {
     const source = sourcesById.get(Number(row.metadata.evidence_event_id));
     return (
       source &&
@@ -101,13 +108,16 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
       ['reported', 'retracted'].includes(row.metadata.status)
     );
   });
-  const rejected = candidates.filter((row) => !selected.includes(row));
-  const seen = new Set();
-  for (const claim of selected) {
-    const k = claim.semantic_type + ':' + statementKey(claim.metadata);
-    if (seen.has(k)) throw new Error('Ambiguous current statement: ' + k);
-    seen.add(k);
+  const rejected = candidates.filter((row) => !validated.includes(row));
+  const counts = new Map();
+  for (const row of validated) {
+    const key = row.semantic_type + ':' + statementKey(row.metadata);
+    counts.set(key, (counts.get(key) || 0) + 1);
   }
+  const selected = validated.filter(
+    (row) => counts.get(row.semantic_type + ':' + statementKey(row.metadata)) === 1,
+  );
+  const ambiguous = validated.filter((row) => !selected.includes(row));
   const represented = new Set(selected.map((r) => Number(r.metadata.evidence_event_id)));
   const pendingSources = relevantSources.filter((r) => !represented.has(r.id));
   const stock = selected.filter(
@@ -137,6 +147,10 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
   }
   if (pendingSources.length) {
     reasons.push('Current source revision awaits extraction');
+    disposition = 'review';
+  }
+  if (ambiguous.length) {
+    reasons.push('Ambiguous current statements require review');
     disposition = 'review';
   }
   if (rejected.length) {
@@ -186,6 +200,7 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
       evidence,
       sourceIds,
       rejected: rejected.map((row) => row.id).sort((a, b) => a - b),
+      ambiguous: ambiguous.map((row) => row.id).sort((a, b) => a - b),
     }),
     policy_revision: POLICY_VERSION,
   };

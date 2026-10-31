@@ -1,3 +1,5 @@
+import { realpathSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 import fs from 'node:fs/promises';
 import { validateSignalForSource } from '../../profiles/marketplace/agent-input.mjs';
 export function scoreCases(cases, response) {
@@ -42,8 +44,20 @@ export function scoreCases(cases, response) {
     results,
   };
 }
-if (process.argv[1] && import.meta.url === new URL('file:' + process.argv[1]).href) {
+function isMain() {
+  try {
+    return (
+      Boolean(process.argv[1]) &&
+      import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href
+    );
+  } catch {
+    return false;
+  }
+}
+if (isMain()) {
   const fixture = JSON.parse(await fs.readFile(new URL('./cases.json', import.meta.url), 'utf8'));
   const response = JSON.parse(await fs.readFile(process.argv[2], 'utf8'));
-  console.log(JSON.stringify(scoreCases(fixture.cases, response), null, 2));
+  const result = scoreCases(fixture.cases, response);
+  console.log(JSON.stringify(result, null, 2));
+  process.exitCode = result.passed ? 0 : 1;
 }
