@@ -98,3 +98,9 @@ Re-running bootstrap must not duplicate records. Runtime upgrades, multi-replica
 - Lobu: https://github.com/lobu-ai/lobu
 
 Example code is MIT-licensed. Ontology sources retain their original terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
+
+## Feedback and evaluation
+
+The evaluation suite checks native feedback persistence, next-run learning context, explicit graph repair, safe candidate-version staging and source attribution. Evaluation evidence is stored in the selected disposable workspace using native entities, relationships and events. See [the evaluation guide](evals/README.md).
+
+The recorded 16-case real-model comparison scored 16/16 both before and after feedback. It demonstrates a working feedback path and no regression on that small set, **not measured self-improvement**. The project does not silently promote its own outputs into ground truth or activate unreviewed candidate policies.

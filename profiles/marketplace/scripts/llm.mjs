@@ -1,6 +1,8 @@
+import { buildAgentInput, validateSignalForSource } from '../agent-input.mjs';
 import fs from 'node:fs/promises';
 import {
   Lobu,
+  ROOT,
   state,
   saveState,
   writeReport,
@@ -86,6 +88,7 @@ if (action === 'prepare') {
   if (!selected) throw new Error('Source did not enter a settled window before the deadline');
   const input = {
     scenario,
+    source_metadata: selected.context.content.find((row) => Number(row.id) === sourceId).metadata,
     source_event_id: sourceId,
     source_revision: revision,
     run_id: selected.run.run_id,
@@ -104,6 +107,10 @@ if (action === 'prepare') {
         run_id: input.run_id,
         scenario,
         instruction,
+        agent_input: buildAgentInput(
+          await fs.readFile(ROOT + 'prompts/extract-supplier.md', 'utf8'),
+          selected.context,
+        ),
       },
       null,
       2,
@@ -117,13 +124,7 @@ if (action === 'prepare') {
   if (!Array.isArray(response.signals) || response.signals.length !== 1)
     throw new Error('This fixture expects exactly one source-specific signal');
   const signal = response.signals[0];
-  const m = signal.metadata;
-  if (
-    signal.parent_event_id !== input.source_event_id ||
-    m?.evidence_event_id !== input.source_event_id ||
-    m?.source_revision !== input.source_revision
-  )
-    throw new Error('The response must cite the exact analyzed source revision');
+  validateSignalForSource(signal, { id: input.source_event_id, metadata: input.source_metadata });
   const completion = {
     automation_id: s.automations.extract,
     run_id: input.run_id,

@@ -1,5 +1,5 @@
 /** Pure domain logic. It neither reads credentials nor performs external effects. */
-export const POLICY_VERSION = 'marketplace-advisory/v2';
+export const POLICY_VERSION = 'marketplace-advisory/v3';
 export function metadata(value) {
   const data = typeof value === 'string' ? JSON.parse(value) : value;
   if (!data || typeof data !== 'object' || Array.isArray(data))
@@ -74,7 +74,7 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
       : r.metadata.document_type === 'supplier_notice' && r.metadata.subject_key === m.seller_key,
   );
   const currentIds = new Set(relevantSources.map((r) => r.id));
-  const selected = claims.filter(
+  const candidates = claims.filter(
     (r) =>
       currentIds.has(Number(r.metadata.evidence_event_id)) &&
       ((r.semantic_type === 'market_inventory_observation' &&
@@ -82,6 +82,26 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
         r.metadata.warehouse_key === warehouse) ||
         (r.semantic_type === 'market_risk_signal' && r.metadata.seller_key === m.seller_key)),
   );
+  const sourcesById = new Map(relevantSources.map((row) => [row.id, row.metadata]));
+  const selected = candidates.filter((row) => {
+    const source = sourcesById.get(Number(row.metadata.evidence_event_id));
+    return (
+      source &&
+      (row.semantic_type === 'market_risk_signal'
+        ? source.document_type === 'supplier_notice' &&
+          row.metadata.seller_key === source.subject_key &&
+          row.metadata.statement_slot === 'supplier-risk'
+        : source.document_type === 'inventory' &&
+          row.metadata.sku === source.sku &&
+          row.metadata.warehouse_key === source.warehouse_key &&
+          row.metadata.statement_slot === 'stock') &&
+      ['source_scope', 'source_record_key', 'source_revision'].every(
+        (field) => row.metadata[field] === source[field],
+      ) &&
+      ['reported', 'retracted'].includes(row.metadata.status)
+    );
+  });
+  const rejected = candidates.filter((row) => !selected.includes(row));
   const seen = new Set();
   for (const claim of selected) {
     const k = claim.semantic_type + ':' + statementKey(claim.metadata);
@@ -117,6 +137,10 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
   }
   if (pendingSources.length) {
     reasons.push('Current source revision awaits extraction');
+    disposition = 'review';
+  }
+  if (rejected.length) {
+    reasons.push('Invalid evidence attribution requires review');
     disposition = 'review';
   }
   if (quantities.length && available < Number(m.quantity)) {
@@ -156,7 +180,13 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
     evidence_event_ids: evidence,
     source_event_ids: sourceIds,
     inventory_sources: stock.map((r) => r.metadata.source_scope).sort(),
-    input_signature: signature({ policy: POLICY_VERSION, order: m, evidence, sourceIds }),
+    input_signature: signature({
+      policy: POLICY_VERSION,
+      order: m,
+      evidence,
+      sourceIds,
+      rejected: rejected.map((row) => row.id).sort((a, b) => a - b),
+    }),
     policy_revision: POLICY_VERSION,
   };
 }

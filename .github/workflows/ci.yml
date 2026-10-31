@@ -42,6 +42,13 @@ jobs:
       - run: npm run verify:live
       - run: npm run verify:governance
       - run: npm run verify:access
+      - name: Verify synthetic feedback and graph contracts
+        env:
+          LOBU_EVAL_MUTATIONS: '1'
+        run: |
+          npm run llm:prepare -- correction
+          npm run verify:feedback
+          npm run verify:source-binding
       - run: npm run verify:ordering
       - name: Replay installation without local identity state
         run: |

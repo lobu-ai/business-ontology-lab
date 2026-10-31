@@ -1,0 +1,531 @@
+{
+  "synthetic": true,
+  "independent_model_calls": true,
+  "repetitions_per_arm": 1,
+  "held_out_from_feedback_example": true,
+  "results": [
+    {
+      "arm": "baseline",
+      "status": "completed",
+      "models_reported": ["claude-sonnet-5-5"],
+      "requested_model_alias": "sonnet",
+      "duration_ms": 16284,
+      "fixture_sha256": "d96f55f1909915187c8161c4ae0814eefe11e80c20fb69610df7f45a4f07ed71",
+      "input_sha256": "2f69e5ad030cc842cde6494c7bdb786cd471211ce7c4dea31b986355474472dd",
+      "score": {
+        "total": 16,
+        "exact_pass": 16,
+        "classification_pass": 16,
+        "attribution_pass": 16,
+        "unexpected_ids": [],
+        "passed": true,
+        "results": [
+          {
+            "case_id": "case-01",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-02",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-03",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "retracted"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "retracted"
+            }
+          },
+          {
+            "case_id": "case-04",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-05",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-06",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-07",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "retracted"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "retracted"
+            }
+          },
+          {
+            "case_id": "case-08",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-09",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-10",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-11",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-12",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "retracted"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "retracted"
+            }
+          },
+          {
+            "case_id": "case-13",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-14",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "retracted"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "retracted"
+            }
+          },
+          {
+            "case_id": "case-15",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-16",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          }
+        ]
+      },
+      "provider_reported_error": false
+    },
+    {
+      "arm": "with-feedback",
+      "status": "completed",
+      "models_reported": ["claude-sonnet-5-5"],
+      "requested_model_alias": "sonnet",
+      "duration_ms": 16169,
+      "fixture_sha256": "d96f55f1909915187c8161c4ae0814eefe11e80c20fb69610df7f45a4f07ed71",
+      "input_sha256": "8d16c72576c34ce86c1372e2c2144346bb5e4d2f4e29a06e6ac689e803aae7b0",
+      "score": {
+        "total": 16,
+        "exact_pass": 16,
+        "classification_pass": 16,
+        "attribution_pass": 16,
+        "unexpected_ids": [],
+        "passed": true,
+        "results": [
+          {
+            "case_id": "case-01",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-02",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-03",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "retracted"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "retracted"
+            }
+          },
+          {
+            "case_id": "case-04",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-05",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-06",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-07",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "retracted"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "retracted"
+            }
+          },
+          {
+            "case_id": "case-08",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-09",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-10",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-11",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-12",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "retracted"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "retracted"
+            }
+          },
+          {
+            "case_id": "case-13",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-14",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "retracted"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "retracted"
+            }
+          },
+          {
+            "case_id": "case-15",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 80,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 80,
+              "status": "reported"
+            }
+          },
+          {
+            "case_id": "case-16",
+            "passed": true,
+            "classification": true,
+            "attribution": true,
+            "error": null,
+            "expected": {
+              "risk_score": 0,
+              "status": "reported"
+            },
+            "actual": {
+              "risk_score": 0,
+              "status": "reported"
+            }
+          }
+        ]
+      },
+      "provider_reported_error": false
+    }
+  ],
+  "limits": "A single small hand-authored smoke test, not a statistical estimate, production benchmark or proof of sustained self-improvement.",
+  "fixture_semantic_sha256": "7c51a4d2b3368e0c9dc92a53a57a71263a4930949edf24c3a95e95b01d6ff140",
+  "interpretation": "Both arms scored 16/16. No measured quality uplift; baseline already saturated this small synthetic suite. No model weights were trained."
+}

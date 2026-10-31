@@ -88,7 +88,9 @@ async function doc(scope, key, quantity, status = 'reported', bump = 0, sku = 'S
   return { draft, id: eventId(r) };
 }
 await check('native_model_installed', async () => {
-  const r = await c.query("SELECT id FROM entities WHERE entity_type LIKE 'market-%' LIMIT 100");
+  const r = await c.query(
+    "SELECT id FROM entities WHERE entity_type LIKE 'market-%' AND metadata->>'demo_suite'='enterprise-marketplace-v1' LIMIT 100",
+  );
   assert.equal(r.length, 13);
   assert.equal(Object.keys(s.links).length, 10);
   return { entities: r.length, links: 10 };
