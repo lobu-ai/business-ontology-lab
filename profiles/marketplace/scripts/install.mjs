@@ -87,27 +87,60 @@ for (const record of RECORDS) {
   s.entities[record.slug] = Number(r.id);
 }
 await saveState(s);
+// The server is authoritative. Local state is a convenience, not the only record
+// of which fixture edges already exist (for example, after cloning on another host).
+async function existingLink(type, from, to) {
+  const page = await c.call('entities.listLinks', {
+    entity_id: s.entities[from],
+    direction: 'outbound',
+    limit: 100,
+  });
+  if (page.metadata?.has_more || page.relationship_failures?.length) {
+    throw new Error('Cannot safely reconstruct an incomplete fixture relationship page');
+  }
+  return (page.relationships || []).find(
+    (edge) =>
+      edge.relationship_type_slug === type &&
+      Number(edge.from_entity_id) === s.entities[from] &&
+      Number(edge.to_entity_id) === s.entities[to],
+  );
+}
 for (const [type, from, to] of LINKS) {
   const key = [type, from, to].join('|');
-  if (!s.links[key]) {
-    const r = applied(
-      await c.call(
-        'entities.link',
-        {
-          from_entity_id: s.entities[from],
-          to_entity_id: s.entities[to],
-          relationship_type_slug: type,
-          source: 'api',
-          metadata: { synthetic: true, demo_suite: VERSION },
-        },
-        true,
-      ),
-    );
-    s.links[key] = Number(r.relationship?.id);
-    if (!s.links[key]) throw Error('Missing relationship receipt');
-    await saveState(s);
+  let edge = await existingLink(type, from, to);
+  if (!edge) {
+    try {
+      const result = applied(
+        await c.call(
+          'entities.link',
+          {
+            from_entity_id: s.entities[from],
+            to_entity_id: s.entities[to],
+            relationship_type_slug: type,
+            source: 'api',
+            metadata: { synthetic: true, demo_suite: VERSION },
+          },
+          true,
+        ),
+      );
+      edge = result.relationship;
+    } catch (error) {
+      // A concurrent installer may win the same edge. Re-read and verify the
+      // exact endpoints; never suppress an unrelated authorization/schema error.
+      if (
+        error.code !== 'VALIDATION' ||
+        !/active relationship.*already exists/i.test(error.message)
+      )
+        throw error;
+      edge = await existingLink(type, from, to);
+      if (!edge) throw error;
+    }
   }
+  if (!edge?.id) throw new Error('Missing relationship receipt');
+  s.links[key] = Number(edge.id);
+  await saveState(s);
 }
+
 if (!s.agent) {
   const agents = (await c.call('agents.list', {})).agents || [];
   const found = agents.find((a) => a.id === 'marketplace-evaluator');
@@ -129,6 +162,7 @@ if (!s.agent) {
   s.agent = a.agent_id;
   await saveState(s);
 }
+await saveState(s);
 const summary = {
   at: new Date().toISOString(),
   org: ORG,
