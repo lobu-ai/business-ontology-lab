@@ -1,9 +1,9 @@
 {
-  "name": "@lobu/ontology-demo",
+  "name": "@lobu/business-ontology-lab",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Reproducible operational ontology profiles built with Lobu native primitives",
+  "description": "Hands-on business ontology examples for marketplace operations and financial relationships",
   "license": "MIT",
   "engines": {
     "node": ">=22 <25 || >=26"

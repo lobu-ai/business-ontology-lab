@@ -1,6 +1,6 @@
-# Operational ontology demo for Lobu
+# Business Ontology Lab
 
-Two reproducible projects built with Lobu's existing entities, typed relationships, versioned evidence, deterministic and LLM Automations, permissions, approvals, native collections and React components.
+Explore marketplace operations and financial relationships through two reproducible profiles built with Lobu's existing entities, typed relationships, versioned evidence, deterministic and LLM Automations, permissions, approvals, native collections and React components.
 
 - **Marketplace operations:** turn independent stock reports and supplier notices into evidence-backed fulfillment recommendations. Correct and retract reports; inspect revisions; propose controlled schema changes and refunds.
 - **FIBO financial model:** install the pinned FIBO vocabulary and a connected synthetic model of legal entities, contextual roles, ownership, voting, control, instruments, lending, portfolios and corporate actions.
