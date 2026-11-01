@@ -83,7 +83,7 @@ The financial page is /fibo-demo/data/-/views/financial-ontology. The [walkthrou
     deploy/                Local-only runtime wiring
     docs/                  Architecture, coverage and security
 
-The bootstrap command is the full installer. Native lobu.config.ts declarations expose the core model; the SDK installer additionally wires the external executor, derived collection, sample data and review policy.
+The bootstrap command is the full installer. Native lobu.config.ts declarations expose the core model and view. The SDK installer wires all Automations with workspace-local IDs, the derived collection, sample data and review policy. Applying the configuration alone does not install the workflows.
 
 ## Repeatability and safety
 
@@ -103,6 +103,6 @@ Example code is MIT-licensed. Ontology sources retain their original terms; see 
 
 The evaluation suite checks native feedback persistence, next-run learning context, explicit graph repair, safe candidate-version staging and source attribution. Evaluation evidence is stored in the selected disposable workspace using native entities, relationships and events. See [the evaluation guide](evals/README.md).
 
-Accepted native feedback is now carried into the domain graph by a repair Automation. It supersedes the affected claim with a corrected or retracted revision and reconciles the decision, while the evidence and earlier claims stay in history. Candidate Automation versions are evaluated against the active version on held-out cases. Eligible candidates are proposed through Lobu's existing approval queue, and rollback uses the same gate. Nothing in this project approves its own request.
+Accepted native feedback is now carried into the domain graph by a repair Automation. It supersedes the affected claim with a corrected or retracted revision and reconciles the decision, while the evidence and earlier claims stay in history. Candidate Automation versions are evaluated against the active version on held-out cases. Eligible candidates are proposed through Lobu's existing approval queue, and rollback uses the same human approval path. Nothing in this project approves its own request.
 
 Measured on 40 synthetic cases with three runs per arm, the candidate prompt beat the baseline by one case for claude-sonnet-5-5 (39 → 40) and by an unstable fraction of a case for claude-haiku-5-5 (39.33 → 40). Neither model regressed a case. That is a small one-case effect, **not measured self-improvement**. Earlier live windows with the old baseline prompt failed: the models emitted an out-of-contract status, and the validator refused it before publication. The current prompt explicitly names the allowed statuses; this change requires fresh real-model window verification. See [coverage](docs/coverage.md) and [results](evals/supplier-risk/results/2026-11-01.json).

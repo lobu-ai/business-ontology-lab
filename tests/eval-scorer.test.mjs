@@ -85,3 +85,8 @@ test('scorer CLI fails a bad response even from a path containing spaces and has
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test('fixture selection refuses an empty set list', async () => {
+  const { loadCases } = await import('../evals/supplier-risk/fixtures.mjs');
+  await assert.rejects(loadCases([]), /Select at least one case set/);
+});

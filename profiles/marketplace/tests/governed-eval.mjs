@@ -36,8 +36,13 @@ async function check(name, fn) {
     throw error;
   }
 }
-function runGovern(extra) {
+function runGovern(extra, rejectWith) {
   const r = spawnSync(process.execPath, [govern, ...extra], { encoding: 'utf8', env: process.env });
+  if (rejectWith) {
+    assert.notEqual(r.status, 0, 'Invalid evidence was accepted');
+    assert.match(r.stderr, rejectWith);
+    return;
+  }
   if (r.status !== 0) throw new Error('govern failed: ' + (r.stderr || r.stdout).slice(-800));
   return JSON.parse(r.stdout);
 }
@@ -71,16 +76,53 @@ async function comparisonFile(name, baselineFlips, candidateFlips) {
     candidate: [0, 1, 2].map(() => answer(candidateFlips)),
   });
   const { promotionGate } = await import('../../../evals/supplier-risk/promotion.mjs');
+  const { versions } = await c.call('automations.getVersions', { automation_id: String(extract) });
+  const current = versions.find((v) => Number(v.version_id) === before);
+  const baselineDetails = await c.call('automations.getVersionDetails', {
+    automation_id: String(extract),
+    version: Number(current.version),
+  });
+  const promptHashes = {
+    baseline: sha(baselineDetails.prompt),
+    candidate: sha(await fs.readFile(candidatePrompt, 'utf8')),
+  };
   const file = STATE_ROOT + name + '.json';
   await fs.mkdir(STATE_ROOT, { recursive: true });
   await fs.writeFile(
     file,
-    JSON.stringify({ fixture_sha256: hashes, gate: promotionGate(cmp), ...cmp }),
+    JSON.stringify({
+      fixture_sha256: hashes,
+      prompt_sha256: promptHashes,
+      gate: promotionGate(cmp),
+      ...cmp,
+    }),
   );
   return file;
 }
 const before = await active();
 const evidence = ['--model-evidence', 'SYNTHETIC gate fixture; not model evidence'];
+
+await check('stale_evaluation_evidence_is_refused_before_staging', async () => {
+  const { versions: beforeVersions } = await c.call('automations.getVersions', {
+    automation_id: String(extract),
+  });
+  for (const field of ['prompt_sha256', 'fixture_sha256']) {
+    const file = await comparisonFile('stale-' + field, ['case-17', 'case-18'], []);
+    const comparison = JSON.parse(await fs.readFile(file, 'utf8'));
+    comparison[field][field === 'prompt_sha256' ? 'baseline' : 'v2'] = '0'.repeat(64);
+    await fs.writeFile(file, JSON.stringify(comparison));
+    runGovern(
+      ['--comparison', file, '--candidate-prompt', candidatePrompt, ...evidence],
+      /Comparison (prompt|fixture) hashes do not match/,
+    );
+  }
+  const { versions: afterVersions } = await c.call('automations.getVersions', {
+    automation_id: String(extract),
+  });
+  assert.equal(afterVersions.length, beforeVersions.length);
+  assert.equal(await active(), before);
+  return { stale_prompt_and_fixture_refused: true, versions_created: 0 };
+});
 
 await check('equal_scores_are_not_proposed', async () => {
   const file = await comparisonFile('synthetic-equal', [], []);

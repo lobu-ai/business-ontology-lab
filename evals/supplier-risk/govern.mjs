@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { Lobu, state, awaitRun, eventId, writeReport } from '../../profiles/marketplace/client.mjs';
 import { baseMetadata } from '../../profiles/marketplace/domain.mjs';
-import { parseArgs } from './fixtures.mjs';
+import { loadCases, parseArgs } from './fixtures.mjs';
 
 // Governed version change for the supplier-extraction Automation.
 //
@@ -42,6 +42,17 @@ let metadata;
 if (action === 'promote') {
   const comparison = JSON.parse(await fs.readFile(args.comparison[0], 'utf8'));
   const prompt = await fs.readFile(args['candidate-prompt'][0], 'utf8');
+  const { hashes } = await loadCases();
+  const evaluatedPrompts = { baseline: sha(baselinePrompt), candidate: sha(prompt) };
+  if (
+    Object.entries(evaluatedPrompts).some(([arm, hash]) => comparison.prompt_sha256?.[arm] !== hash)
+  )
+    throw new Error('Comparison prompt hashes do not match the active baseline and candidate');
+  if (
+    Object.keys(comparison.fixture_sha256 || {}).length !== Object.keys(hashes).length ||
+    Object.entries(hashes).some(([set, hash]) => comparison.fixture_sha256?.[set] !== hash)
+  )
+    throw new Error('Comparison fixture hashes do not match the current case sets');
   let candidate = null;
   for (const v of versions) {
     if (Number(v.version_id) === baseline) continue;
@@ -91,6 +102,7 @@ if (action === 'promote') {
   };
 } else throw new Error('Use --action promote or rollback');
 
+metadata.request_id = randomUUID();
 const evaluation = eventId(
   await c.save({
     semantic_type: 'market_evaluation_result',

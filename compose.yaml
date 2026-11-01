@@ -24,6 +24,8 @@ services:
       DATABASE_URL: postgresql://lobu@postgres:5432/lobu?sslmode=disable
       NODE_ENV: development
       CHOKIDAR_USEPOLLING: 'true'
+      # This loopback-only disposable stack owns its database and local operator.
+      LOBU_RUN_OWNS_DB: '1'
       LOBU_LOCAL_INIT_ALLOW_PROXY: '0'
     depends_on:
       postgres:

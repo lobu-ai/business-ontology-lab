@@ -16,6 +16,7 @@ export const SETS = { v1: 'cases.json', v2: 'holdout-v2.json' };
 
 /** Load labelled fixtures. Labels stay here; prepare.mjs exports inputs only. */
 export async function loadCases(names = Object.keys(SETS)) {
+  if (!Array.isArray(names) || names.length === 0) throw new Error('Select at least one case set');
   const cases = [];
   const hashes = {};
   for (const name of names) {

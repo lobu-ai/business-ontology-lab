@@ -54,10 +54,10 @@ Held-out cases live in supplier-risk/holdout-v2.json, labelled under supplier-ri
 
     node evals/supplier-risk/prepare.mjs --sets v1 v2 > /tmp/baseline-input.json
     node evals/supplier-risk/prepare.mjs --sets v1 v2 --prompt evals/supplier-risk/candidates/extract-supplier-v2.md > /tmp/candidate-input.json
-    npm run eval:compare -- --sets v1 v2 --baseline b1.json b2.json b3.json --candidate c1.json c2.json c3.json > /tmp/compare.json
+    npm run eval:compare -- --sets v1 v2 --baseline-prompt profiles/marketplace/prompts/extract-supplier.md --candidate-prompt evals/supplier-risk/candidates/extract-supplier-v2.md --baseline b1.json b2.json b3.json --candidate c1.json c2.json c3.json > /tmp/compare.json
     npm run eval:govern -- --comparison /tmp/compare.json --candidate-prompt evals/supplier-risk/candidates/extract-supplier-v2.md --model-evidence "model, runs, who produced it"
 
-The gate rejects fewer than three runs per arm, any candidate attribution failure or unexpected output, any majority-level per-case regression, and an improvement below one case. eval:govern stages an inactive version and records the comparison as a native event. The agent-owned proposer Automation then re-checks the gate and requests activation, which Lobu queues for human approval. Rollback is `--action rollback --restore-version <id>` through the same path. verify:governed-eval exercises those paths with deterministic synthetic comparisons. They are gate fixtures, not model evidence.
+The gate rejects fewer than three runs per arm, any candidate attribution failure or unexpected output, any majority-level per-case regression, and an improvement below one case. The comparison records both prompt hashes and fixture hashes. eval:govern refuses evidence for different prompts or case sets before staging an inactive version and records the comparison as a native event. The agent-owned proposer Automation then re-checks the gate and requests activation, which Lobu queues for human approval. Rollback is `--action rollback --restore-version <id>` through the same path. verify:governed-eval exercises those paths with deterministic synthetic comparisons. They are gate fixtures, not model evidence.
 
 results/2026-11-01.json records agent-produced runs from claude-haiku-5-5 and claude-sonnet-5-5 (Claude Code subagents acting as the external model):
 
@@ -70,6 +70,6 @@ v1 scored 16/16 on every run in both arms. The differences come from case-37 (a 
 
 ## Observed prototype latency limitation
 
-A repeated run on the shared Kubernetes prototype exceeded the evaluator's 45-second polling budget. The script run remained claimed and eventually completed about five minutes after creation. The initial timeout and failed evaluation were preserved; a later successful completion does not retroactively make the latency check pass. Fresh clean-runtime CI passed the workflow contracts. The delay's root cause has not been isolated, so bounded dispatch latency is not claimed.
+A repeated run on the shared Kubernetes prototype exceeded the evaluator's 45-second polling budget. The script run remained claimed and eventually completed about five minutes after creation. The initial timeout and failed evaluation were preserved; a later successful completion does not retroactively make the latency check pass. Fresh clean-runtime CI passed the workflow contracts. The PostgreSQL lock inversion was diagnosed and repaired in lobu-ai/lobu#4636. The pinned 24.4.0 image includes that fix; fresh runtime CI must pass before closing lab issue #2. General bounded dispatch latency is not claimed.
 
 The feedback harness now checkpoints the committed synthetic signal receipt. A completed-window replay does not necessarily repeat the original event IDs; recovery uses that receipt or a unique exact-source lookup, not a second write or an invented success. This is test resumability, not a fix for the observed scheduler delay.

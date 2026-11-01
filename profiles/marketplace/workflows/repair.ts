@@ -8,6 +8,9 @@ export default async function repair(ctx, client, params) {
   const extract = Number(params?.extract_automation_id);
   if (!Number.isSafeInteger(extract) || extract < 1)
     throw new Error('Configure extract_automation_id');
+  const target = Number(params?.reconcile_automation_id);
+  if (!Number.isSafeInteger(target) || target < 1)
+    throw new Error('Configure reconcile_automation_id');
   const bounded = async (sql) => {
     const rows = await client.query(sql + ' LIMIT 501');
     if (rows.length > 500) throw new Error('Demo input bound exceeded; partition the feedback');
@@ -87,9 +90,6 @@ export default async function repair(ctx, client, params) {
   // explicitly, exactly once, and only when this run recorded something.
   let downstream = null;
   if (results.length) {
-    const target = Number(params?.reconcile_automation_id);
-    if (!Number.isSafeInteger(target) || target < 1)
-      throw new Error('Configure reconcile_automation_id');
     downstream = (await client.automations.trigger({ automation_id: String(target) })).run_id;
   }
   return {
