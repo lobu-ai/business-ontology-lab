@@ -1,5 +1,6 @@
 import { metadata, deriveDecision } from '../policy.mjs';
-export default async function reconcile(ctx, client) {
+import { REPAIR_SOURCE } from '../repair.mjs';
+export default async function reconcile(ctx, client, params) {
   const bounded = async (sql) => {
     const rows = await client.query(sql + ' LIMIT 501');
     if (rows.length > 500) throw new Error('Demo input bound exceeded; partition the sources');
@@ -9,14 +10,38 @@ export default async function reconcile(ctx, client) {
     "SELECT id,metadata FROM entities WHERE entity_type='market-order' AND metadata->>'demo_suite'='enterprise-marketplace-v1'",
   );
   const claims = await bounded(
-    "SELECT id,semantic_type,metadata FROM events WHERE semantic_type IN ('market_inventory_observation','market_risk_signal') AND metadata->>'demo_suite'='enterprise-marketplace-v1'",
+    "SELECT id,semantic_type,run_id,metadata FROM events WHERE semantic_type IN ('market_inventory_observation','market_risk_signal') AND metadata->>'demo_suite'='enterprise-marketplace-v1'",
   );
   const sources = await bounded(
     "SELECT id,metadata FROM events WHERE semantic_type='market_source_document' AND metadata->>'demo_suite'='enterprise-marketplace-v1'",
   );
+  // Reviewed claim revisions are only valid against native accepted feedback.
+  const extract = Number(params?.extract_automation_id) || null;
+  const corrections = extract
+    ? await bounded(
+        "SELECT id,semantic_type,run_id,created_by,client_id,metadata FROM events WHERE semantic_type='correction' AND metadata->>'automation_id'='" +
+          extract +
+          "'",
+      )
+    : [];
+  const repairs = await bounded(
+    "SELECT id,metadata FROM events WHERE semantic_type='market_claim_repair' AND metadata->>'demo_suite'='enterprise-marketplace-v1'",
+  );
+  const runOutputs = new Map();
+  const repairedRuns = new Set(
+    claims
+      .filter((r) => metadata(r.metadata).model_source === REPAIR_SOURCE && Number(r.run_id) > 0)
+      .map((r) => Number(r.run_id)),
+  );
+  if (repairedRuns.size > 50) throw new Error('Demo repair bound exceeded');
+  for (const runId of repairedRuns) {
+    const { run } = await client.operations.getRun(runId);
+    if (Number(run?.automation_id) === extract) runOutputs.set(runId, run.output || null);
+  }
+  const review = { corrections, repairs, runOutputs, extractAutomationId: extract };
   const results = [];
   for (const order of orders) {
-    const value = deriveDecision(order, claims, sources, 'enterprise-marketplace-v1');
+    const value = deriveDecision(order, claims, sources, 'enterprise-marketplace-v1', review);
     const literal = "'" + value.order_key.replace(/'/g, "''") + "'";
     const previous = await client.query(
       "SELECT id,metadata FROM events WHERE semantic_type='market_decision' AND metadata->>'order_key'=" +

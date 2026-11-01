@@ -1,5 +1,6 @@
 /** Pure domain logic. It neither reads credentials nor performs external effects. */
-export const POLICY_VERSION = 'marketplace-advisory/v2';
+import { verifyRepairClaim } from './repair.mjs';
+export const POLICY_VERSION = 'marketplace-advisory/v4';
 export function metadata(value) {
   const data = typeof value === 'string' ? JSON.parse(value) : value;
   if (!data || typeof data !== 'object' || Array.isArray(data))
@@ -59,8 +60,23 @@ export function stockObservation(row, version) {
  * are never treated as additional suppliers. A correction with no new extraction
  * yields review instead of silently retaining the previous allegation.
  */
-export function deriveDecision(order, claimRows, sourceRows, version) {
+/* `review` carries native feedback context: correction events, the outputs of the
+ * runs they correct, the extraction Automation ID and repair outcome events. A
+ * reviewed repair claim that does not match its cited feedback is invalid. */
+export function deriveDecision(order, claimRows, sourceRows, version, review = {}) {
+  const corrections = review.corrections || [];
+  const repairCheck = {
+    extractAutomationId: review.extractAutomationId ?? null,
+    runOutputs: review.runOutputs || new Map(),
+  };
   const m = metadata(order.metadata);
+  for (const field of ['order_key', 'sku', 'seller_key'])
+    if (typeof m[field] !== 'string' || !m[field].trim()) throw new Error('Invalid order ' + field);
+  if (!Number.isSafeInteger(m.quantity) || m.quantity < 1)
+    throw new Error('Invalid order quantity');
+  if (!['placed', 'review', 'shipped', 'cancelled', 'returned'].includes(m.status))
+    throw new Error('Invalid order status');
+
   const claims = claimRows.map((r) => ({ ...r, id: Number(r.id), metadata: metadata(r.metadata) }));
   const sources = sourceRows.map((r) => ({
     ...r,
@@ -74,7 +90,7 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
       : r.metadata.document_type === 'supplier_notice' && r.metadata.subject_key === m.seller_key,
   );
   const currentIds = new Set(relevantSources.map((r) => r.id));
-  const selected = claims.filter(
+  const candidates = claims.filter(
     (r) =>
       currentIds.has(Number(r.metadata.evidence_event_id)) &&
       ((r.semantic_type === 'market_inventory_observation' &&
@@ -82,14 +98,45 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
         r.metadata.warehouse_key === warehouse) ||
         (r.semantic_type === 'market_risk_signal' && r.metadata.seller_key === m.seller_key)),
   );
-  const seen = new Set();
-  for (const claim of selected) {
-    const k = claim.semantic_type + ':' + statementKey(claim.metadata);
-    if (seen.has(k)) throw new Error('Ambiguous current statement: ' + k);
-    seen.add(k);
+  const sourcesById = new Map(relevantSources.map((row) => [row.id, row.metadata]));
+  const validated = candidates.filter((row) => {
+    const source = sourcesById.get(Number(row.metadata.evidence_event_id));
+    return (
+      source &&
+      (row.semantic_type === 'market_risk_signal'
+        ? source.document_type === 'supplier_notice' &&
+          row.metadata.seller_key === source.subject_key &&
+          row.metadata.statement_slot === 'supplier-risk'
+        : source.document_type === 'inventory' &&
+          row.metadata.sku === source.sku &&
+          row.metadata.warehouse_key === source.warehouse_key &&
+          row.metadata.statement_slot === 'stock') &&
+      ['source_scope', 'source_record_key', 'source_revision'].every(
+        (field) => row.metadata[field] === source[field],
+      ) &&
+      ['reported', 'retracted'].includes(row.metadata.status) &&
+      verifyRepairClaim(row, corrections, repairCheck)
+    );
+  });
+  const rejected = candidates.filter((row) => !validated.includes(row));
+  const counts = new Map();
+  for (const row of validated) {
+    const key = row.semantic_type + ':' + statementKey(row.metadata);
+    counts.set(key, (counts.get(key) || 0) + 1);
   }
+  const selected = validated.filter(
+    (row) => counts.get(row.semantic_type + ':' + statementKey(row.metadata)) === 1,
+  );
+  const ambiguous = validated.filter((row) => !selected.includes(row));
   const represented = new Set(selected.map((r) => Number(r.metadata.evidence_event_id)));
   const pendingSources = relevantSources.filter((r) => !represented.has(r.id));
+  const awaiting = (review.repairs || [])
+    .map((r) => ({ id: Number(r.id), metadata: metadata(r.metadata) }))
+    .filter(
+      (r) =>
+        r.metadata.outcome === 'awaiting_source_revision' &&
+        currentIds.has(Number(r.metadata.source_event_id)),
+    );
   const stock = selected.filter(
     (r) => r.semantic_type === 'market_inventory_observation' && r.metadata.status === 'reported',
   );
@@ -117,6 +164,18 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
   }
   if (pendingSources.length) {
     reasons.push('Current source revision awaits extraction');
+    disposition = 'review';
+  }
+  if (awaiting.length) {
+    reasons.push('Reviewer reported a changed source fact; awaiting a new source revision');
+    disposition = 'review';
+  }
+  if (ambiguous.length) {
+    reasons.push('Ambiguous current statements require review');
+    disposition = 'review';
+  }
+  if (rejected.length) {
+    reasons.push('Invalid evidence attribution requires review');
     disposition = 'review';
   }
   if (quantities.length && available < Number(m.quantity)) {
@@ -156,7 +215,15 @@ export function deriveDecision(order, claimRows, sourceRows, version) {
     evidence_event_ids: evidence,
     source_event_ids: sourceIds,
     inventory_sources: stock.map((r) => r.metadata.source_scope).sort(),
-    input_signature: signature({ policy: POLICY_VERSION, order: m, evidence, sourceIds }),
+    input_signature: signature({
+      policy: POLICY_VERSION,
+      order: m,
+      evidence,
+      sourceIds,
+      rejected: rejected.map((row) => row.id).sort((a, b) => a - b),
+      ambiguous: ambiguous.map((row) => row.id).sort((a, b) => a - b),
+      awaiting: awaiting.map((row) => row.id).sort((a, b) => a - b),
+    }),
     policy_revision: POLICY_VERSION,
   };
 }

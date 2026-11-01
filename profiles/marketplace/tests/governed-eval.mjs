@@ -1,0 +1,326 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+import { Lobu, BASE, state, STATE_ROOT, awaitRun, writeReport } from '../client.mjs';
+import { compareArms } from '../../../evals/supplier-risk/gate.mjs';
+import { loadCases } from '../../../evals/supplier-risk/fixtures.mjs';
+
+// Governance contract for candidate versions. The comparisons here are
+// DETERMINISTIC SYNTHETIC FIXTURES that exercise the gate; they are not model
+// evidence. Approvals are left pending: no check approves or rejects anything.
+if (process.env.LOBU_EVAL_MUTATIONS !== '1')
+  throw new Error('Use LOBU_EVAL_MUTATIONS=1 in a disposable workspace only');
+const c = await Lobu.connect();
+const s = await state();
+const extract = Number(s.automations.extract);
+const govern = fileURLToPath(new URL('../../../evals/supplier-risk/govern.mjs', import.meta.url));
+const candidatePrompt = fileURLToPath(
+  new URL('../../../evals/supplier-risk/candidates/extract-supplier-v2.md', import.meta.url),
+);
+const checks = [];
+const sha = (t) => createHash('sha256').update(t).digest('hex');
+const active = async () =>
+  Number(
+    (await c.query('SELECT current_version_id FROM automations WHERE id=' + extract))[0]
+      .current_version_id,
+  );
+async function check(name, fn) {
+  try {
+    checks.push({ name, passed: true, detail: await fn() });
+    console.log(JSON.stringify({ name, passed: true }));
+  } catch (error) {
+    checks.push({ name, passed: false, error: error.message });
+    await writeReport('governed-eval', { at: new Date().toISOString(), checks, failed: 1 });
+    throw error;
+  }
+}
+function runGovern(extra, rejectWith) {
+  const r = spawnSync(process.execPath, [govern, ...extra], { encoding: 'utf8', env: process.env });
+  if (rejectWith) {
+    assert.notEqual(r.status, 0, 'Invalid evidence was accepted');
+    assert.match(r.stderr, rejectWith);
+    return;
+  }
+  if (r.status !== 0) throw new Error('govern failed: ' + (r.stderr || r.stdout).slice(-800));
+  return JSON.parse(r.stdout);
+}
+// Synthetic responses: answer each labelled case, optionally flipping some.
+const { cases, hashes } = await loadCases();
+const answer = (flip = []) => ({
+  signals: cases.map((x) => {
+    const wrong = flip.includes(x.case_id);
+    return {
+      case_id: x.case_id,
+      parent_event_id: x.source.id,
+      metadata: {
+        source_scope: x.source.metadata.source_scope,
+        source_record_key: x.source.metadata.source_record_key,
+        source_revision: x.source.metadata.source_revision,
+        seller_key: x.source.metadata.subject_key,
+        evidence_event_id: x.source.id,
+        statement_slot: 'supplier-risk',
+        demo_suite: 'enterprise-marketplace-v1',
+        synthetic: true,
+        review_required: true,
+        status: wrong ? 'reported' : x.expected.status,
+        risk_score: wrong ? 80 - x.expected.risk_score : x.expected.risk_score,
+      },
+    };
+  }),
+});
+async function comparisonFile(name, baselineFlips, candidateFlips) {
+  const cmp = compareArms(cases, {
+    baseline: [0, 1, 2].map(() => answer(baselineFlips)),
+    candidate: [0, 1, 2].map(() => answer(candidateFlips)),
+  });
+  const { promotionGate } = await import('../../../evals/supplier-risk/promotion.mjs');
+  const { versions } = await c.call('automations.getVersions', { automation_id: String(extract) });
+  const current = versions.find((v) => Number(v.version_id) === before);
+  const baselineDetails = await c.call('automations.getVersionDetails', {
+    automation_id: String(extract),
+    version: Number(current.version),
+  });
+  const promptHashes = {
+    baseline: sha(baselineDetails.prompt),
+    candidate: sha(await fs.readFile(candidatePrompt, 'utf8')),
+  };
+  const file = STATE_ROOT + name + '.json';
+  await fs.mkdir(STATE_ROOT, { recursive: true });
+  await fs.writeFile(
+    file,
+    JSON.stringify({
+      fixture_sha256: hashes,
+      prompt_sha256: promptHashes,
+      gate: promotionGate(cmp),
+      ...cmp,
+    }),
+  );
+  return file;
+}
+const before = await active();
+const evidence = ['--model-evidence', 'SYNTHETIC gate fixture; not model evidence'];
+
+await check('stale_evaluation_evidence_is_refused_before_staging', async () => {
+  const { versions: beforeVersions } = await c.call('automations.getVersions', {
+    automation_id: String(extract),
+  });
+  for (const field of ['prompt_sha256', 'fixture_sha256']) {
+    const file = await comparisonFile('stale-' + field, ['case-17', 'case-18'], []);
+    const comparison = JSON.parse(await fs.readFile(file, 'utf8'));
+    comparison[field][field === 'prompt_sha256' ? 'baseline' : 'v2'] = '0'.repeat(64);
+    await fs.writeFile(file, JSON.stringify(comparison));
+    runGovern(
+      ['--comparison', file, '--candidate-prompt', candidatePrompt, ...evidence],
+      /Comparison (prompt|fixture) hashes do not match/,
+    );
+  }
+  const { versions: afterVersions } = await c.call('automations.getVersions', {
+    automation_id: String(extract),
+  });
+  assert.equal(afterVersions.length, beforeVersions.length);
+  assert.equal(await active(), before);
+  return { stale_prompt_and_fixture_refused: true, versions_created: 0 };
+});
+
+await check('equal_scores_are_not_proposed', async () => {
+  const file = await comparisonFile('synthetic-equal', [], []);
+  const r = runGovern(['--comparison', file, '--candidate-prompt', candidatePrompt, ...evidence]);
+  assert.equal(r.proposal.decision, 'reject');
+  assert.ok(r.proposal.reasons.includes('no_measured_improvement'));
+  assert.equal(r.approval, null);
+  assert.equal(r.active_version_after, before);
+  return { evaluation_event_id: r.evaluation_event_id, reasons: r.proposal.reasons };
+});
+
+await check('regression_is_not_proposed', async () => {
+  const file = await comparisonFile('synthetic-regression', ['case-01', 'case-02'], ['case-03']);
+  const r = runGovern(['--comparison', file, '--candidate-prompt', candidatePrompt, ...evidence]);
+  assert.equal(r.proposal.decision, 'reject');
+  assert.ok(r.proposal.reasons.includes('per_case_regressions'));
+  assert.equal(r.active_version_after, before);
+  return { reasons: r.proposal.reasons };
+});
+
+let pending;
+await check('eligible_candidate_waits_for_human_approval', async () => {
+  const file = await comparisonFile('synthetic-improvement', ['case-17', 'case-18'], []);
+  const r = runGovern(['--comparison', file, '--candidate-prompt', candidatePrompt, ...evidence]);
+  assert.equal(r.proposal.decision, 'propose_promotion');
+  assert.equal(r.approval.approval, 'pending');
+  assert.equal(r.active_version_after, before, 'Promotion applied without approval');
+  pending = r;
+  const [card] = await c.query(
+    "SELECT metadata FROM events WHERE semantic_type='operation' AND run_id=" +
+      Number(r.approval.run_id) +
+      ' LIMIT 1',
+  );
+  assert.equal(card.metadata.proposal.actingAgentId, s.agent, 'Requested by the agent principal');
+  assert.equal(
+    sha(card.metadata.proposal.args.prompt),
+    sha(await fs.readFile(candidatePrompt, 'utf8')),
+  );
+  return {
+    approval_run_id: r.approval.run_id,
+    candidate_version_id: r.proposal.target_version_id,
+    acting_agent: card.metadata.proposal.actingAgentId,
+  };
+});
+
+await check('proposer_replay_does_not_duplicate_the_request', async () => {
+  const t = await c.call('automations.trigger', { automation_id: s.automations.propose }, true);
+  const run = await awaitRun(c, t.run_id, 90000);
+  assert.equal(run.output.replay, true);
+  assert.equal(run.output.approval_run_id, pending.approval.run_id);
+  return { replay: true };
+});
+
+await check('rollback_is_gated_and_restores_retained_content', async () => {
+  const { versions } = await c.call('automations.getVersions', { automation_id: String(extract) });
+  const original = versions.find((v) => Number(v.version) === 1);
+  const restoreTarget = Number(original.version_id) === before ? null : Number(original.version_id);
+  const target = restoreTarget ?? Number(pending.proposal.target_version_id);
+  const r = runGovern([
+    '--action',
+    'rollback',
+    '--restore-version',
+    String(target),
+    '--model-evidence',
+    'Operator rollback request (synthetic contract)',
+  ]);
+  assert.equal(r.proposal.decision, 'propose_rollback');
+  assert.equal(r.approval.approval, 'pending');
+  assert.equal(r.active_version_after, before);
+  const v = versions.find((x) => Number(x.version_id) === target);
+  const detail = await c.call('automations.getVersionDetails', {
+    automation_id: String(extract),
+    version: Number(v.version),
+  });
+  const [card] = await c.query(
+    "SELECT metadata FROM events WHERE semantic_type='operation' AND run_id=" +
+      Number(r.approval.run_id) +
+      ' LIMIT 1',
+  );
+  assert.equal(sha(card.metadata.proposal.args.prompt), sha(detail.prompt));
+  const noop = runGovern([
+    '--action',
+    'rollback',
+    '--restore-version',
+    String(before),
+    '--model-evidence',
+    'Operator rollback request (synthetic contract)',
+  ]);
+  assert.equal(noop.proposal.decision, 'reject');
+  assert.ok(noop.proposal.reasons.includes('already_active'));
+  return { approval_run_id: r.approval.run_id, restore_version_id: target };
+});
+
+// Only the disposable Compose install's synthetic operator may act as the
+// independent test reviewer. This never resolves a real user's pending request.
+let approvalsResolved = 0;
+if (process.env.LOBU_EVAL_REVIEWER_TESTS === '1') {
+  if (
+    process.env.LOBU_TOKEN ||
+    !['127.0.0.1', 'localhost', '[::1]'].includes(new URL(BASE).hostname) ||
+    !c.localInstallUser?.id?.startsWith('user_install_')
+  )
+    throw new Error('Reviewer transitions require a loopback disposable install-operator session');
+  await check('independent_test_reviewer_rejects_then_activates_and_rolls_back', async () => {
+    const rejected = await c.call(
+      'operations.reject',
+      { run_id: pending.approval.run_id, reason: 'Synthetic reviewer rejection' },
+      true,
+    );
+    assert.equal(rejected.rejected, true);
+    approvalsResolved++;
+    assert.equal(await active(), before);
+    const { run: rejectedRun } = await c.call('operations.getRun', pending.approval.run_id);
+    assert.equal(rejectedRun.approval_status, 'rejected');
+
+    const file = await comparisonFile(
+      'synthetic-retry-after-rejection',
+      ['case-17', 'case-18'],
+      [],
+    );
+    const retry = runGovern([
+      '--comparison',
+      file,
+      '--candidate-prompt',
+      candidatePrompt,
+      ...evidence,
+    ]);
+    assert.notEqual(retry.evaluation_event_id, pending.evaluation_event_id);
+    assert.notEqual(retry.approval.run_id, pending.approval.run_id);
+    assert.equal(retry.approval.approval, 'pending');
+    const approved = await c.call('operations.approve', { run_id: retry.approval.run_id }, true);
+    assert.equal(approved.approved, true);
+    approvalsResolved++;
+    const promoted = await active();
+    assert.notEqual(promoted, before);
+    const currentPrompt = async () => {
+      const { versions } = await c.call('automations.getVersions', {
+        automation_id: String(extract),
+      });
+      const currentId = await active();
+      const current = versions.find((v) => Number(v.version_id) === currentId);
+      return (
+        await c.call('automations.getVersionDetails', {
+          automation_id: String(extract),
+          version: Number(current.version),
+        })
+      ).prompt;
+    };
+    assert.equal(await currentPrompt(), await fs.readFile(candidatePrompt, 'utf8'));
+    const rollback = runGovern([
+      '--action',
+      'rollback',
+      '--restore-version',
+      String(before),
+      '--model-evidence',
+      'Synthetic reviewer rollback',
+    ]);
+    assert.equal(rollback.approval.approval, 'pending');
+    assert.equal(await active(), promoted);
+    const restored = await c.call('operations.approve', { run_id: rollback.approval.run_id }, true);
+    assert.equal(restored.approved, true);
+    approvalsResolved++;
+    const { versions } = await c.call('automations.getVersions', {
+      automation_id: String(extract),
+    });
+    const original = versions.find((v) => Number(v.version_id) === before);
+    const baselinePrompt = (
+      await c.call('automations.getVersionDetails', {
+        automation_id: String(extract),
+        version: Number(original.version),
+      })
+    ).prompt;
+    assert.equal(await currentPrompt(), baselinePrompt);
+    return {
+      rejected: true,
+      activated: true,
+      rolled_back: true,
+      reviewer: 'isolated install operator',
+      real_human_decisions: 0,
+    };
+  });
+}
+
+const report = {
+  at: new Date().toISOString(),
+  suite: 'governed-eval-contract-v1',
+  passed: checks.length,
+  failed: 0,
+  checks,
+  boundaries: {
+    synthetic_gate_fixtures: true,
+    model_evidence: false,
+    approvals_resolved: approvalsResolved,
+    real_human_decisions: 0,
+    human_gate: approvalsResolved
+      ? 'Only generated synthetic requests were resolved by the isolated test reviewer.'
+      : 'Pending approvals are left for a human reviewer; never approved by the test.',
+  },
+};
+await writeReport('governed-eval', report);
+console.log(JSON.stringify(report, null, 2));

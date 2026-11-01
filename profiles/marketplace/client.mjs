@@ -43,9 +43,14 @@ export class Lobu {
       signal: AbortSignal.timeout(15000),
     });
     const d = await r.json();
-    if (!r.ok || !d.session_token) throw new Error('Local bootstrap failed: HTTP ' + r.status);
+    if (!r.ok || !d.session_token)
+      throw new Error(
+        'Local bootstrap failed: HTTP ' +
+          r.status +
+          (typeof d.error === 'string' ? ' (' + d.error + ')' : ''),
+      );
     const cookie = (r.headers.getSetCookie?.() || []).map((x) => x.split(';')[0]).join('; ');
-    return new Lobu(d.session_token, org, cookie);
+    return Object.assign(new Lobu(d.session_token, org, cookie), { localInstallUser: d.user });
   }
   redact(value) {
     let text = String(value);

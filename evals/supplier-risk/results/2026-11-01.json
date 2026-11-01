@@ -1,0 +1,192 @@
+{
+  "date": "2026-11-01",
+  "synthetic": true,
+  "total_cases": 40,
+  "sets": {
+    "v1": {
+      "file": "cases.json",
+      "cases": 16
+    },
+    "v2": {
+      "file": "holdout-v2.json",
+      "cases": 24,
+      "labelling": "see holdout-v2.json labelling block and LABELING.md"
+    }
+  },
+  "fixture_sha256": {
+    "v1": "d6fd8561d9afc0a58c7179b285b654b61770cc4d201af79aff4000b0eccbbf24",
+    "v2": "e504c0b89fc95bfd83d8cd7274b7dba9e839e144d8a447617d8f70e5a5d96278"
+  },
+  "arms": {
+    "baseline": {
+      "prompt": "active extract Automation prompt (profiles/marketplace)",
+      "prompt_sha256": "4b3d042d476c78ab4f5f2c15ca07df8482bcc8695f5bfcf1e43f7147ac895f50",
+      "input_sha256": "05f360e73dae56683b756093075b55519708930907ce7ab0e5b100a505de843f"
+    },
+    "candidate": {
+      "prompt": "candidates/extract-supplier-v2.md",
+      "prompt_sha256": "763c770d0ce5327f71152dd5f65ebe59ca3a7e19f21e714fb718a000ef75e41f",
+      "input_sha256": "6adbf8ca15aa368a1ca521c4bab3fd0423abefcdc2ed61c0135788b95c0c4400"
+    }
+  },
+  "results": [
+    {
+      "model": "claude-haiku-5-5",
+      "sessions": "independent subagent sessions, no tools, no labels or scenario names",
+      "producer": "agent-produced (Claude Code subagents acting as the external model)",
+      "runs_per_arm": 3,
+      "exact_pass_per_run": {
+        "baseline": [39, 39, 40],
+        "candidate": [40, 40, 40]
+      },
+      "attribution_pass_per_run": {
+        "baseline": [40, 40, 40],
+        "candidate": [40, 40, 40]
+      },
+      "mean_exact": {
+        "baseline": 39.333333333333336,
+        "candidate": 40
+      },
+      "mean_judgment": {
+        "baseline": 39.333333333333336,
+        "candidate": 40
+      },
+      "per_set": {
+        "v1": {
+          "cases": 16,
+          "baseline_mean_exact": 16,
+          "candidate_mean_exact": 16
+        },
+        "v2": {
+          "cases": 24,
+          "baseline_mean_exact": 23.333333333333332,
+          "candidate_mean_exact": 24
+        }
+      },
+      "majority_regressions": [],
+      "majority_improvements": [],
+      "unstable_cases": ["case-21", "case-37"],
+      "attribution_failures": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "unexpected_outputs": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "contested_cases": [
+        {
+          "case_id": "case-21",
+          "scenario": "terse-beneficiary-verification-failure",
+          "baseline_passes": 2,
+          "baseline_majority": true,
+          "baseline_attribution_failures": 0,
+          "candidate_passes": 3,
+          "candidate_majority": true,
+          "candidate_attribution_failures": 0
+        },
+        {
+          "case_id": "case-37",
+          "scenario": "text-names-different-seller-id-than-metadata",
+          "baseline_passes": 2,
+          "baseline_majority": true,
+          "baseline_attribution_failures": 0,
+          "candidate_passes": 3,
+          "candidate_majority": true,
+          "candidate_attribution_failures": 0
+        }
+      ],
+      "gate": {
+        "decision": "reject",
+        "reasons": ["improvement_below_threshold", "no_case_level_improvement"],
+        "mean_exact_delta": 0.6666666666666643,
+        "thresholds": {
+          "min_runs": 3,
+          "min_delta_cases": 1
+        }
+      }
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "sessions": "independent subagent sessions, no tools, no labels or scenario names",
+      "producer": "agent-produced (Claude Code subagents acting as the external model)",
+      "runs_per_arm": 3,
+      "exact_pass_per_run": {
+        "baseline": [39, 39, 39],
+        "candidate": [40, 40, 40]
+      },
+      "attribution_pass_per_run": {
+        "baseline": [40, 40, 40],
+        "candidate": [40, 40, 40]
+      },
+      "mean_exact": {
+        "baseline": 39,
+        "candidate": 40
+      },
+      "mean_judgment": {
+        "baseline": 39,
+        "candidate": 40
+      },
+      "per_set": {
+        "v1": {
+          "cases": 16,
+          "baseline_mean_exact": 16,
+          "candidate_mean_exact": 16
+        },
+        "v2": {
+          "cases": 24,
+          "baseline_mean_exact": 23,
+          "candidate_mean_exact": 24
+        }
+      },
+      "majority_regressions": [],
+      "majority_improvements": ["case-37"],
+      "unstable_cases": [],
+      "attribution_failures": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "unexpected_outputs": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "contested_cases": [
+        {
+          "case_id": "case-37",
+          "scenario": "text-names-different-seller-id-than-metadata",
+          "baseline_passes": 0,
+          "baseline_majority": false,
+          "baseline_attribution_failures": 0,
+          "candidate_passes": 3,
+          "candidate_majority": true,
+          "candidate_attribution_failures": 0
+        }
+      ],
+      "gate": {
+        "decision": "propose_promotion",
+        "reasons": [],
+        "mean_exact_delta": 1,
+        "thresholds": {
+          "min_runs": 3,
+          "min_delta_cases": 1
+        }
+      }
+    }
+  ],
+  "interpretation": [
+    "Both models scored 16/16 on every run of the original v1 set in both arms; v1 cannot separate the prompts.",
+    "All measured differences come from two v2 cases. With 3 runs per arm this is not a statistically meaningful estimate.",
+    "Sonnet: every baseline run gave seller-ox-17 risk 80 on case-37, where the text names a different seller than the metadata subject; every candidate run scored it 0. The gate proposes promotion exactly at its one-case threshold.",
+    "Haiku: case-21 (one baseline run scored 60) and case-37 (one baseline run scored 80) were unstable, no majority-level change, so the gate rejects.",
+    "The candidate prompt and the labelling guideline were written by the same agent, so agreement with labels partly reflects shared wording. Case authoring and blind labelling were done by separate sessions after the candidate was frozen.",
+    "No candidate run regressed any case; no run in either arm failed source attribution.",
+    "The offline input includes the market_risk_signal metadata schema (status enum). The live native window does not: its extraction_schema types metadata only as an object. A live window processed on 2026-11-01 with the baseline prompt produced status \"candidate\" (claude-sonnet-5-5) and was refused before publication, so offline baseline scores overstate live baseline behavior."
+  ],
+  "earlier_round_artifact": "A first round on the same cases omitted the extraction schema from the model input; baselines then emitted status values outside the contract. That round measured the harness defect, not the prompts, and is not reported as evidence. prepare.mjs now includes the schema.",
+  "not_claimed": [
+    "model-weight training",
+    "production accuracy",
+    "statistical significance",
+    "an approved promotion: the governed proposal stays pending until a human decides it"
+  ]
+}

@@ -6,7 +6,9 @@ send messages, change permissions, or invent facts.
 For an explicitly reported suspicious payout-account change, propose risk_score 80.
 A routine update without fraud evidence scores 0. An explicit correction withdrawing
 an allegation must produce status retracted, risk_score 0, preserving the statement
-identity. Express uncertainty as a candidate for review, never a conviction.
+identity. For every other notice use status reported. The only allowed status
+values are reported and retracted. Express uncertainty in the reason and leave
+review_required true; these reports always require review, never imply a conviction.
 
 Each output uses the exact source event's scope, record key and integer revision.
 Use statement_slot supplier-risk, source subject_key as seller_key,

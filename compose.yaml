@@ -1,22 +1,35 @@
 services:
+  postgres:
+    image: pgvector/pgvector:pg18-trixie@sha256:5895949dfcdf308eb0cd31c950c93c14895c77f33fbedfecf1fa511ab1d4bcd2
+    environment:
+      POSTGRES_USER: lobu
+      POSTGRES_DB: lobu
+      # Disposable local database; reachable only inside the Compose network.
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ontology_pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U lobu -d lobu']
+      interval: 5s
+      timeout: 3s
+      retries: 30
   runtime:
-    image: ghcr.io/lobu-ai/lobu/preview@sha256:7191248773930ef4e68070d4e42e470952ebeb6a5a52dd1cf91534d40d8c3b0c
+    image: ghcr.io/lobu-ai/lobu-app@sha256:3601f581ddf6dfda595a930170d078ee112182bd30a80ec3769faac8f4efc681
     command:
-      [
-        'sh',
-        '-c',
-        'socat TCP-LISTEN:8788,fork,reuseaddr TCP:127.0.0.1:8787 & exec node packages/server/dist/server.bundle.mjs',
-      ]
+      ['sh', '-c', 'socat TCP-LISTEN:8788,fork,reuseaddr TCP:127.0.0.1:8787 & exec /app/start.sh']
     env_file: .runtime/runtime.env
     environment:
       HOST: 127.0.0.1
       PORT: '8787'
-      DATABASE_URL: file:///var/lib/lobu/data/lobu.db
+      DATABASE_URL: postgresql://lobu@postgres:5432/lobu?sslmode=disable
       NODE_ENV: development
       CHOKIDAR_USEPOLLING: 'true'
+      # This loopback-only disposable stack owns its database and local operator.
+      LOBU_RUN_OWNS_DB: '1'
       LOBU_LOCAL_INIT_ALLOW_PROXY: '0'
-    volumes:
-      - ontology_data:/var/lib/lobu/data
+    depends_on:
+      postgres:
+        condition: service_healthy
     mem_limit: 4g
     healthcheck:
       test:
@@ -30,25 +43,6 @@ services:
       timeout: 4s
       retries: 40
       start_period: 20s
-  web:
-    image: ghcr.io/lobu-ai/lobu/preview@sha256:7191248773930ef4e68070d4e42e470952ebeb6a5a52dd1cf91534d40d8c3b0c
-    network_mode: service:runtime
-    working_dir: /app/packages/owletto
-    command:
-      [
-        'node',
-        '/app/node_modules/vite/bin/vite.js',
-        'preview',
-        '--host',
-        '0.0.0.0',
-        '--port',
-        '5173',
-        '--strictPort',
-      ]
-    depends_on:
-      runtime:
-        condition: service_healthy
-    mem_limit: 768m
   gateway:
     image: nginx:1.28-alpine
     ports:
@@ -56,7 +50,7 @@ services:
     volumes:
       - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      web:
-        condition: service_started
+      runtime:
+        condition: service_healthy
 volumes:
-  ontology_data:
+  ontology_pgdata:
