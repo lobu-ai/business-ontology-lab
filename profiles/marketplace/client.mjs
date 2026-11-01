@@ -50,7 +50,7 @@ export class Lobu {
           (typeof d.error === 'string' ? ' (' + d.error + ')' : ''),
       );
     const cookie = (r.headers.getSetCookie?.() || []).map((x) => x.split(';')[0]).join('; ');
-    return new Lobu(d.session_token, org, cookie);
+    return Object.assign(new Lobu(d.session_token, org, cookie), { localInstallUser: d.user });
   }
   redact(value) {
     let text = String(value);

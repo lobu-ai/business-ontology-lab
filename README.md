@@ -87,7 +87,7 @@ The bootstrap command is the full installer. Native lobu.config.ts declarations 
 
 ## Repeatability and safety
 
-All business data is synthetic. No payments, shipments, stock reservations or sanctions are executed. Approval tests leave real human decisions pending and never impersonate a reviewer. Tests mutate only the selected demo workspace. Reports and session state belong in ignored .runtime directories, never public source control.
+All business data is synthetic. No payments, shipments, stock reservations or sanctions are executed. Approval tests leave real human decisions pending. CI uses the disposable install operator as an isolated test reviewer to reject, activate and roll back only its generated synthetic version requests. Tests mutate only the selected demo workspace. Reports and session state belong in ignored .runtime directories, never public source control.
 
 Re-running bootstrap must not duplicate records. Runtime upgrades, multi-replica deployments, real credentials and production capacity need separate evaluation. The published app runs with a separate Postgres database. Earlier embedded-database volumes require an explicit export/restore; see [runtime compatibility](docs/runtime-compatibility.md).
 

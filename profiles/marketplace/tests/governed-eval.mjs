@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { Lobu, state, STATE_ROOT, awaitRun, writeReport } from '../client.mjs';
+import { Lobu, BASE, state, STATE_ROOT, awaitRun, writeReport } from '../client.mjs';
 import { compareArms } from '../../../evals/supplier-risk/gate.mjs';
 import { loadCases } from '../../../evals/supplier-risk/fixtures.mjs';
 
@@ -216,6 +216,96 @@ await check('rollback_is_gated_and_restores_retained_content', async () => {
   return { approval_run_id: r.approval.run_id, restore_version_id: target };
 });
 
+// Only the disposable Compose install's synthetic operator may act as the
+// independent test reviewer. This never resolves a real user's pending request.
+let approvalsResolved = 0;
+if (process.env.LOBU_EVAL_REVIEWER_TESTS === '1') {
+  if (
+    process.env.LOBU_TOKEN ||
+    !['127.0.0.1', 'localhost', '[::1]'].includes(new URL(BASE).hostname) ||
+    !c.localInstallUser?.id?.startsWith('user_install_')
+  )
+    throw new Error('Reviewer transitions require a loopback disposable install-operator session');
+  await check('independent_test_reviewer_rejects_then_activates_and_rolls_back', async () => {
+    const rejected = await c.call(
+      'operations.reject',
+      { run_id: pending.approval.run_id, reason: 'Synthetic reviewer rejection' },
+      true,
+    );
+    assert.equal(rejected.rejected, true);
+    approvalsResolved++;
+    assert.equal(await active(), before);
+    const { run: rejectedRun } = await c.call('operations.getRun', pending.approval.run_id);
+    assert.equal(rejectedRun.approval_status, 'rejected');
+
+    const file = await comparisonFile(
+      'synthetic-retry-after-rejection',
+      ['case-17', 'case-18'],
+      [],
+    );
+    const retry = runGovern([
+      '--comparison',
+      file,
+      '--candidate-prompt',
+      candidatePrompt,
+      ...evidence,
+    ]);
+    assert.notEqual(retry.evaluation_event_id, pending.evaluation_event_id);
+    assert.notEqual(retry.approval.run_id, pending.approval.run_id);
+    assert.equal(retry.approval.approval, 'pending');
+    const approved = await c.call('operations.approve', { run_id: retry.approval.run_id }, true);
+    assert.equal(approved.approved, true);
+    approvalsResolved++;
+    const promoted = await active();
+    assert.notEqual(promoted, before);
+    const currentPrompt = async () => {
+      const { versions } = await c.call('automations.getVersions', {
+        automation_id: String(extract),
+      });
+      const currentId = await active();
+      const current = versions.find((v) => Number(v.version_id) === currentId);
+      return (
+        await c.call('automations.getVersionDetails', {
+          automation_id: String(extract),
+          version: Number(current.version),
+        })
+      ).prompt;
+    };
+    assert.equal(await currentPrompt(), await fs.readFile(candidatePrompt, 'utf8'));
+    const rollback = runGovern([
+      '--action',
+      'rollback',
+      '--restore-version',
+      String(before),
+      '--model-evidence',
+      'Synthetic reviewer rollback',
+    ]);
+    assert.equal(rollback.approval.approval, 'pending');
+    assert.equal(await active(), promoted);
+    const restored = await c.call('operations.approve', { run_id: rollback.approval.run_id }, true);
+    assert.equal(restored.approved, true);
+    approvalsResolved++;
+    const { versions } = await c.call('automations.getVersions', {
+      automation_id: String(extract),
+    });
+    const original = versions.find((v) => Number(v.version_id) === before);
+    const baselinePrompt = (
+      await c.call('automations.getVersionDetails', {
+        automation_id: String(extract),
+        version: Number(original.version),
+      })
+    ).prompt;
+    assert.equal(await currentPrompt(), baselinePrompt);
+    return {
+      rejected: true,
+      activated: true,
+      rolled_back: true,
+      reviewer: 'isolated install operator',
+      real_human_decisions: 0,
+    };
+  });
+}
+
 const report = {
   at: new Date().toISOString(),
   suite: 'governed-eval-contract-v1',
@@ -225,8 +315,11 @@ const report = {
   boundaries: {
     synthetic_gate_fixtures: true,
     model_evidence: false,
-    approvals_resolved: 0,
-    human_gate: 'Pending approvals are left for a human reviewer; never approved by the test.',
+    approvals_resolved: approvalsResolved,
+    real_human_decisions: 0,
+    human_gate: approvalsResolved
+      ? 'Only generated synthetic requests were resolved by the isolated test reviewer.'
+      : 'Pending approvals are left for a human reviewer; never approved by the test.',
   },
 };
 await writeReport('governed-eval', report);

@@ -45,6 +45,7 @@ jobs:
       - name: Verify synthetic feedback and graph contracts
         env:
           LOBU_EVAL_MUTATIONS: '1'
+          LOBU_EVAL_REVIEWER_TESTS: '1'
         run: |
           npm run llm:prepare -- correction
           npm run verify:feedback
