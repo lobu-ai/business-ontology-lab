@@ -1,0 +1,284 @@
+{
+  "captured_at": "2026-11-01T05:27:45.363099+00:00",
+  "purpose": "Recovery snapshots only. Not an applied implementation or a verified release. Original worktrees remain untouched.",
+  "artifacts": [
+    {
+      "file": "handoff/recovery/event-kind-freshness.patch",
+      "repository": "lobu-ai/lobu",
+      "base_commit": "c5f259e7739c78e2b9c461331f4f0b6ad370ba93",
+      "source_branch": "feat/ontology-evaluation-readiness",
+      "paths": [
+        "packages/server/src/__tests__/integration/automations/automation-reference-validation.test.ts",
+        "packages/server/src/__tests__/integration/tools/save-content-kind-validation.test.ts",
+        "packages/server/src/tools/admin/manage_automations/shared.ts",
+        "packages/server/src/utils/event-kind-validation.ts",
+        "packages/server/src/utils/persist-automation-event-output.ts",
+        "packages/server/src/utils/__tests__/event-kind-freshness.test.ts"
+      ],
+      "sha256": "d91069c83499d128c336cfaa42d251533b073e986555d7e614862d9a5581d6dc",
+      "bytes": 12838,
+      "applied": false,
+      "tests_reexecuted": false
+    },
+    {
+      "file": "handoff/recovery/event-kind-freshness-earlier.patch",
+      "repository": "lobu-ai/lobu",
+      "base_commit": "fd3ac4ee825a8e8e1eb40386d0e77cf2c08a99e6",
+      "source_branch": "feat/enterprise-ontology-evaluation",
+      "paths": [
+        "packages/server/src/__tests__/integration/automations/automation-reference-validation.test.ts",
+        "packages/server/src/tools/admin/manage_automations/shared.ts",
+        "packages/server/src/utils/event-kind-validation.ts",
+        "packages/server/src/utils/persist-automation-event-output.ts",
+        "packages/server/src/utils/__tests__/event-kind-freshness.test.ts"
+      ],
+      "sha256": "55de61b8736d0f19dcb9b09ae81c27a033b69e064699bbf3c959a9a36dba77a5",
+      "bytes": 8450,
+      "applied": false,
+      "tests_reexecuted": false
+    },
+    {
+      "file": "handoff/recovery/public-source-type-identity.patch",
+      "repository": "lobu-ai/lobu",
+      "base_commit": "962cf4637e5e1877343c276d290df9928decd9d2",
+      "source_branch": "feat/public-source-type-identity",
+      "paths": [
+        "docs/CONCEPTS.md",
+        "packages/client/src/generated/types.gen.ts",
+        "packages/core/src/__tests__/manage-entity-references.test.ts",
+        "packages/core/src/contracts/tools/manage-entity.ts",
+        "packages/server/src/__tests__/integration/relationships/federated-entity-links.test.ts",
+        "packages/server/src/__tests__/unit/manage-wire-schema.test.ts",
+        "packages/server/src/sandbox/method-metadata.ts",
+        "packages/server/src/tools/admin/manage_entity.ts",
+        "packages/server/src/utils/entity-reference.ts",
+        "packages/server/src/utils/relationship-reads.ts",
+        "db/migrations/20261101010000_public_source_type_references.sql"
+      ],
+      "sha256": "b96983b0632335c76895015a858e0566dfae9de74c97ac40f76a4318088ca78a",
+      "bytes": 55299,
+      "applied": false,
+      "tests_reexecuted": false
+    },
+    {
+      "file": "handoff/recovery/legacy-marketplace-initial.patch",
+      "repository": "lobu-ai/lobu",
+      "base_commit": "fd3ac4ee825a8e8e1eb40386d0e77cf2c08a99e6",
+      "source_branch": "feat/enterprise-ontology-evaluation",
+      "paths": [
+        "examples/enterprise-ontology/.gitignore",
+        "examples/enterprise-ontology/IDENTITY.md",
+        "examples/enterprise-ontology/README.md",
+        "examples/enterprise-ontology/SOUL.md",
+        "examples/enterprise-ontology/USER.md",
+        "examples/enterprise-ontology/audit_matrix.json",
+        "examples/enterprise-ontology/bootstrap.mjs",
+        "examples/enterprise-ontology/client.mjs",
+        "examples/enterprise-ontology/commerce_contracts.json",
+        "examples/enterprise-ontology/domain.mjs",
+        "examples/enterprise-ontology/install.mjs",
+        "examples/enterprise-ontology/lifecycle-tests.mjs",
+        "examples/enterprise-ontology/lobu.config.ts",
+        "examples/enterprise-ontology/normalize.ts",
+        "examples/enterprise-ontology/overview.tsx",
+        "examples/enterprise-ontology/package.json",
+        "examples/enterprise-ontology/reconcile.ts",
+        "examples/enterprise-ontology/refund.rules.ts",
+        "examples/enterprise-ontology/schema-policy.json",
+        "examples/enterprise-ontology/setup-workflows.mjs"
+      ],
+      "sha256": "87926f59dc08caeccea51530d733900d6a21f6f0eeba2ef10f066307f052cdcd",
+      "bytes": 52616,
+      "applied": false,
+      "tests_reexecuted": false
+    },
+    {
+      "file": "handoff/recovery/legacy-marketplace-readiness.patch",
+      "repository": "lobu-ai/lobu",
+      "base_commit": "c5f259e7739c78e2b9c461331f4f0b6ad370ba93",
+      "source_branch": "feat/ontology-evaluation-readiness",
+      "paths": [
+        "examples/enterprise-ontology/.gitignore",
+        "examples/enterprise-ontology/IDENTITY.md",
+        "examples/enterprise-ontology/README.md",
+        "examples/enterprise-ontology/SOUL.md",
+        "examples/enterprise-ontology/USER.md",
+        "examples/enterprise-ontology/audit_matrix.json",
+        "examples/enterprise-ontology/bootstrap.mjs",
+        "examples/enterprise-ontology/client.mjs",
+        "examples/enterprise-ontology/domain.mjs",
+        "examples/enterprise-ontology/install.mjs",
+        "examples/enterprise-ontology/lifecycle-tests.mjs",
+        "examples/enterprise-ontology/lobu.config.ts",
+        "examples/enterprise-ontology/normalize.ts",
+        "examples/enterprise-ontology/overview.tsx",
+        "examples/enterprise-ontology/package.json",
+        "examples/enterprise-ontology/reconcile.ts",
+        "examples/enterprise-ontology/refund.rules.ts",
+        "examples/enterprise-ontology/schema-policy.json",
+        "examples/enterprise-ontology/setup-workflows.mjs"
+      ],
+      "sha256": "4269e96c4c1e694fbe1bdfc755b833b28f322e55c256f57409913c23e492c394",
+      "bytes": 62271,
+      "applied": false,
+      "tests_reexecuted": false
+    },
+    {
+      "file": "handoff/recovery/legacy-financial-prototype.patch",
+      "repository": "lobu-ai/lobu",
+      "base_commit": "8b864c1acc4f3394c8c4ddb460017cfda971e700",
+      "source_branch": "feat/ontology-lab-macbook-20261030",
+      "paths": [
+        "examples/fibo-demo/.gitignore",
+        "examples/fibo-demo/apply_demo.py",
+        "examples/fibo-demo/publish_views.py",
+        "examples/fibo-demo/views/finance-demo.view.tsx",
+        "examples/fibo-demo/views/manifest.json",
+        "examples/fibo-demo/views/ontology-explorer.view.tsx",
+        "examples/fibo-demo/views/ownership-evidence.view.tsx"
+      ],
+      "sha256": "4f91eea7d1b3507898f86a8a0b5cb8be865caabb1d200909e7d45d271dd7ac06",
+      "bytes": 210672,
+      "applied": false,
+      "tests_reexecuted": false
+    }
+  ],
+  "excluded": [
+    {
+      "snapshot": "public-source-type-identity",
+      "path": "packages/owletto",
+      "reason": "Submodule pointer change is not accepted as part of this source snapshot; inspect separately before including."
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/.k8s-migration-state.json",
+      "reason": "Runtime/deployment report or retired private deployment configuration; not portable source",
+      "sha256": "c31feee1c9c020d898b443a1c790d772c7570b79dd5c8ea0772f3f587caf8ec4"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/fixture_validation.json",
+      "reason": "Runtime/deployment report or retired private deployment configuration; not portable source",
+      "sha256": "270a06e23ad10873e4fdc2cea59c911ea5260c1c5e003c2659069bc2b749ba8b"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/import_notes.json",
+      "reason": "Runtime/deployment report or retired private deployment configuration; not portable source",
+      "sha256": "cd8e03843d203b3e2a871cee230fb72e6011e8592f2cbad2174bb522c89a0fd7"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/k8s/migrate_baseline.py",
+      "reason": "Runtime/deployment report or retired private deployment configuration; not portable source",
+      "sha256": "77b1bccc0b1c6b319c2559b05107476215f8976a6329e47770f36151bb74de0d"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/k8s/normalize_baseline.py",
+      "reason": "Runtime/deployment report or retired private deployment configuration; not portable source",
+      "sha256": "2706996b11ac398700863de781a60e51e6067e396c1e378e7c5f46171fafcc16"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/k8s/ontology-lab.json",
+      "reason": "Runtime/deployment report or retired private deployment configuration; not portable source",
+      "sha256": "188d2739e9aa3eff5912ad9a22d40a87d63d2c913da8b451b956e2c914dedacc"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/k8s/verification-k8s.json",
+      "reason": "Runtime/deployment report or retired private deployment configuration; not portable source",
+      "sha256": "6f31d55b99d2707208af5453dfedf4f229de9aa570007ba20f68a3e71d0f2c58"
+    },
+    {
+      "snapshot": "ontology-evaluation-readiness",
+      "path": "config/knip.ts",
+      "reason": "Formatter churn and integration for retired example; preserve original locally, do not apply to core."
+    },
+    {
+      "path": ".runtime, .cache, .env*, credentials, node_modules, databases and unrelated worktree edits",
+      "reason": "Never publish private/runtime or unrelated state."
+    }
+  ],
+  "already_published": [
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/build_fibo_catalog.py",
+      "matches": ["profiles/fibo/build_fibo_catalog.py"],
+      "sha256": "88cfdc1950555f625b7dfb8a5064bcb1777881c44d7ce6aa3fe2fae26f189cb0"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/build_fixture.py",
+      "matches": ["profiles/fibo/build_fixture.py"],
+      "sha256": "a2d52636a6cd48214f71bfd2389a1db67c5dd5caad2116d37b353eb6fb03a645"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/demo_walkthrough.json",
+      "matches": ["profiles/fibo/demo_walkthrough.json"],
+      "sha256": "a0ffc9306da632c7206e76dbce95d423034308042bc081f885c5258bc667e89b"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/dependency-snapshots.json",
+      "matches": ["profiles/fibo/dependency-snapshots.json"],
+      "sha256": "e50bc62ae2ec68ec111f39eb74648afc87e47b1bf307511e3b1893ffee505225"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/financial_demo_fixture.json",
+      "matches": ["profiles/fibo/financial_demo_fixture.json"],
+      "sha256": "21bee872a6bd7d83de5ed4b5db82d2fc16e3910e340326016b727b53006bfb56"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/operational-mappings.json",
+      "matches": ["profiles/fibo/operational-mappings.json"],
+      "sha256": "caf262e96fce07df92b0fa1be589672dcc7dcb1e18fbb0b824a89002944c9cc3"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/operational-type-map.json",
+      "matches": ["profiles/fibo/operational-type-map.json"],
+      "sha256": "25fe184895b1a54f6b26b1e7ec08eb538d3ed0b004ce50d3b286f3e092e86e2b"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/pinned-source-tree.json",
+      "matches": ["profiles/fibo/pinned-source-tree.json"],
+      "sha256": "2aace858fd59247c16ca2dc300eefa7e0ae698fbe7ba097293df7b36e067d5d8"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/requirements.txt",
+      "matches": ["profiles/fibo/requirements.txt"],
+      "sha256": "57aeacad5ff503955bb4822cb01abb2af562c525da1dd24592d8f688c5c1e0ee"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/scenario_expectations.json",
+      "matches": ["profiles/fibo/scenario_expectations.json"],
+      "sha256": "6fa62a8dda0fbbf7c3b7e217f5a1684a43dab99e4ce8cc2719de949d1e022d66"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/schema_contract.json",
+      "matches": ["profiles/fibo/schema_contract.json"],
+      "sha256": "a768fcb863360660be3bf5f3dda05fccb2c811593677aa897435751c67f28c5a"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/verify_fibo_catalog.py",
+      "matches": ["profiles/fibo/verify_fibo_catalog.py"],
+      "sha256": "263f1589f695f060ac3bb4efd6c1b8002afa80a920d3b73758efc334d55da9d3"
+    },
+    {
+      "snapshot": "ontology-lab-macbook-20261030",
+      "path": "examples/fibo-demo/verify_live_demo.py",
+      "matches": ["profiles/fibo/verify_live_demo.py"],
+      "sha256": "9a7f7f36eba591aeb6f345dc6a5a2e82fd19573876e1f5956678aaa231d8be4b"
+    }
+  ]
+}

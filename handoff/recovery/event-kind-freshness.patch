@@ -1,0 +1,261 @@
+diff --git a/packages/server/src/__tests__/integration/automations/automation-reference-validation.test.ts b/packages/server/src/__tests__/integration/automations/automation-reference-validation.test.ts
+index 5cd82946a..d572ba093 100644
+--- a/packages/server/src/__tests__/integration/automations/automation-reference-validation.test.ts
++++ b/packages/server/src/__tests__/integration/automations/automation-reference-validation.test.ts
+@@ -24,6 +24,7 @@ import type { Env } from "../../../index";
+ import type { AuthContext } from "../../../tools/execute";
+ import { executeTool } from "../../../tools/execute";
+ import { ensureMemberEntityType } from "../../../utils/member-entity-type";
++import { primeMemberEventKinds } from "../../../utils/event-kind-validation";
+ import { cleanupTestDatabase, getTestDb } from "../../setup/test-db";
+ import { createTestAgent } from "../../setup/test-fixtures";
+ import { TestWorkspace } from "../../setup/test-mcp-client";
+@@ -389,6 +390,31 @@ describe("manage_automations reference validation", () => {
+ 		).rejects.toThrow(/Invalid event type 'not_a_registered_kind'/i);
+ 	});
+ 
++	it("accepts a just-registered output kind despite a stale cache", async () => {
++		await executeTool("manage_entity_schema", {
++			schema_type: "entity_type", action: "update", slug: "$member",
++			event_kinds: { note: {}, fresh_report: {} },
++		}, TEST_ENV, ctx);
++		primeMemberEventKinds(workspace.org.id, { note: {} });
++		const created = await executeTool("manage_automations", {
++			action: "create", slug: "fresh-output", prompt: "Report evidence.",
++			managed_agent_id: agentId, outputs: { reports: { event: "fresh_report" } },
++		}, TEST_ENV, ctx) as { automation_id: string };
++		expect(Number(created.automation_id)).toBeGreaterThan(0);
++	});
++
++	it("refuses a removed output kind despite its cached definition", async () => {
++		await executeTool("manage_entity_schema", {
++			schema_type: "entity_type", action: "update", slug: "$member",
++			event_kinds: { note: {} },
++		}, TEST_ENV, ctx);
++		primeMemberEventKinds(workspace.org.id, { note: {}, removed_report: {} });
++		await expect(executeTool("manage_automations", {
++			action: "create", slug: "removed-output", prompt: "Report evidence.",
++			managed_agent_id: agentId, outputs: { reports: { event: "removed_report" } },
++		}, TEST_ENV, ctx)).rejects.toThrow(/Invalid event type 'removed_report'/i);
++	});
++
+ 	it("accepts the built-in draft_reply output type", async () => {
+ 		const created = (await executeTool(
+ 			"manage_automations",
+diff --git a/packages/server/src/__tests__/integration/tools/save-content-kind-validation.test.ts b/packages/server/src/__tests__/integration/tools/save-content-kind-validation.test.ts
+index 90f8968c4..83f61c023 100644
+--- a/packages/server/src/__tests__/integration/tools/save-content-kind-validation.test.ts
++++ b/packages/server/src/__tests__/integration/tools/save-content-kind-validation.test.ts
+@@ -3,8 +3,10 @@
+ import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
+ import {
+   primeMemberEventKinds,
++  type EventKindDefinition,
+   validateSaveContentSemanticType,
+ } from '../../../utils/event-kind-validation';
++import { ensureMemberEntityType } from '../../../utils/member-entity-type';
+ import { cleanupTestDatabase, getTestDb } from '../../setup/test-db';
+ import { createTestEntity, createTestOrganization } from '../../setup/test-fixtures';
+ 
+@@ -23,6 +25,7 @@ describe('validateSaveContentSemanticType > entity-type kinds', () => {
+   beforeAll(async () => {
+     await cleanupTestDatabase();
+     org = await createTestOrganization({ name: 'Kind Validation Org' });
++    await ensureMemberEntityType(org.id);
+     entity = await createTestEntity({ name: 'Kind Validation Topic', organization_id: org.id });
+     alternative = await createTestEntity({
+       name: 'Alternative Kind Validation Topic',
+@@ -63,8 +66,18 @@ describe('validateSaveContentSemanticType > entity-type kinds', () => {
+     `;
+   });
+ 
+-  beforeEach(() => {
+-    primeMemberEventKinds(org.id, { note: { description: 'A note' } });
++  async function setMemberKinds(kinds: Record<string, EventKindDefinition> | null) {
++    // Write the actual schema: authoring no longer treats a cache as DB truth.
++    await sql`
++      UPDATE entity_types
++      SET event_kinds = ${kinds === null ? null : JSON.stringify(kinds)}::jsonb
++      WHERE organization_id = ${org.id} AND slug = '$member'
++    `;
++    primeMemberEventKinds(org.id, kinds);
++  }
++
++  beforeEach(async () => {
++    await setMemberKinds({ note: { description: 'A note' } });
+   });
+ 
+   it('accepts metadata that matches the declared kind', async () => {
+@@ -121,7 +134,7 @@ describe('validateSaveContentSemanticType > entity-type kinds', () => {
+   });
+ 
+   it('accepts a matching $member kind after a linked metadata mismatch', async () => {
+-    primeMemberEventKinds(org.id, { source_item: { description: 'An unrestricted item' } });
++    await setMemberKinds({ source_item: { description: 'An unrestricted item' } });
+     const result = await validateSaveContentSemanticType(
+       'source_item',
+       { item: 'reply' },
+@@ -133,7 +146,7 @@ describe('validateSaveContentSemanticType > entity-type kinds', () => {
+ 
+   it('preserves the $member metadata error when it also declares the kind', async () => {
+     const memberSchema = { type: 'object', required: ['member_item'] };
+-    primeMemberEventKinds(org.id, { source_item: { metadataSchema: memberSchema } });
++    await setMemberKinds({ source_item: { metadataSchema: memberSchema } });
+     const result = await validateSaveContentSemanticType(
+       'source_item',
+       { item: 'reply' },
+@@ -146,7 +159,7 @@ describe('validateSaveContentSemanticType > entity-type kinds', () => {
+   });
+ 
+   it('preserves permissive validation when there is no $member registry', async () => {
+-    primeMemberEventKinds(org.id, null);
++    await setMemberKinds(null);
+     const result = await validateSaveContentSemanticType(
+       'source_item',
+       { item: 'reply' },
+diff --git a/packages/server/src/tools/admin/manage_automations/shared.ts b/packages/server/src/tools/admin/manage_automations/shared.ts
+index 511d52375..c0f4ae5c2 100644
+--- a/packages/server/src/tools/admin/manage_automations/shared.ts
++++ b/packages/server/src/tools/admin/manage_automations/shared.ts
+@@ -544,7 +544,8 @@ export async function assertOutputEventTypesExist(
+       event.trim(),
+       {},
+       organizationId,
+-      entityIds.length > 0 ? entityIds : undefined
++      entityIds.length > 0 ? entityIds : undefined,
++      getDb()
+     );
+     if (!validation.valid) {
+       throw new ToolUserError(
+diff --git a/packages/server/src/utils/event-kind-validation.ts b/packages/server/src/utils/event-kind-validation.ts
+index d58ba542b..e12386800 100644
+--- a/packages/server/src/utils/event-kind-validation.ts
++++ b/packages/server/src/utils/event-kind-validation.ts
+@@ -316,16 +316,22 @@ export async function validateSaveContentSemanticType(
+   semanticType: string,
+   metadata: Record<string, unknown> | undefined | null,
+   orgId: string,
+-  entityIds?: number[]
++  entityIds?: number[],
++  db?: DbClient
+ ): Promise<KindValidationResult> {
+-  const memberKinds = await getMemberEventKinds(orgId);
++  // This entry point gates writes/authoring, including ordinary saves, view
++  // actions and notifications. Always read authoritative state: a per-pod cache
++  // may lag a kind added, removed or tightened on another replica. Rendering
++  // may still use the cached resolver. A caller transaction must stay local.
++  const registryDb = db ?? getDb();
++  const memberKinds = await getMemberEventKinds(orgId, registryDb);
+ 
+   // An event can be linked to several entity types. Accept a custom kind when
+   // any linked type declares it; array order must not change authorability.
+   let declaredMismatch: KindValidationResult | null = null;
+   if (entityIds && entityIds.length > 0) {
+     for (const entityId of entityIds) {
+-      const entityTypeKinds = await getEntityTypeEventKinds(orgId, entityId);
++      const entityTypeKinds = await getEntityTypeEventKinds(orgId, entityId, registryDb);
+       if (!entityTypeKinds) continue;
+       // Try entity type kinds first (more specific)
+       const entityResult = validateKindAgainstDefinitions(semanticType, metadata, entityTypeKinds);
+diff --git a/packages/server/src/utils/persist-automation-event-output.ts b/packages/server/src/utils/persist-automation-event-output.ts
+index 2bdce2c59..8cfca873a 100644
+--- a/packages/server/src/utils/persist-automation-event-output.ts
++++ b/packages/server/src/utils/persist-automation-event-output.ts
+@@ -236,7 +236,8 @@ export async function persistAutomationEventOutput(
+       params.output.event,
+       metadata,
+       params.organizationId,
+-      entityIds.length > 0 ? entityIds : undefined
++      entityIds.length > 0 ? entityIds : undefined,
++      params.tx
+     );
+     if (!kindValidation.valid) {
+       throw new ToolUserError(
+diff --git a/packages/server/src/utils/__tests__/event-kind-freshness.test.ts b/packages/server/src/utils/__tests__/event-kind-freshness.test.ts
+new file mode 100644
+index 000000000..a979be85b
+--- /dev/null
++++ b/packages/server/src/utils/__tests__/event-kind-freshness.test.ts
+@@ -0,0 +1,82 @@
++import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
++import type { DbClient } from '../../db/client';
++
++const state = {
++  member: {} as Record<string, unknown>,
++  entity: {} as Record<string, unknown>,
++  query: vi.fn(),
++};
++let api: typeof import('../event-kind-validation');
++let serial = 0;
++
++beforeEach(async () => {
++  vi.resetModules();
++  state.member = { note: {} };
++  state.entity = {};
++  state.query.mockReset();
++  state.query.mockImplementation(async (strings: TemplateStringsArray) => [{
++    event_kinds: strings.join('').includes('FROM entities e') ? state.entity : state.member,
++  }]);
++  vi.doMock('../../db/client', () => ({ getDb: () => state.query }));
++  api = await import('../event-kind-validation');
++});
++
++afterEach(() => {
++  vi.doUnmock('../../db/client');
++  vi.resetModules();
++});
++
++function organization() { return 'freshness-regression-' + (++serial); }
++function transaction() { return state.query as unknown as DbClient; }
++
++describe('authoritative event registry validation', () => {
++  it('accepts a newly declared kind despite a warmed member cache', async () => {
++    const org = organization();
++    api.primeMemberEventKinds(org, { note: {} });
++    state.member = { note: {}, new_kind: {} };
++    const result = await api.validateSaveContentSemanticType('new_kind', {}, org, undefined, transaction());
++    expect(result.valid).toBe(true);
++  });
++
++  it('ordinary saves and action validation do not need an explicit transaction to see changes', async () => {
++    const org = organization();
++    api.primeMemberEventKinds(org, { note: {} });
++    state.member = { note: {}, new_kind: {} };
++    expect((await api.validateSaveContentSemanticType('new_kind', {}, org)).valid).toBe(true);
++  });
++
++  it('enforces tightened metadata instead of a loose cached schema', async () => {
++    const org = organization();
++    api.primeMemberEventKinds(org, { report: {} });
++    state.member = { report: { metadataSchema: {
++      type: 'object', required: ['source_revision'],
++      properties: { source_revision: { type: 'integer' } },
++    } } };
++    const result = await api.validateSaveContentSemanticType('report', { text: 'missing revision' }, org, undefined, transaction());
++    expect(result.valid).toBe(false);
++    expect(result.errors.join(' ')).toContain('source_revision');
++  });
++
++  it('rejects a removed kind rather than accepting its cached definition', async () => {
++    const org = organization();
++    api.primeMemberEventKinds(org, { retired: {} });
++    expect((await api.validateSaveContentSemanticType('retired', {}, org)).valid).toBe(false);
++  });
++
++  it('bypasses linked-entity caches as well as the member cache', async () => {
++    const org = organization();
++    api.primeMemberEventKinds(org, { note: {} });
++    state.entity = { old_kind: {} };
++    await api.resolveEventKindDefinition('old_kind', org, [42]);
++    state.entity = { new_entity_kind: {} };
++    expect((await api.validateSaveContentSemanticType('new_entity_kind', {}, org, [42], transaction())).valid).toBe(true);
++  });
++
++  it('does not publish transaction-local definitions into the rendering cache', async () => {
++    const org = organization();
++    api.primeMemberEventKinds(org, { note: {} });
++    state.member = { note: {}, uncommitted: {} };
++    expect((await api.validateSaveContentSemanticType('uncommitted', {}, org, undefined, transaction())).valid).toBe(true);
++    expect(await api.resolveEventKindDefinition('uncommitted', org)).toBeNull();
++  });
++});

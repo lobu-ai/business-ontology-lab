@@ -1,0 +1,909 @@
+diff --git a/docs/CONCEPTS.md b/docs/CONCEPTS.md
+index 6e604d6ad..7d81c2e0c 100644
+--- a/docs/CONCEPTS.md
++++ b/docs/CONCEPTS.md
+@@ -45,6 +45,17 @@ must advertise both `queryCapabilities.exactMatch` and `queryCapabilities.verbat
+ unsupported sources reject the lookup before executing it. Legacy view slugs
+ retain trimmed matching.
+ 
++Reference selectors also accept a discovered numeric entity-type ID. A string
++type slug resolves only in the current workspace; a numeric type ID identifies
++one exact schema and derives its owner. Private authored relationships may
++target public source-backed types, with live reads limited to the target's
++public visitor projection. The caller's agent read restrictions still apply,
++private source connections remain inaccessible, and this grants no permission
++to switch execution workspaces. Persisted references retain type IDs, not
++re-resolved names; retiring a type cannot retarget old edges to a reused slug.
++Portable configurations resolve schema IDs at install time rather than storing
++database-specific IDs.
++
+ `get` and `listLinks` accept either reference. `link`, `unlink`, and `updateLink`
+ accept `from_entity_id`/`to_entity_id`, with `from_entity_type`/`to_entity_type`
+ required for strings. Ordinary relationships support every stored/source pair.
+diff --git a/packages/client/src/generated/types.gen.ts b/packages/client/src/generated/types.gen.ts
+index 82ddc944d..9bd74c572 100644
+--- a/packages/client/src/generated/types.gen.ts
++++ b/packages/client/src/generated/types.gen.ts
+@@ -1104,6 +1104,24 @@ export type OpenViewResponse = OpenViewResponses[keyof OpenViewResponses];
+ 
+ export type ManageEntityData = {
+   body:
++    | {
++        /**
++         * Fetch one entity.
++         */
++        action: "get";
++        /**
++         * A stored integer ID, or a source key. String IDs require the accompanying entity_type; keys are case-sensitive and never coerced to integers.
++         */
++        entity_id: number | string;
++        /**
++         * [get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access.
++         */
++        entity_type?: string | number;
++        /**
++         * [get] Return the entity even if it is soft-deleted (deleted_at set). [list_links] Include soft-deleted relationships.
++         */
++        include_deleted?: boolean;
++      }
+     | {
+         /**
+          * Create an entity of a given type.
+@@ -1273,24 +1291,6 @@ export type ManageEntityData = {
+           run_id: number;
+         };
+       }
+-    | {
+-        /**
+-         * Fetch one entity.
+-         */
+-        action: "get";
+-        /**
+-         * A stored integer ID, or a source key. String IDs require the accompanying entity_type; keys are case-sensitive and never coerced to integers.
+-         */
+-        entity_id: number | string;
+-        /**
+-         * Entity type as defined in your workspace
+-         */
+-        entity_type?: string;
+-        /**
+-         * [get] Return the entity even if it is soft-deleted (deleted_at set). [list_links] Include soft-deleted relationships.
+-         */
+-        include_deleted?: boolean;
+-      }
+     | {
+         /**
+          * Delete an entity (force_delete_tree for cascading).
+@@ -1344,13 +1344,13 @@ export type ManageEntityData = {
+          */
+         to_entity_id: number | string;
+         /**
+-         * Entity type as defined in your workspace
++         * [get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access.
+          */
+-        from_entity_type?: string;
++        from_entity_type?: string | number;
+         /**
+-         * Entity type as defined in your workspace
++         * [get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access.
+          */
+-        to_entity_type?: string;
++        to_entity_type?: string | number;
+         /**
+          * [link/unlink/update_link/list_links] Relationship type slug
+          */
+@@ -1418,13 +1418,13 @@ export type ManageEntityData = {
+          */
+         to_entity_id?: number | string;
+         /**
+-         * Entity type as defined in your workspace
++         * [get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access.
+          */
+-        from_entity_type?: string;
++        from_entity_type?: string | number;
+         /**
+-         * Entity type as defined in your workspace
++         * [get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access.
+          */
+-        to_entity_type?: string;
++        to_entity_type?: string | number;
+         /**
+          * [link/unlink/update_link/list_links] Relationship type slug
+          */
+@@ -1448,13 +1448,13 @@ export type ManageEntityData = {
+          */
+         to_entity_id?: number | string;
+         /**
+-         * Entity type as defined in your workspace
++         * [get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access.
+          */
+-        from_entity_type?: string;
++        from_entity_type?: string | number;
+         /**
+-         * Entity type as defined in your workspace
++         * [get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access.
+          */
+-        to_entity_type?: string;
++        to_entity_type?: string | number;
+         /**
+          * [link/unlink/update_link/list_links] Relationship type slug
+          */
+@@ -1484,9 +1484,9 @@ export type ManageEntityData = {
+          */
+         entity_id?: number | string;
+         /**
+-         * Entity type as defined in your workspace
++         * [get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access.
+          */
+-        entity_type?: string;
++        entity_type?: string | number;
+         /**
+          * [list_links] A record of a source-backed entity type, instead of entity_id. Its relationships are read live from the event kinds that declare them; stores nothing.
+          */
+@@ -1604,6 +1604,7 @@ export type ManageEntityResponses = {
+             root_id: number;
+             member_ids: Array<number>;
+           };
++          entity_type_id?: number;
+           entity_type: string;
+           name: string;
+           slug: string;
+@@ -1644,6 +1645,7 @@ export type ManageEntityResponses = {
+             root_id: number;
+             member_ids: Array<number>;
+           };
++          entity_type_id?: number;
+           entity_type: string;
+           name: string;
+           slug: string;
+@@ -1684,6 +1686,7 @@ export type ManageEntityResponses = {
+             root_id: number;
+             member_ids: Array<number>;
+           };
++          entity_type_id?: number;
+           entity_type: string;
+           name: string;
+           slug: string;
+@@ -1734,6 +1737,7 @@ export type ManageEntityResponses = {
+             root_id: number;
+             member_ids: Array<number>;
+           };
++          entity_type_id?: number;
+           entity_type: string;
+           name: string;
+           slug: string;
+@@ -1817,6 +1821,10 @@ export type ManageEntityResponses = {
+           relationship_type_name: string;
+           is_symmetric: boolean;
+           acl_managed: boolean;
++          from_entity_type_id?: number;
++          to_entity_type_id?: number;
++          from_entity_url?: string;
++          to_entity_url?: string;
+           from_entity_name?: string;
+           from_entity_slug?: string;
+           from_entity_type?: string;
+@@ -1853,6 +1861,10 @@ export type ManageEntityResponses = {
+           relationship_type_name: string;
+           is_symmetric: boolean;
+           acl_managed: boolean;
++          from_entity_type_id?: number;
++          to_entity_type_id?: number;
++          from_entity_url?: string;
++          to_entity_url?: string;
+           from_entity_name?: string;
+           from_entity_slug?: string;
+           from_entity_type?: string;
+@@ -1913,6 +1925,10 @@ export type ManageEntityResponses = {
+           relationship_type_name: string;
+           is_symmetric: boolean;
+           acl_managed: boolean;
++          from_entity_type_id?: number;
++          to_entity_type_id?: number;
++          from_entity_url?: string;
++          to_entity_url?: string;
+           from_entity_name?: string;
+           from_entity_slug?: string;
+           from_entity_type?: string;
+@@ -1978,6 +1994,10 @@ export type ManageEntityResponses = {
+           relationship_type_name: string;
+           is_symmetric: boolean;
+           acl_managed: boolean;
++          from_entity_type_id?: number;
++          to_entity_type_id?: number;
++          from_entity_url?: string;
++          to_entity_url?: string;
+           from_entity_name?: string;
+           from_entity_slug?: string;
+           from_entity_type?: string;
+diff --git a/packages/core/src/__tests__/manage-entity-references.test.ts b/packages/core/src/__tests__/manage-entity-references.test.ts
+index 6d81d300d..45d8fbbaa 100644
+--- a/packages/core/src/__tests__/manage-entity-references.test.ts
++++ b/packages/core/src/__tests__/manage-entity-references.test.ts
+@@ -8,6 +8,16 @@ import {
+ } from "../contracts/tools/manage-entity";
+ 
+ describe("entity references", () => {
++  it("accepts discovered type IDs without coercing string source keys", () => {
++    expect(Value.Check(GetEntityAction, { action: "get", entity_id: "007", entity_type: 101 })).toBe(true);
++    expect(Value.Check(LinkEntitiesAction, { action: "link", from_entity_id: 10,
++      to_entity_id: "007", to_entity_type: 101, relationship_type_slug: "related-to" })).toBe(true);
++    expect(Value.Check(ListLinksAction, { action: "list_links", entity_id: "007", entity_type: 101 })).toBe(true);
++    for (const type of [0, -1, 1.5, Number.MAX_SAFE_INTEGER + 1]) {
++      expect(Value.Check(GetEntityAction, { action: "get", entity_id: "007", entity_type: type })).toBe(false);
++    }
++  });
++
+   it("accepts typed source keys on the existing entity fields", () => {
+     expect(
+       Value.Check(GetEntityAction, {
+diff --git a/packages/core/src/contracts/tools/manage-entity.ts b/packages/core/src/contracts/tools/manage-entity.ts
+index 2a3c19992..c7b6abdcb 100644
+--- a/packages/core/src/contracts/tools/manage-entity.ts
++++ b/packages/core/src/contracts/tools/manage-entity.ts
+@@ -22,6 +22,12 @@ const EntityType = Type.String({
+   description: "Entity type as defined in your workspace",
+ });
+ 
++// Type names are local; a discovered numeric ID identifies one immutable type.
++const EntityReferenceType = Type.Union(
++  [EntityType, Type.Integer({ minimum: 1, maximum: Number.MAX_SAFE_INTEGER })],
++  { description: "[get/list_links and relationship endpoints] A local type slug or discovered numeric type ID. Other actions require a slug. Foreign IDs allow only public-record reads, not workspace access." }
++);
++
+ const EntityId = Type.Union(
+   [
+     Type.Integer({ minimum: 1, maximum: Number.MAX_SAFE_INTEGER }),
+@@ -98,8 +104,8 @@ const IncludeDeleted = Type.Boolean({
+ const EdgeEndpoints = {
+   from_entity_id: EntityId,
+   to_entity_id: EntityId,
+-  from_entity_type: Type.Optional(EntityType),
+-  to_entity_type: Type.Optional(EntityType),
++  from_entity_type: Type.Optional(EntityReferenceType),
++  to_entity_type: Type.Optional(EntityReferenceType),
+   relationship_type_slug: Type.String({
+     description: "[link/unlink/update_link/list_links] Relationship type slug",
+     minLength: 1,
+@@ -213,7 +219,7 @@ export const ListEntitiesAction = Type.Object({
+ export const GetEntityAction = Type.Object({
+   action: Type.Literal("get", { description: "Fetch one entity." }),
+   entity_id: EntityId,
+-  entity_type: Type.Optional(EntityType),
++  entity_type: Type.Optional(EntityReferenceType),
+   include_deleted: Type.Optional(IncludeDeleted),
+ });
+ 
+@@ -323,7 +329,7 @@ export const ListLinksAction = Type.Object({
+     description: "List relationships for an entity with filters + counts.",
+   }),
+   entity_id: Type.Optional(EntityId),
+-  entity_type: Type.Optional(EntityType),
++  entity_type: Type.Optional(EntityReferenceType),
+   record: Type.Optional(
+     Type.Object(
+       {
+@@ -387,10 +393,12 @@ export const DiscoverDuplicatesAction = Type.Object({
+ });
+ 
+ export const ManageEntitySchema = Type.Union([
++  // MCP flattens duplicate fields first-occurrence-wins: advertise the read
++  // selector superset while each mutation still validates its slug-only input.
++  GetEntityAction,
+   CreateEntityAction,
+   UpdateEntityAction,
+   ListEntitiesAction,
+-  GetEntityAction,
+   DeleteEntityAction,
+   LinkEntitiesAction,
+   UnlinkEntitiesAction,
+@@ -446,6 +454,11 @@ export const RelationshipRowSchema = Type.Object({
+   // dead affordance this exists to remove. Every producer projects it from
+   // the one shared RELATIONSHIP_SELECT, so no path needs to omit it.
+   acl_managed: Type.Boolean(),
++  from_entity_type_id: Type.Optional(Type.Integer({ minimum: 1 })),
++  to_entity_type_id: Type.Optional(Type.Integer({ minimum: 1 })),
++  // Canonical links for foreign endpoints; same-workspace peeks are unchanged.
++  from_entity_url: Type.Optional(Type.String()),
++  to_entity_url: Type.Optional(Type.String()),
+   from_entity_name: Type.Optional(Type.String()),
+   from_entity_slug: Type.Optional(Type.String()),
+   from_entity_type: Type.Optional(Type.String()),
+@@ -495,6 +508,7 @@ export type EntityIdentity = Static<typeof EntityIdentitySchema>;
+ export const ManageEntityItemSchema = Type.Object({
+   id: Type.Union([EntityId, Type.Null()]),
+   identity: Type.Optional(EntityIdentitySchema),
++  entity_type_id: Type.Optional(Type.Integer({ minimum: 1 })),
+   entity_type: Type.String(),
+   name: Type.String(),
+   slug: Type.String(),
+diff --git a/packages/server/src/__tests__/integration/relationships/federated-entity-links.test.ts b/packages/server/src/__tests__/integration/relationships/federated-entity-links.test.ts
+index fc09241cf..d339c3e0d 100644
+--- a/packages/server/src/__tests__/integration/relationships/federated-entity-links.test.ts
++++ b/packages/server/src/__tests__/integration/relationships/federated-entity-links.test.ts
+@@ -3,7 +3,8 @@ import { cleanupTestDatabase, getTestDb } from '../../setup/test-db';
+ import { createAuthProfile } from '../../../utils/auth-profiles';
+ import { resolvePath } from '../../../tools/resolve_path';
+ import { querySqlImpl } from '../../../tools/admin/query_sql';
+-import { ownerToolContext } from '../../setup/test-fixtures';
++import { createTestAgent, ownerToolContext } from '../../setup/test-fixtures';
++import { upsertEntityApprovalPolicy } from '../../../authz/entity-policy';
+ import { TestWorkspace } from '../../setup/test-mcp-client';
+ import * as entityReferences from '../../../utils/entity-reference';
+ import { ToolUserError } from '../../../utils/errors';
+@@ -25,6 +26,117 @@ describe('typed references and authored source relationships', () => {
+     stored = created.entity.id;
+   });
+ 
++  it('public source references preserve type identity and private edge ownership', async () => {
++    const catalog = await TestWorkspace.create({ name: 'Public source reference fixture' });
++    const db = getTestDb();
++    await db`UPDATE organization SET visibility = 'public' WHERE id = ${catalog.org.id}`;
++    await catalog.owner.entity_schema.createType({ slug: type, name: 'Public source items',
++      backing: { sql: "SELECT '007' AS id, 'Public Seven' AS name" },
++      metadata_schema: { type: 'object', 'x-lobu-record-key': 'id' } });
++    const [row] = await db`SELECT id FROM entity_types WHERE organization_id = ${catalog.org.id} AND slug = ${type}`;
++    const typeId = Number(row.id);
++    const got = await ws.owner.entities.get({ entity_id: '007', entity_type: typeId });
++    expect(got.entity).toMatchObject({ id: '007', name: 'Public Seven', entity_type: type });
++    const local = await ws.owner.entities.get({ entity_id: '007', entity_type: type });
++    expect(local.entity.name).toBe('Source Seven');
++    const linked = await ws.owner.entities.link({ from_entity_id: stored, to_entity_id: '007',
++      to_entity_type: typeId, relationship_type_slug: 'related-item' });
++    const edgeId = Number(linked.relationship.id);
++    const [edge] = await db`SELECT organization_id, to_entity_type_id, to_source_key FROM entity_relationships WHERE id = ${edgeId}`;
++    expect(edge).toMatchObject({ organization_id: ws.org.id, to_entity_type_id: typeId, to_source_key: '007' });
++    const listed = await ws.owner.entities.listLinks({ entity_id: stored });
++    expect(listed.relationships).toEqual(expect.arrayContaining([expect.objectContaining({ id: edgeId, to_entity_name: 'Public Seven' })]));
++    const revised = await ws.owner.entities.updateLink({ relationship_id: edgeId, confidence: 0.8 });
++    expect(revised.relationship.confidence).toBe(0.8);
++    const audits = await db`SELECT organization_id, linked_org_ids FROM events WHERE metadata->>'relationshipId' = ${String(edgeId)}`;
++    expect(audits.length).toBeGreaterThan(0);
++    for (const audit of audits) {
++      expect(audit.organization_id).toBe(ws.org.id);
++      expect(audit.linked_org_ids ?? []).not.toContain(catalog.org.id);
++    }
++    const publicLinks = await catalog.owner.entities.listLinks({ entity_id: '007', entity_type: type });
++    expect(publicLinks.relationships.map((item: any) => Number(item.id))).not.toContain(edgeId);
++    const reverse = await ws.owner.entities.listLinks({ entity_id: '007', entity_type: typeId });
++    expect(reverse.relationships.map((item: any) => Number(item.id))).toContain(edgeId);
++    await db`UPDATE organization SET visibility = 'private' WHERE id = ${catalog.org.id}`;
++    await expect(ws.owner.entities.get({ entity_id: '007', entity_type: typeId })).rejects.toThrow(/not found|not readable/i);
++    expect((await ws.owner.entities.listLinks({ entity_id: stored })).relationships.map((item: any) => Number(item.id))).not.toContain(edgeId);
++    await ws.owner.entities.unlink({ relationship_id: edgeId });
++  });
++
++  it('keeps a bound agent in its workspace and applies its read denials to numeric type selectors', async () => {
++    const catalog = await TestWorkspace.create({ name: 'Agent public target fixture' });
++    const db = getTestDb();
++    await db`UPDATE organization SET visibility = 'public' WHERE id = ${catalog.org.id}`;
++    await catalog.owner.entity_schema.createType({ slug: 'agent-public-item', name: 'Public item',
++      backing: { sql: "SELECT '007' AS id, 'Public item' AS name" }, metadata_schema: { type: 'object', 'x-lobu-record-key': 'id' } });
++    const [t] = await db`SELECT id FROM entity_types WHERE organization_id = ${catalog.org.id} AND slug = 'agent-public-item'`;
++    const principal = await createTestAgent({ organizationId: ws.org.id, ownerUserId: ws.users.owner.id });
++    const agent = ws.withAuth({ agentId: principal.agentId });
++    expect((await agent.entities.get({ entity_id: '007', entity_type: Number(t.id) })).entity.name).toBe('Public item');
++    await upsertEntityApprovalPolicy(ws.org.id, { principalKind: 'agent', principalId: principal.agentId,
++      entityTypeSlug: 'agent-public-item', effects: { read: 'deny' } });
++    await expect(agent.entities.get({ entity_id: '007', entity_type: Number(t.id) })).rejects.toMatchObject({ httpStatus: 403 });
++  });
++
++  it('does not inherit private source access from either workspace owner', async () => {
++    const catalog = await TestWorkspace.create({ name: 'Private source in public catalog' });
++    const db = getTestDb();
++    await db`UPDATE organization SET visibility = 'public' WHERE id = ${catalog.org.id}`;
++    const profile = await createAuthProfile({ organizationId: catalog.org.id, connectorKey: 'postgres', displayName: 'Private fixture',
++      profileKind: 'env', authData: { DATABASE_URL: process.env.DATABASE_URL! } });
++    await db`INSERT INTO connections(organization_id, connector_key, slug, display_name, status, auth_profile_id, visibility, created_by)
++      VALUES (${catalog.org.id}, 'postgres', 'private-public-source', 'Private source', 'active', ${profile.id}, 'private', ${ws.users.owner.id})`;
++    await catalog.owner.entity_schema.createType({ slug: 'private-public-items', name: 'Private source items',
++      backing: { sql: "SELECT 'secret-key' AS id, 'Private item' AS name", connection: 'private-public-source' },
++      metadata_schema: { type: 'object', 'x-lobu-record-key': 'id' } });
++    const [typeRow] = await db`SELECT id FROM entity_types WHERE organization_id = ${catalog.org.id} AND slug = 'private-public-items'`;
++    await expect(ws.owner.entities.get({ entity_id: 'secret-key', entity_type: Number(typeRow.id) }))
++      .rejects.toMatchObject({ httpStatus: 404 });
++    await expect(ws.owner.entities.link({ from_entity_id: stored, to_entity_id: 'secret-key', to_entity_type: Number(typeRow.id), relationship_type_slug: 'related-item' }))
++      .rejects.toMatchObject({ httpStatus: 404 });
++  });
++
++  it('reads an org-published external source without borrowing private credentials', async () => {
++    const catalog = await TestWorkspace.create({ name: 'Published external source fixture' });
++    const db = getTestDb();
++    await db`UPDATE organization SET visibility = 'public' WHERE id = ${catalog.org.id}`;
++    const profile = await createAuthProfile({ organizationId: catalog.org.id, connectorKey: 'postgres', displayName: 'Published fixture',
++      profileKind: 'env', authData: { DATABASE_URL: process.env.DATABASE_URL! } });
++    await db`INSERT INTO connections(organization_id, connector_key, slug, display_name, status, auth_profile_id, visibility, created_by)
++      VALUES (${catalog.org.id}, 'postgres', 'published-external-source', 'Published source', 'active', ${profile.id}, 'org', ${catalog.users.owner.id})`;
++    await catalog.owner.entity_schema.createType({ slug: 'published-external-items', name: 'Published items',
++      backing: { sql: "SELECT '007' AS id, 'Published item' AS name", connection: 'published-external-source' },
++      metadata_schema: { type: 'object', 'x-lobu-record-key': 'id' } });
++    const [typeRow] = await db`SELECT id FROM entity_types WHERE organization_id = ${catalog.org.id} AND slug = 'published-external-items'`;
++    const got = await ws.member.entities.get({ entity_id: '007', entity_type: Number(typeRow.id) });
++    expect(got.entity).toMatchObject({ id: '007', name: 'Published item' });
++    expect(got.entity.view_url).toContain(catalog.org.slug);
++  });
++
++  it('retiring a public source preserves private assertions without retargeting a reused slug', async () => {
++    const catalog = await TestWorkspace.create({ name: 'Retired public source fixture' });
++    const db = getTestDb();
++    await db`UPDATE organization SET visibility = 'public' WHERE id = ${catalog.org.id}`;
++    const spec = { slug: 'retired-catalog-item', name: 'Retirable source', backing: { sql: "SELECT 'A' AS id, 'Original' AS name" },
++      metadata_schema: { type: 'object', 'x-lobu-record-key': 'id' } };
++    await catalog.owner.entity_schema.createType(spec);
++    const [oldType] = await db`SELECT id FROM entity_types WHERE organization_id = ${catalog.org.id} AND slug = ${spec.slug}`;
++    const typeId = Number(oldType.id);
++    const edge = await ws.owner.entities.link({ from_entity_id: stored, to_entity_id: 'A', to_entity_type: typeId, relationship_type_slug: 'related-item' });
++    const edgeId = Number(edge.relationship.id);
++    await expect(catalog.owner.entity_schema.updateType({ slug: spec.slug, backing: { sql: "SELECT 'A' AS id, 'Different source' AS name" } }))
++      .rejects.toThrow(/live relationships/);
++    await catalog.owner.entity_schema.manage({ schema_type: 'entity_type', action: 'delete', slug: spec.slug });
++    await catalog.owner.entity_schema.createType({ ...spec, backing: { sql: "SELECT 'A' AS id, 'Replacement' AS name" } });
++    await expect(ws.owner.entities.get({ entity_id: 'A', entity_type: typeId })).rejects.toMatchObject({ httpStatus: 404 });
++    const visible = await ws.owner.entities.listLinks({ entity_id: stored });
++    expect(visible.relationships.map(item => Number(item.id))).not.toContain(edgeId);
++    const [retained] = await db`SELECT to_entity_type_id, deleted_at FROM entity_relationships WHERE id = ${edgeId}`;
++    expect(retained).toMatchObject({ to_entity_type_id: typeId, deleted_at: null });
++    await ws.owner.entities.unlink({ relationship_id: edgeId });
++  });
++
+   it('gets verbatim keys, requires their type, and never writes through to sources', async () => {
+     const got = await ws.owner.entities.get({ entity_id: '007', entity_type: type }) as { entity: { id: string; name: string } };
+     expect(got.entity).toMatchObject({ id: '007', name: 'Source Seven' });
+@@ -246,6 +358,7 @@ describe('typed references and authored source relationships', () => {
+     async ({ endpointStatus, unavailableFirst, unavailableFrom }) => {
+       const edge = await ws.owner.entities.link({ from_entity_id: '007', from_entity_type: type,
+         to_entity_id: 'B', to_entity_type: type, relationship_type_slug: 'related-item' });
++      const [sourceType] = await getTestDb()`SELECT id FROM entity_types WHERE organization_id = ${ws.org.id} AND slug = ${type}`;
+       const resolveReference = entityReferences.resolveEntityReference;
+       let anchorReads = 0;
+       let rejectAnchor!: (error: Error) => void;
+@@ -253,7 +366,7 @@ describe('typed references and authored source relationships', () => {
+       let started!: () => void;
+       const bothStarted = new Promise<void>(resolve => { started = resolve; });
+       const resolver = vi.spyOn(entityReferences, 'resolveEntityReference').mockImplementation((id, entityType, ctx, options) => {
+-        if (entityType === type && (id === 'B' || (id === '007' && ++anchorReads > 1))) {
++        if ((entityType === type || entityType === Number(sourceType.id)) && (id === 'B' || (id === '007' && ++anchorReads > 1))) {
+           return new Promise((_, reject) => {
+             if (id === '007') rejectAnchor = reject;
+             else rejectPeer = reject;
+diff --git a/packages/server/src/__tests__/unit/manage-wire-schema.test.ts b/packages/server/src/__tests__/unit/manage-wire-schema.test.ts
+index 1f1d982bd..ecba07bd4 100644
+--- a/packages/server/src/__tests__/unit/manage-wire-schema.test.ts
++++ b/packages/server/src/__tests__/unit/manage-wire-schema.test.ts
+@@ -12,6 +12,7 @@
+  * `src/__tests__/unit/`, also imports the registry directly).
+  */
+ import { describe, expect, it } from "bun:test";
++import Ajv from "ajv";
+ import { getAllTools } from "../../tools/registry";
+ import { SdkScriptResultSchema } from "../../tools/sdk_run";
+ import { validateToolResult } from "../../tools/validate-args";
+@@ -42,6 +43,14 @@ function actionsOf(schema: any): string[] | null {
+ const MANAGE_TOOLS = TOOLS.filter((t) => t.name.startsWith("manage_"));
+ 
+ describe("manage_* wire schema: action discoverability", () => {
++  it("advertises immutable numeric type selectors on the actual MCP wire schema", () => {
++    const validate = new Ajv({ strict: false, validateFormats: false }).compile(byName.get("manage_entity")!.inputSchema);
++    expect(validate({ action: "get", entity_id: "007", entity_type: 101 })).toBe(true);
++    expect(validate({ action: "list_links", entity_id: "007", entity_type: 101 })).toBe(true);
++    expect(validate({ action: "link", from_entity_id: 10, to_entity_id: "007", to_entity_type: 101, relationship_type_slug: "related" })).toBe(true);
++    expect(validate({ action: "get", entity_id: "007", entity_type: "catalog" })).toBe(true);
++  });
++
+ 	it("every manage_* tool exposes a flat object input schema (no top-level anyOf/oneOf)", () => {
+ 		for (const tool of MANAGE_TOOLS) {
+ 			const schema = tool.inputSchema as any;
+diff --git a/packages/server/src/sandbox/method-metadata.ts b/packages/server/src/sandbox/method-metadata.ts
+index 38bee79c3..f47ce9a68 100644
+--- a/packages/server/src/sandbox/method-metadata.ts
++++ b/packages/server/src/sandbox/method-metadata.ts
+@@ -110,10 +110,10 @@ export default async (_ctx, client) => {
+ };`,
+ 	},
+ 	"entities.get": {
+-		summary: "Fetch a single entity by id.",
++		summary: "Fetch a stored entity or typed source key. entity_type accepts a local slug or a discovered numeric type ID; the latter identifies its owner without switching execution workspaces. Foreign type IDs are read only through the public visitor projection, never with local owner/source credentials.",
+ 		access: "read",
+ 		signature:
+-			"entities.get(input: { entity_id: number | string; entity_type?: string; include_deleted?: boolean }): Promise<unknown>",
++			"entities.get(input: { entity_id: number | string; entity_type?: string | number; include_deleted?: boolean }): Promise<unknown>",
+ 		throws: ["EntityNotFound"],
+ 		example: "const entity = await client.entities.get({ entity_id: 42 });",
+ 		usageExample: `export default async (_ctx, client) => {
+@@ -169,7 +169,7 @@ export default async (_ctx, client) => {
+ 			"Create a relationship between two entities. Identity-purpose relationships associate retained records; applied, queued approval, suppressed, and preview results are distinct. Needs the two entity IDs AND a relationship TYPE that already exists — if the relationship type is new, call `entitySchema.createRelType` first; list existing ones with `entitySchema.listRelTypes()`. (`entitySchema.addRule` does NOT create a type; it restricts the allowed source/target entity-type pairs on a type that already exists.)",
+ 		access: "write",
+ 		signature:
+-			"entities.link(input: { from_entity_id: number | string; from_entity_type?: string; to_entity_id: number | string; to_entity_type?: string; relationship_type_slug: string; source?: 'ui' | 'llm' | 'feed' | 'api'; confidence?: number; metadata?: object; dry_run?: boolean }): Promise<unknown>",
++			"entities.link(input: { from_entity_id: number | string; from_entity_type?: string | number; to_entity_id: number | string; to_entity_type?: string | number; relationship_type_slug: string; source?: 'ui' | 'llm' | 'feed' | 'api'; confidence?: number; metadata?: object; dry_run?: boolean }): Promise<unknown>",
+ 		example:
+ 			"await client.entities.link({ from_entity_id: 42, to_entity_id: 43, relationship_type_slug: 'customer_of' });",
+ 		usageExample: `// Two-hop: the relationship TYPE must exist before linking. Ensure it
+@@ -204,10 +204,10 @@ export default async (_ctx, client) => {
+ 		access: "write",
+ 	},
+ 	"entities.listLinks": {
+-		summary: "List relationships for a stored entity or source-backed record; record reads accept cursor: null then next_cursor.",
++		summary: "List relationships for a stored entity or source-backed record. entity_type accepts a local slug or discovered numeric type ID. Authored links stay scoped to this workspace; foreign source-native links use only the public visitor projection. Record reads accept cursor: null then next_cursor.",
+ 		access: "read",
+ 		signature:
+-			"entities.listLinks(input: { entity_id?: number | string; entity_type?: string; record?: { type: string; key: string }; cursor?: string | null; direction?: 'outbound' | 'inbound' | 'both'; relationship_type_slug?: string; source?: 'ui' | 'llm' | 'feed' | 'api'; confidence_min?: number; include_deleted?: boolean; limit?: number; offset?: number }): Promise<unknown>",
++			"entities.listLinks(input: { entity_id?: number | string; entity_type?: string | number; record?: { type: string; key: string }; cursor?: string | null; direction?: 'outbound' | 'inbound' | 'both'; relationship_type_slug?: string; source?: 'ui' | 'llm' | 'feed' | 'api'; confidence_min?: number; include_deleted?: boolean; limit?: number; offset?: number }): Promise<unknown>",
+ 	},
+ 
+ 	// entitySchema
+diff --git a/packages/server/src/tools/admin/manage_entity.ts b/packages/server/src/tools/admin/manage_entity.ts
+index 7828f37f1..c8f33c6db 100644
+--- a/packages/server/src/tools/admin/manage_entity.ts
++++ b/packages/server/src/tools/admin/manage_entity.ts
+@@ -89,7 +89,7 @@ import {
+   RELATIONSHIP_JOINS,
+   RELATIONSHIP_SELECT,
+ } from "../../utils/relationship-reads";
+-import { compareEntityEndpoints, lockEndpointTypes, resolveEntityReference } from "../../utils/entity-reference";
++import { compareEntityEndpoints, lockEndpointTypes, resolveEntityReference, sourceReferenceReadContext } from "../../utils/entity-reference";
+ import {
+ 	EntityPolicyDenialError,
+ 	type EntityWriteDenialDescription,
+@@ -1153,13 +1153,14 @@ async function handleGet(
+ 	env: Env,
+ 	ctx: ToolContext,
+ 	includeDeleted = false,
+-	entityType?: string,
++	entityType?: string | number,
+ ): Promise<ManageEntityResult> {
+ 	if (typeof entityId === 'string') {
+ 		if (includeDeleted) throw new ToolUserError('include_deleted is not supported by this source', 400);
+ 		const entity = await resolveEntityReference(entityId, entityType, ctx);
+-		return { action: 'get', entity: { id: entity.id, entity_type: entity.entityType,
+-			name: entity.name, slug: entity.slug, metadata: entity.metadata } };
++		return { action: 'get', entity: { id: entity.id, entity_type: entity.entityType, entity_type_id: entity.typeId,
++			name: entity.name, slug: entity.slug, metadata: entity.metadata,
++      view_url: await buildEntityViewUrl({ ...ctx, organizationId: entity.organizationId }, { entity_type: entity.entityType, slug: entity.slug }) } };
+ 	}
+ 	const readRestrictions = await entityReadRestrictions(getDb(), ctx);
+ 	const entity = await getEntity(entityId, env, ctx, { includeDeleted, readRestrictions });
+@@ -1167,7 +1168,8 @@ async function handleGet(
+ 	if (!entity) {
+ 		throw new ToolUserError(`Entity with ID ${entityId} not found`, 404);
+ 	}
+-	if (entityType !== undefined && entity.entity_type !== normalizeEntityTypeSlug(entityType)) {
++	if (typeof entityType === 'number') await resolveEntityReference(entityId, entityType, ctx);
++	if (typeof entityType === 'string' && entity.entity_type !== normalizeEntityTypeSlug(entityType)) {
+ 		throw new ToolUserError('entity_type does not match entity_id', 400);
+ 	}
+ 
+@@ -1852,7 +1854,7 @@ async function handleListLinks(
+   const principal = await actingPrincipalFor(args, ctx);
+   const restrictions = await entityReadRestrictions(sql, ctx, principal);
+   const endpoint = await resolveEntityReference(entityId, entityType, ctx, { restrictions });
+-  if (endpoint.organizationId !== ctx.organizationId) {
++  if (endpoint.organizationId !== ctx.organizationId && endpoint.sourceTypeId === null) {
+     throw new ToolUserError('Entity not found in this workspace', 404);
+   }
+   const binding = JSON.stringify([
+@@ -1860,7 +1862,8 @@ async function handleListLinks(
+     ctx.userId,
+     ctx.agentId,
+     ctx.actingAutomationId,
+-    entityType,
++    endpoint.typeId,
++    endpoint.organizationId,
+     entityId,
+     args.direction,
+     args.relationship_type_slug,
+@@ -1886,11 +1889,12 @@ async function handleListLinks(
+   const native = cursor.sourceDone
+     ? { links: [], failures: [], next_cursor: undefined }
+     : await readNativeRelationshipPage(
+-      args, { type: endpoint.entityType, key: String(entityId) }, ctx, authored.limit, cursor.sourceCursor,
++      args, { type: endpoint.entityType, key: String(entityId) }, sourceReferenceReadContext(endpoint, ctx), authored.limit, cursor.sourceCursor,
+     );
+   return {
+     ...result,
+-    record_links: native.links,
++    record_links: native.links.filter(link => !restrictions.some(rule => rule.entity_id === null
++      && (rule.entity_type_slug === null || rule.entity_type_slug === link.entity_type))),
+     record_failures: native.failures,
+     next_cursor: nextRelationshipCursor(cursor, authored, native),
+   };
+diff --git a/packages/server/src/utils/entity-reference.ts b/packages/server/src/utils/entity-reference.ts
+index c3ceddc25..cec6b5e65 100644
+--- a/packages/server/src/utils/entity-reference.ts
++++ b/packages/server/src/utils/entity-reference.ts
+@@ -30,7 +30,7 @@ export interface ResolvedEntityReference extends EntityEndpoint {
+ 
+ export async function resolveEntityReference(
+   id: number | string,
+-  entityType: string | undefined,
++  entityType: string | number | undefined,
+   ctx: ToolContext,
+   options: { readSource?: boolean; restrictions?: EntityReadRestrictions } = {},
+ ): Promise<ResolvedEntityReference> {
+@@ -48,7 +48,9 @@ export async function resolveEntityReference(
+     const allowed = await filterEntityReadRows(sql, rows as Array<typeof rows[number] & { id: number }>, restrictions);
+     const row = allowed[0];
+     if (!row) throw new ToolUserError('Entity not found or not readable', 404);
+-    if (entityType !== undefined && normalizeEntityTypeSlug(entityType) !== row.entity_type) {
++    if (entityType !== undefined && (typeof entityType === 'number'
++      ? entityType !== Number(row.entity_type_id)
++      : normalizeEntityTypeSlug(entityType) !== row.entity_type)) {
+       throw new ToolUserError('entity_type does not match entity_id', 400);
+     }
+     return { id, entityId: id, sourceTypeId: null, sourceKey: null, typeId: Number(row.entity_type_id),
+@@ -58,17 +60,27 @@ export async function resolveEntityReference(
+   if (typeof id !== 'string' || !entityType || recordKey({ key: id }, 'key') === null) {
+     throw new ToolUserError('A string entity_id requires entity_type and a non-empty source key of at most 1024 UTF-8 bytes', 400);
+   }
+-  const type = normalizeEntityTypeSlug(entityType);
+-  if (type.startsWith('$')) throw new ToolUserError('System entity types do not accept source keys', 400);
+-  if (restrictions.some(rule => rule.entity_id === null && (rule.entity_type_slug === null || rule.entity_type_slug === type))) {
+-    throw new ToolUserError('Entity type is not readable', 403);
++  if (typeof entityType === 'number' && (!Number.isSafeInteger(entityType) || entityType < 1)) {
++    throw new ToolUserError('entity_type must be a local slug or positive safe-integer type ID', 400);
+   }
++  const selector = typeof entityType === 'number'
++    ? sql`et.id = ${entityType}`
++    : sql`et.organization_id = ${ctx.organizationId} AND et.slug = ${normalizeEntityTypeSlug(entityType)}`;
+   const rows = await sql`
+-    SELECT id, organization_id, slug, backing_sql, backing_source, metadata_schema FROM entity_types
+-    WHERE organization_id = ${ctx.organizationId} AND slug = ${type} AND deleted_at IS NULL
++    SELECT et.id, et.organization_id, et.slug, et.backing_sql, et.backing_source, et.metadata_schema
++    FROM entity_types et JOIN organization o ON o.id = et.organization_id
++    WHERE ${selector} AND et.deleted_at IS NULL
++      AND (et.organization_id = ${ctx.organizationId} OR o.visibility = 'public')
+   `;
+   const row = rows[0];
+   if (!row) throw new ToolUserError('Entity type not found or not readable', 404);
++  const type = String(row.slug);
++  if (type.startsWith('$')) throw new ToolUserError('System entity types do not accept source keys', 400);
++  // The originating agent's restrictions still apply before the narrower
++  // public read. A type ID is an address, not a policy escape hatch.
++  if (restrictions.some(rule => rule.entity_id === null && (rule.entity_type_slug === null || rule.entity_type_slug === type))) {
++    throw new ToolUserError('Entity type is not readable', 403);
++  }
+   if (!row.backing_sql) throw new ToolUserError('String entity_id requires a source-backed entity type', 400);
+   const keyColumn = recordKeyColumn(row.metadata_schema);
+   if (!keyColumn) throw new ToolUserError('This type has no declared stable record key (metadata_schema.x-lobu-record-key)', 400);
+@@ -76,13 +88,14 @@ export async function resolveEntityReference(
+     typeId: Number(row.id), entityType: type, organizationId: String(row.organization_id), name: id, slug: id, metadata: {},
+     sourceContract: JSON.stringify([row.backing_sql, row.backing_source ?? null, keyColumn]) };
+   if (options.readSource === false) return ref;
++  const readContext = sourceReferenceReadContext(ref, ctx);
+   // Check connection visibility before cancellation or source errors can be
+   // disclosed as a failed relationship. Row-level visibility still belongs to
+   // the live exact read below; no source key is disclosed without that read.
+   if (row.backing_source) {
+-    const visibility = isAdminOrOwnerRole(ctx.memberRole) ? sql``
+-      : sql`${sql.unsafe(compileConnectionRowVisibility(authzScopeFromToolContext(ctx), 'connections'))}`;
+-    const visible = await sql`SELECT 1 FROM connections WHERE organization_id = ${ctx.organizationId}
++    const visibility = isAdminOrOwnerRole(readContext.memberRole) ? sql``
++      : sql`${sql.unsafe(compileConnectionRowVisibility(authzScopeFromToolContext(readContext), 'connections'))}`;
++    const visible = await sql`SELECT 1 FROM connections WHERE organization_id = ${readContext.organizationId}
+       AND slug = ${row.backing_source} AND deleted_at IS NULL AND status = 'active' ${visibility}`;
+     if (!visible.length) throw new ToolUserError('Source connection not found or not readable', 404);
+   }
+@@ -90,7 +103,7 @@ export async function resolveEntityReference(
+   try {
+     ctx.abortSignal?.throwIfAborted();
+     result = await raceAbort(queryDerivedEntityView(String(row.backing_sql), row.backing_source ?? undefined,
+-      { limit: 2, offset: 0 }, ctx, { exactSlug: id, keyColumn, preservePageRows: true }), ctx.abortSignal);
++      { limit: 2, offset: 0 }, readContext, { exactSlug: id, keyColumn, preservePageRows: true }), ctx.abortSignal);
+   } catch (error) {
+     if (ctx.abortSignal?.aborted) throw new ToolUserError('Source record read exceeded the deadline', 500, 'UPSTREAM_TIMEOUT');
+     throw error;
+@@ -105,6 +118,33 @@ export async function resolveEntityReference(
+   return { ...ref, name: derivedRowName(matches[0], id), metadata: matches[0] };
+ }
+ 
++/** A foreign published record is read as a public visitor, never with the
++ * writer's workspace role, source credentials or Automation owner privileges.
++ * Call only after resolveEntityReference checked the public type and the
++ * originating actor's policy. The caller's execution context is not changed.
++ */
++export function sourceReferenceReadContext(
++  reference: Pick<ResolvedEntityReference, 'organizationId'>,
++  ctx: ToolContext,
++): ToolContext {
++  if (reference.organizationId === ctx.organizationId) return ctx;
++  return {
++    organizationId: reference.organizationId,
++    userId: null,
++    memberRole: null,
++    sourceContext: ctx.sourceContext,
++    isAuthenticated: false,
++    tokenType: 'anonymous',
++    scopedToOrg: true,
++    allowCrossOrg: false,
++    grantedOrganizationIds: null,
++    directSearchFederation: false,
++    abortSignal: ctx.abortSignal,
++    requestUrl: ctx.requestUrl,
++    baseUrl: ctx.baseUrl,
++  };
++}
++
+ /** Canonical ordering is shared by creation and endpoint-triple lookup. */
+ export function compareEntityEndpoints(a: EntityEndpoint, b: EntityEndpoint): number {
+   if (a.entityId !== null && b.entityId !== null) return a.entityId - b.entityId;
+diff --git a/packages/server/src/utils/relationship-reads.ts b/packages/server/src/utils/relationship-reads.ts
+index 5ed7e10c0..46ede2768 100644
+--- a/packages/server/src/utils/relationship-reads.ts
++++ b/packages/server/src/utils/relationship-reads.ts
+@@ -19,6 +19,7 @@ import { MEMBER_ENTITY_TYPE_SLUG } from '../tools/constants';
+ import type { ToolContext } from '../tools/registry';
+ import { type EntityEndpoint, type ResolvedEntityReference, resolveEntityReference } from './entity-reference';
+ import { ToolUserError } from './errors';
++import { buildEntityViewUrl } from '../tools/view-urls';
+ import { canSeeMemberList } from './member-entity-type';
+ import { RELATIONSHIP_CLAIMS_METADATA_KEY } from './relationship-claims';
+ import { ACL_MANAGED_TYPE_SQL } from './relationship-validation';
+@@ -39,9 +40,11 @@ export const RELATIONSHIP_SELECT = `
+   ${ACL_MANAGED_TYPE_SQL} as acl_managed,
+   COALESCE(fe.name, r.from_source_key) as from_entity_name,
+   fet.slug as from_entity_type,
++  fet.id as from_entity_type_id,
+   COALESCE(fe.slug, r.from_source_key) as from_entity_slug,
+   COALESCE(te.name, r.to_source_key) as to_entity_name,
+   tet.slug as to_entity_type,
++  tet.id as to_entity_type_id,
+   COALESCE(te.slug, r.to_source_key) as to_entity_slug,
+   NULLIF(r.metadata - '${RELATIONSHIP_CLAIMS_METADATA_KEY}', '{}'::jsonb) AS metadata,
+   r.confidence,
+@@ -144,7 +147,7 @@ export async function readableRelationships(
+   const allowed = new Set((await filterEntityReadRows(sql, stored, restrictions)).map(row => Number(row.id)));
+   const pending = new Map<string, Promise<ResolvedEntityReference>>();
+ 
+-  function resolveSource(id: string, type: string | undefined) {
++  function resolveSource(id: string, type: string | number | undefined) {
+     const key = JSON.stringify([type, id]);
+     let result = pending.get(key);
+     if (!result) {
+@@ -160,8 +163,8 @@ export async function readableRelationships(
+     const touchesMember = row.from_entity_type === MEMBER_ENTITY_TYPE_SLUG || row.to_entity_type === MEMBER_ENTITY_TYPE_SLUG;
+     if (hiddenStoredEndpoint || (touchesMember && !canSeeMemberList(ctx.memberRole))) return null;
+     const outcomes = await Promise.allSettled([
+-      typeof row.from_entity_id === 'string' ? resolveSource(row.from_entity_id, row.from_entity_type) : null,
+-      typeof row.to_entity_id === 'string' ? resolveSource(row.to_entity_id, row.to_entity_type) : null,
++      typeof row.from_entity_id === 'string' ? resolveSource(row.from_entity_id, row.from_entity_type_id ?? row.from_entity_type) : null,
++      typeof row.to_entity_id === 'string' ? resolveSource(row.to_entity_id, row.to_entity_type_id ?? row.to_entity_type) : null,
+     ]);
+     const rejected = outcomes.filter((outcome): outcome is PromiseRejectedResult => outcome.status === 'rejected');
+     // Hidden endpoints suppress failure IDs even when another read fails first.
+@@ -179,8 +182,10 @@ export async function readableRelationships(
+     const [from, to] = outcomes.map(outcome => outcome.status === 'fulfilled' ? outcome.value : null);
+     return {
+       ...row,
+-      ...(from ? { from_entity_name: from.name } : {}),
+-      ...(to ? { to_entity_name: to.name } : {}),
++      ...(from ? { from_entity_name: from.name, ...(from.organizationId !== ctx.organizationId ? { from_entity_url: await buildEntityViewUrl(
++        { ...ctx, organizationId: from.organizationId }, { entity_type: from.entityType, slug: from.slug }) } : {}) } : {}),
++      ...(to ? { to_entity_name: to.name, ...(to.organizationId !== ctx.organizationId ? { to_entity_url: await buildEntityViewUrl(
++        { ...ctx, organizationId: to.organizationId }, { entity_type: to.entityType, slug: to.slug }) } : {}) } : {}),
+     };
+   }
+ 
+diff --git a/db/migrations/20261101010000_public_source_type_references.sql b/db/migrations/20261101010000_public_source_type_references.sql
+new file mode 100644
+index 000000000..4dbc35d90
+--- /dev/null
++++ b/db/migrations/20261101010000_public_source_type_references.sql
+@@ -0,0 +1,118 @@
++-- squawk-ignore-file prefer-robust-stmts
++-- migrate:up
++-- lobu:quiesce old readers resolve saved source type IDs by local slug and must not serve cross-workspace endpoints
++-- Reuse immutable type IDs and verbatim keys; no data rewrite or new tables.
++CREATE OR REPLACE FUNCTION lobu_guard_source_relationships() RETURNS trigger LANGUAGE plpgsql AS $$
++DECLARE rt entity_relationship_types; source_type entity_types; type_id bigint;
++BEGIN
++  IF TG_OP = 'UPDATE' AND (OLD.from_entity_type_id IS NOT NULL OR OLD.to_entity_type_id IS NOT NULL) AND
++     (NEW.from_entity_id, NEW.from_entity_type_id, NEW.from_source_key, NEW.to_entity_id, NEW.to_entity_type_id, NEW.to_source_key)
++     IS DISTINCT FROM
++     (OLD.from_entity_id, OLD.from_entity_type_id, OLD.from_source_key, OLD.to_entity_id, OLD.to_entity_type_id, OLD.to_source_key) THEN
++    RAISE EXCEPTION 'Source relationship endpoints are immutable; unlink and create a new relationship';
++  END IF;
++  IF NEW.from_entity_type_id IS NULL AND NEW.to_entity_type_id IS NULL THEN RETURN NEW; END IF;
++  SELECT * INTO rt FROM entity_relationship_types WHERE id = NEW.relationship_type_id FOR SHARE;
++  IF rt.purpose IN ('authorization', 'identity') OR rt.slug = 'member_of' THEN
++    RAISE EXCEPTION 'Authorization and identity associations require stored endpoints';
++  END IF;
++  -- Withdrawals remain possible after a source disconnect or disappearance.
++  IF NEW.deleted_at IS NOT NULL THEN RETURN NEW; END IF;
++  FOR type_id IN SELECT DISTINCT id FROM unnest(ARRAY[NEW.from_entity_type_id, NEW.to_entity_type_id]) AS ids(id)
++    WHERE id IS NOT NULL ORDER BY id LOOP
++    SELECT * INTO source_type FROM entity_types WHERE id = type_id FOR SHARE;
++    IF source_type.deleted_at IS NOT NULL OR source_type.backing_sql IS NULL
++       OR source_type.metadata_schema->>'x-lobu-record-key' IS NULL THEN
++      RAISE EXCEPTION 'Source endpoints require a live workspace type with a declared stable record key';
++    END IF;
++    -- Only a locally owned source may author an edge. A remote target may
++    -- name a public type; source ACLs are additionally enforced at read/write.
++    IF source_type.organization_id IS DISTINCT FROM NEW.organization_id
++       AND (NEW.from_entity_type_id = type_id OR NOT EXISTS (
++         SELECT 1 FROM organization WHERE id = source_type.organization_id AND visibility = 'public'
++       )) THEN
++      RAISE EXCEPTION 'Source relationship requires a local source and a local or public target';
++    END IF;
++  END LOOP;
++  RETURN NEW;
++END $$;
++
++CREATE OR REPLACE FUNCTION lobu_guard_source_type_contract() RETURNS trigger LANGUAGE plpgsql AS $$
++DECLARE blocking_ids bigint[];
++BEGIN
++  -- A publisher can withdraw a type without another tenant vetoing it.
++  -- Keep old IDs tombstoned; a replacement schema receives a new type ID.
++  IF OLD.deleted_at IS NULL AND NEW.deleted_at IS NOT NULL AND NOT EXISTS (
++    SELECT 1 FROM entity_relationships WHERE organization_id = OLD.organization_id AND deleted_at IS NULL
++      AND (from_entity_type_id = OLD.id OR to_entity_type_id = OLD.id)
++  ) THEN
++    RETURN NEW;
++  END IF;
++  IF (NEW.deleted_at, NEW.backing_sql, NEW.backing_source, NEW.metadata_schema->>'x-lobu-record-key')
++     IS DISTINCT FROM (OLD.deleted_at, OLD.backing_sql, OLD.backing_source, OLD.metadata_schema->>'x-lobu-record-key')
++     AND (EXISTS (SELECT 1 FROM entity_relationships WHERE from_entity_type_id = OLD.id AND deleted_at IS NULL)
++       OR EXISTS (SELECT 1 FROM entity_relationships WHERE to_entity_type_id = OLD.id AND deleted_at IS NULL)) THEN
++    SELECT array_agg(id) INTO blocking_ids FROM (
++      SELECT id FROM entity_relationships WHERE organization_id = OLD.organization_id AND deleted_at IS NULL
++        AND (from_entity_type_id = OLD.id OR to_entity_type_id = OLD.id) ORDER BY id LIMIT 25
++    ) AS blockers;
++    RAISE EXCEPTION 'Source record contract has live relationships; unlink relationship IDs % then retry changing backing, key, or deleting the type (at most 25 shown)', blocking_ids
++      USING ERRCODE = 'check_violation', CONSTRAINT = 'entity_types_source_relationship_contract';
++  END IF;
++  RETURN NEW;
++END $$;
++
++-- migrate:down
++DO $$ BEGIN
++  IF EXISTS (
++    SELECT 1 FROM entity_relationships r
++    JOIN entity_types t ON t.id = r.to_entity_type_id
++    WHERE t.organization_id IS DISTINCT FROM r.organization_id
++  ) THEN
++    RAISE EXCEPTION 'Cannot downgrade while cross-workspace source references are retained';
++  END IF;
++END $$;
++CREATE OR REPLACE FUNCTION lobu_guard_source_relationships() RETURNS trigger LANGUAGE plpgsql AS $$
++DECLARE rt entity_relationship_types; source_type entity_types; type_id bigint;
++BEGIN
++  IF TG_OP = 'UPDATE' AND (OLD.from_entity_type_id IS NOT NULL OR OLD.to_entity_type_id IS NOT NULL) AND
++     (NEW.from_entity_id, NEW.from_entity_type_id, NEW.from_source_key, NEW.to_entity_id, NEW.to_entity_type_id, NEW.to_source_key)
++     IS DISTINCT FROM
++     (OLD.from_entity_id, OLD.from_entity_type_id, OLD.from_source_key, OLD.to_entity_id, OLD.to_entity_type_id, OLD.to_source_key) THEN
++    RAISE EXCEPTION 'Source relationship endpoints are immutable; unlink and create a new relationship';
++  END IF;
++  IF NEW.from_entity_type_id IS NULL AND NEW.to_entity_type_id IS NULL THEN RETURN NEW; END IF;
++  SELECT * INTO rt FROM entity_relationship_types WHERE id = NEW.relationship_type_id FOR SHARE;
++  IF rt.purpose IN ('authorization', 'identity') OR rt.slug = 'member_of' THEN
++    RAISE EXCEPTION 'Authorization and identity associations require stored endpoints';
++  END IF;
++  -- Withdrawals remain possible after a source disconnect or disappearance.
++  IF NEW.deleted_at IS NOT NULL THEN RETURN NEW; END IF;
++  FOR type_id IN SELECT DISTINCT id FROM unnest(ARRAY[NEW.from_entity_type_id, NEW.to_entity_type_id]) AS ids(id)
++    WHERE id IS NOT NULL ORDER BY id LOOP
++    SELECT * INTO source_type FROM entity_types WHERE id = type_id FOR SHARE;
++    IF source_type.deleted_at IS NOT NULL OR source_type.backing_sql IS NULL
++       OR source_type.organization_id IS DISTINCT FROM NEW.organization_id
++       OR source_type.metadata_schema->>'x-lobu-record-key' IS NULL THEN
++      RAISE EXCEPTION 'Source endpoints require a live workspace type with a declared stable record key';
++    END IF;
++  END LOOP;
++  RETURN NEW;
++END $$;
++
++CREATE OR REPLACE FUNCTION lobu_guard_source_type_contract() RETURNS trigger LANGUAGE plpgsql AS $$
++DECLARE blocking_ids bigint[];
++BEGIN
++  IF (NEW.deleted_at, NEW.backing_sql, NEW.backing_source, NEW.metadata_schema->>'x-lobu-record-key')
++     IS DISTINCT FROM (OLD.deleted_at, OLD.backing_sql, OLD.backing_source, OLD.metadata_schema->>'x-lobu-record-key')
++     AND (EXISTS (SELECT 1 FROM entity_relationships WHERE from_entity_type_id = OLD.id AND deleted_at IS NULL)
++       OR EXISTS (SELECT 1 FROM entity_relationships WHERE to_entity_type_id = OLD.id AND deleted_at IS NULL)) THEN
++    SELECT array_agg(id) INTO blocking_ids FROM (
++      SELECT id FROM entity_relationships WHERE organization_id = OLD.organization_id AND deleted_at IS NULL
++        AND (from_entity_type_id = OLD.id OR to_entity_type_id = OLD.id) ORDER BY id LIMIT 25
++    ) AS blockers;
++    RAISE EXCEPTION 'Source record contract has live relationships; unlink relationship IDs % then retry changing backing, key, or deleting the type (at most 25 shown)', blocking_ids
++      USING ERRCODE = 'check_violation', CONSTRAINT = 'entity_types_source_relationship_contract';
++  END IF;
++  RETURN NEW;
++END $$;

@@ -1,0 +1,42 @@
+{
+  "snapshot_validation": [
+    {
+      "file": "handoff/recovery/event-kind-freshness.patch",
+      "sha256_verified": true,
+      "applies_to_recorded_base": true,
+      "diagnostic": ""
+    },
+    {
+      "file": "handoff/recovery/event-kind-freshness-earlier.patch",
+      "sha256_verified": true,
+      "applies_to_recorded_base": true,
+      "diagnostic": ""
+    },
+    {
+      "file": "handoff/recovery/public-source-type-identity.patch",
+      "sha256_verified": true,
+      "applies_to_recorded_base": true,
+      "diagnostic": ""
+    },
+    {
+      "file": "handoff/recovery/legacy-marketplace-initial.patch",
+      "sha256_verified": true,
+      "applies_to_recorded_base": true,
+      "diagnostic": ""
+    },
+    {
+      "file": "handoff/recovery/legacy-marketplace-readiness.patch",
+      "sha256_verified": true,
+      "applies_to_recorded_base": true,
+      "diagnostic": ""
+    },
+    {
+      "file": "handoff/recovery/legacy-financial-prototype.patch",
+      "sha256_verified": true,
+      "applies_to_recorded_base": true,
+      "diagnostic": ""
+    }
+  ],
+  "publication_scan": "passed",
+  "runtime_tests": "not run by preservation operation"
+}
