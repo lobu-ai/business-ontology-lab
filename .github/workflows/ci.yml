@@ -69,3 +69,44 @@ jobs:
       - name: Stop disposable runtime
         if: always()
         run: docker compose down -v
+  financial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      LOBU_LOCAL_INIT: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: profiles/fibo/requirements.txt
+      - run: npm ci --ignore-scripts
+      - run: python -m pip install -r profiles/fibo/requirements.txt
+      - name: Rebuild and independently verify the pinned reference catalog
+        run: |
+          python profiles/fibo/build_fibo_catalog.py --work .cache/fibo-source --output .cache/fibo-catalog
+          python profiles/fibo/verify_fibo_catalog.py .cache/fibo-catalog
+      - run: node scripts/runtime-env.mjs
+      - run: docker compose up -d --wait --wait-timeout 240
+      - name: Install and verify six financial scenarios in a fresh workspace
+        run: python profiles/fibo/bootstrap.py --base-url http://127.0.0.1:8787 --org financial-ci --catalog .cache/fibo-catalog
+      - name: Replay without local identity state
+        run: |
+          rm -f .runtime/financial-ci/fibo-state.json
+          python profiles/fibo/bootstrap.py --base-url http://127.0.0.1:8787 --org financial-ci --catalog .cache/fibo-catalog
+      - name: Restart and verify financial persistence
+        run: |
+          docker compose restart runtime
+          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:8787/api/health >/dev/null && break; sleep 2; done
+          python profiles/fibo/verify_live_demo.py --base-url http://127.0.0.1:8787 --org financial-ci --fixture profiles/fibo/financial_demo_fixture.json --state .runtime/financial-ci/fibo-state.json --output .runtime/financial-ci/fibo-restart-verification.json --require-manifest
+      - name: Show runtime status on failure
+        if: failure()
+        run: docker compose ps
+      - name: Stop disposable runtime
+        if: always()
+        run: docker compose down -v
