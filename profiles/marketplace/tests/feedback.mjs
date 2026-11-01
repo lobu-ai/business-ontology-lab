@@ -138,19 +138,24 @@ await check('feedback_is_durable_and_readable', async () => {
           value: 'retracted',
           note: 'Synthetic correction: preserve history but stop treating this claim as current suspicion.',
         },
+        {
+          field_path: 'signals[0].metadata.correction_basis',
+          value: 'source_withdrawal',
+          note: 'The source itself withdrew the allegation; this is not a changed fact.',
+        },
       ],
     },
     true,
   );
   feedbackIds = result.feedback_ids;
-  assert.equal(feedbackIds.length, 2);
+  assert.equal(feedbackIds.length, 3);
   const found = await c.call('automations.getFeedback', {
     automation_id: s.automations.extract,
     run_id: input.run_id,
   });
   assert.ok(feedbackIds.every((id) => found.feedback.some((x) => Number(x.id) === Number(id))));
   const events = await c.call('knowledge.read', { content_ids: feedbackIds, limit: 10 });
-  assert.equal(events.content.filter((e) => e.semantic_type === 'correction').length, 2);
+  assert.equal(events.content.filter((e) => e.semantic_type === 'correction').length, 3);
   return { feedback_events: feedbackIds };
 });
 await check('feedback_changes_run_result_not_saved_claim', async () => {
@@ -165,7 +170,7 @@ await check('feedback_changes_run_result_not_saved_claim', async () => {
     saved_claim_score: 80,
     decision_score: 80,
     observed_boundary:
-      'Feedback is guidance and result correction, not automatic re-publication of domain events.',
+      'Feedback alone corrects the run result; the explicitly invoked repair Automation republishes the claim.',
   };
 });
 await check('future_window_receives_past_feedback', async () => {
@@ -212,34 +217,27 @@ await check('candidate_version_does_not_replace_active_version', async () => {
   assert.notEqual(String(draftVersionId), String(after[0].current_version_id));
   return { candidate_version_id: draftVersionId, active_unchanged: true };
 });
-await check('explicit_corrected_claim_repairs_downstream_graph_state', async () => {
-  const old = (await c.call('knowledge.read', { content_ids: [signalId], limit: 5 })).content[0];
-  const meta = Object.fromEntries(
-    Object.entries(old.metadata).filter(([k]) => !k.startsWith('_lobu_')),
+await check('accepted_feedback_repairs_claim_and_decision', async () => {
+  const run = await c.call('automations.trigger', { automation_id: s.automations.repair }, true);
+  const done = await awaitRun(c, run.run_id, 90000);
+  const result = done.output.results.find((r) =>
+    feedbackIds.every((id) => r.feedback_event_ids.includes(Number(id))),
   );
-  const saved = await c.save({
-    semantic_type: 'market_risk_signal',
-    title: 'Synthetic corrected claim',
-    content:
-      'Synthetic test correction: the source withdrew its allegation. This is a harness-owned repair, not a human approval.',
-    metadata: {
-      ...meta,
-      risk_score: 0,
-      status: 'retracted',
-      reason: 'Explicit source withdrawal; synthetic fault repaired.',
-      model_source: 'synthetic-evaluation-repair',
-    },
-    parent_event_id: input.source_event_id,
-    entity_ids: [s.entities['northwind-demo']],
-    supersedes_event_id: signalId,
-    idempotency_key: marker + ':repair',
-  });
-  correctedId = eventId(saved);
+  assert.equal(result?.outcome, 'applied');
+  correctedId = Number(result.repaired_claim_event_id);
+  // Reading a revision returns its supersession chain; select the exact event.
+  const repaired = (
+    await c.call('knowledge.read', { content_ids: [correctedId], limit: 5 })
+  ).content.find((row) => Number(row.id) === correctedId);
+  assert.equal(repaired.metadata.status, 'retracted');
+  assert.equal(repaired.metadata.correction_basis, 'source_withdrawal');
+  assert.equal(Number(repaired.metadata.repaired_from_event_id), signalId);
   const d = await reconcile();
   assert.equal(d.metadata.risk_score, 0);
   assert.ok(d.metadata.evidence_event_ids.includes(correctedId));
-  const original = (await c.call('knowledge.read', { content_ids: [signalId], limit: 5 }))
-    .content[0];
+  const original = (
+    await c.call('knowledge.read', { content_ids: [signalId], limit: 5 })
+  ).content.find((row) => Number(row.id) === signalId);
   assert.equal(original.metadata.risk_score, 80);
   return { corrected_event: correctedId, decision_event: Number(d.id), original_preserved: true };
 });
@@ -316,7 +314,7 @@ await check('evaluation_adds_queryable_native_graph_evidence', async () => {
     semantic_type: 'content',
     title: 'Feedback and graph eval results',
     content:
-      'Synthetic contract checks. Demonstrates stored feedback, next-window context, explicit domain repair, and draft version staging. Does not establish model accuracy improvement.',
+      'Synthetic contract checks. Demonstrates stored feedback, next-window context, accepted-feedback claim repair, and draft version staging. Does not establish model accuracy improvement.',
     entity_ids: [entityId, s.entities['northwind-demo'], s.entities['order-lamp']],
     parent_event_id: correctedId,
     idempotency_key: marker + ':results',
@@ -359,7 +357,7 @@ const report = {
     synthetic_fault_injection: true,
     real_human_review: false,
     model_quality_improvement_measured: false,
-    automatic_existing_claim_repair: false,
+    accepted_feedback_claim_repair: 'explicitly invoked market-repair-claims Automation',
     feedback_available_to_next_model: true,
     production_policy_promoted: false,
   },
@@ -376,7 +374,7 @@ const complete = await c.save({
   semantic_type: 'content',
   title: 'Completed synthetic feedback evaluation',
   content:
-    'All seven synthetic feedback and graph contract checks passed; no model-quality uplift is claimed.',
+    'All synthetic feedback and graph contract checks passed; no model-quality uplift is claimed.',
   entity_ids: [graph.evaluation_entity_id, s.entities['northwind-demo'], s.entities['order-lamp']],
   parent_event_id: graph.result_event_id,
   idempotency_key: marker + ':completed',

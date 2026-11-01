@@ -61,6 +61,25 @@ const normalize = defineAutomation({
       "SELECT id,payload_text,metadata FROM events WHERE semantic_type='market_source_document' AND metadata->>'document_type'='inventory'",
   },
 });
+const repair = defineAutomation({
+  slug: 'market-repair-claims',
+  agent,
+  name: 'Apply accepted feedback to published claims',
+  minCooldownSeconds: 0,
+  executor: scriptFromFile('./workflows/repair.ts'),
+  triggers: [],
+  sources: {
+    feedback: "SELECT id,payload_text,metadata FROM events WHERE semantic_type='correction'",
+  },
+});
+const proposeVersion = defineAutomation({
+  slug: 'market-propose-version',
+  agent,
+  name: 'Propose an evaluated Automation version change (requires human approval)',
+  minCooldownSeconds: 0,
+  executor: scriptFromFile('./workflows/propose-version.ts'),
+  triggers: [],
+});
 // setup-workflows.mjs uses the existing API for the external executor and derived collection.
 export default defineConfig({
   org: process.env.LOBU_ORG || 'enterprise-ontology',
@@ -69,6 +88,6 @@ export default defineConfig({
   agents: [agent],
   entities: [...entities, member],
   relationships,
-  automations: [reconcile, normalize],
+  automations: [reconcile, normalize, repair, proposeVersion],
   views: [viewFromFile('./views/overview.tsx')],
 });

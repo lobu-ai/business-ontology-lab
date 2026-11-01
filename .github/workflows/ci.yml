@@ -24,7 +24,7 @@ jobs:
       - run: npm run format:check
   runtime:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
       LOBU_LOCAL_INIT: '1'
       LOBU_BASE_URL: http://127.0.0.1:8787
@@ -49,6 +49,8 @@ jobs:
           npm run llm:prepare -- correction
           npm run verify:feedback
           npm run verify:source-binding
+          npm run verify:repair
+          npm run verify:governed-eval
       - run: npm run verify:ordering
       - name: Replay installation without local identity state
         run: |

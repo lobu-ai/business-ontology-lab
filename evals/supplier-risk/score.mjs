@@ -2,6 +2,7 @@ import { realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import fs from 'node:fs/promises';
 import { validateSignalForSource } from '../../profiles/marketplace/agent-input.mjs';
+import { loadCases, parseArgs } from './fixtures.mjs';
 export function scoreCases(cases, response) {
   const signals = response.signals;
   if (!Array.isArray(signals)) throw new Error('Response must contain a signals array');
@@ -24,10 +25,16 @@ export function scoreCases(cases, response) {
       matches.length === 1 &&
       m?.risk_score === c.expected.risk_score &&
       m?.status === c.expected.status;
+    // Judgment ignores output vocabulary: same risk and same withdrawal decision.
+    const judgment =
+      matches.length === 1 &&
+      m?.risk_score === c.expected.risk_score &&
+      (m?.status === 'retracted') === (c.expected.status === 'retracted');
     return {
       case_id: c.case_id,
       passed: classification && attribution,
       classification,
+      judgment,
       attribution,
       error,
       expected: c.expected,
@@ -38,6 +45,7 @@ export function scoreCases(cases, response) {
     total: cases.length,
     exact_pass: results.filter((x) => x.passed).length,
     classification_pass: results.filter((x) => x.classification).length,
+    judgment_pass: results.filter((x) => x.judgment).length,
     attribution_pass: results.filter((x) => x.attribution).length,
     unexpected_ids: unexpected,
     passed: results.every((x) => x.passed) && unexpected.length === 0,
@@ -55,9 +63,11 @@ function isMain() {
   }
 }
 if (isMain()) {
-  const fixture = JSON.parse(await fs.readFile(new URL('./cases.json', import.meta.url), 'utf8'));
-  const response = JSON.parse(await fs.readFile(process.argv[2], 'utf8'));
-  const result = scoreCases(fixture.cases, response);
+  // Usage: score.mjs <response.json> [--sets v1 v2]
+  const args = parseArgs(process.argv.slice(2));
+  const { cases } = await loadCases(args.sets);
+  const response = JSON.parse(await fs.readFile(args._[0], 'utf8'));
+  const result = scoreCases(cases, response);
   console.log(JSON.stringify(result, null, 2));
   process.exitCode = result.passed ? 0 : 1;
 }

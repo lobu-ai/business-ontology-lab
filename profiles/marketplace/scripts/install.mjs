@@ -141,10 +141,10 @@ for (const [type, from, to] of LINKS) {
   await saveState(s);
 }
 
-if (!s.agent) {
+// Local state may describe a different (e.g. discarded) runtime; the server decides.
+{
   const agents = (await c.call('agents.list', {})).agents || [];
-  const found = agents.find((a) => a.id === 'marketplace-evaluator');
-  if (found) s.agent = found.id;
+  s.agent = agents.find((a) => a.id === 'marketplace-evaluator')?.id;
 }
 if (!s.agent) {
   const a = applied(

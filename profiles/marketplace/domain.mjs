@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { CORRECTION_BASES } from './repair.mjs';
 export const VERSION = 'enterprise-marketplace-v1';
 const text = (title) => ({ type: 'string', minLength: 1, title });
 const num = (title, min = 0) => ({ type: 'number', minimum: min, title });
@@ -137,6 +138,10 @@ export const KINDS = {
       reason: text('Evidence-grounded reason'),
       review_required: { type: 'boolean' },
       model_source: text('Extraction provenance'),
+      correction_basis: choice('Correction basis', ['model_error', 'source_withdrawal']),
+      feedback_event_ids: { type: 'array', items: { type: 'integer' }, maxItems: 20 },
+      repaired_from_event_id: integer('Superseded claim revision', 1),
+      original_claim_event_id: integer('Original extracted claim', 1),
     },
     [
       'demo_suite',
@@ -215,6 +220,57 @@ export const KINDS = {
     'Explicit action: refresh derived marketplace decisions.',
     { ...base, reason: { type: 'string' } },
     [],
+  ),
+  market_evaluation_result: event(
+    'Held-out comparison of an inactive candidate Automation version against the active baseline.',
+    {
+      ...base,
+      suite: text('Suite'),
+      action: choice('Requested change', ['promote', 'rollback']),
+      extract_automation_id: integer('Automation', 1),
+      baseline_version_id: integer('Baseline version', 1),
+      candidate_version_id: integer('Candidate version', 1),
+      restore_version_id: integer('Version to restore', 1),
+      prompt_sha256: { type: 'object' },
+      fixture_sha256: { type: 'object' },
+      model_evidence: text('Model evidence provenance'),
+      comparison: { type: 'object' },
+      gate: { type: 'object' },
+    },
+    ['demo_suite', 'synthetic', 'suite', 'action', 'extract_automation_id', 'model_evidence'],
+  ),
+  market_version_proposal: event(
+    'Agent-requested Automation version change; applies only after a human approval.',
+    {
+      ...base,
+      evaluation_event_id: integer('Evaluation', 1),
+      action: choice('Requested change', ['promote', 'rollback']),
+      decision: choice('Proposal decision', ['reject', 'propose_promotion', 'propose_rollback']),
+      reasons: { type: 'array', items: { type: 'string' } },
+      approval_run_id: integer('Pending approval run', 1),
+      target_version_id: integer('Version whose content is proposed', 1),
+    },
+    ['demo_suite', 'synthetic', 'evaluation_event_id', 'action', 'decision'],
+  ),
+  market_claim_repair: event(
+    'Outcome of applying one accepted feedback group to a published claim.',
+    {
+      ...base,
+      outcome: text('Outcome'),
+      outcome_key: text('Feedback group identity'),
+      basis: choice('Correction basis', CORRECTION_BASES),
+      rejection: { type: 'string' },
+      feedback_run_id: integer('Corrected run', 1),
+      signal_index: { type: ['integer', 'null'], minimum: 0 },
+      feedback_event_ids: { type: 'array', items: { type: 'integer' } },
+      reviewer_ids: { type: 'array', items: { type: 'string' } },
+      affected_claim_event_id: integer('Affected claim revision', 1),
+      repaired_claim_event_id: integer('Repaired claim revision', 1),
+      source_event_id: integer('Cited source revision', 1),
+      current_source_event_id: { type: ['integer', 'null'] },
+      seller_key: { type: 'string' },
+    },
+    ['demo_suite', 'synthetic', 'outcome', 'feedback_run_id', 'feedback_event_ids'],
   ),
 };
 export const RECORDS = [

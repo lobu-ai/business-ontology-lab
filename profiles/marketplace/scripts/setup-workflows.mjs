@@ -44,6 +44,27 @@ async function ensure(key, input) {
   await saveState(s);
 }
 const common = { managed_agent_id: s.agent, min_cooldown_seconds: 0 };
+await ensure('extract', {
+  ...common,
+  slug: 'market-extract-supplier-risk',
+  name: 'LLM supplier-evidence extraction',
+  triggers: [],
+  execution_config: { executor: { kind: 'external' } },
+  prompt: await fs.readFile(ROOT + 'prompts/extract-supplier.md', 'utf8'),
+  sources: [
+    {
+      name: 'supplier_notices',
+      query:
+        "SELECT id,payload_text,metadata FROM events WHERE semantic_type='market_source_document' AND metadata->>'document_type'='supplier_notice'",
+    },
+  ],
+  outputs: {
+    signals: {
+      event: 'market_risk_signal',
+      key: ['source_scope', 'source_record_key', 'statement_slot', 'source_revision'],
+    },
+  },
+});
 await ensure('reconcile', {
   ...common,
   slug: 'market-reconcile',
@@ -65,7 +86,46 @@ await ensure('reconcile', {
     },
   ],
   execution_config: {
-    executor: { kind: 'script', source: await bundleScript(ROOT + 'workflows/reconcile.ts') },
+    executor: {
+      kind: 'script',
+      source: await bundleScript(ROOT + 'workflows/reconcile.ts'),
+      params: { extract_automation_id: s.automations.extract },
+    },
+  },
+});
+await ensure('repair', {
+  ...common,
+  slug: 'market-repair-claims',
+  name: 'Apply accepted feedback to published claims',
+  sources: [
+    {
+      name: 'feedback',
+      query: "SELECT id,payload_text,metadata FROM events WHERE semantic_type='correction'",
+    },
+  ],
+  triggers: [],
+  execution_config: {
+    executor: {
+      kind: 'script',
+      source: await bundleScript(ROOT + 'workflows/repair.ts'),
+      params: {
+        extract_automation_id: s.automations.extract,
+        reconcile_automation_id: s.automations.reconcile,
+      },
+    },
+  },
+});
+await ensure('propose', {
+  ...common,
+  slug: 'market-propose-version',
+  name: 'Propose an evaluated Automation version change (requires human approval)',
+  triggers: [],
+  execution_config: {
+    executor: {
+      kind: 'script',
+      source: await bundleScript(ROOT + 'workflows/propose-version.ts'),
+      params: { extract_automation_id: s.automations.extract },
+    },
   },
 });
 await ensure('normalize', {
@@ -85,27 +145,6 @@ await ensure('normalize', {
       kind: 'script',
       source: await bundleScript(ROOT + 'workflows/normalize.ts'),
       params: { reconcile_automation_id: s.automations.reconcile },
-    },
-  },
-});
-await ensure('extract', {
-  ...common,
-  slug: 'market-extract-supplier-risk',
-  name: 'LLM supplier-evidence extraction',
-  triggers: [],
-  execution_config: { executor: { kind: 'external' } },
-  prompt: await fs.readFile(ROOT + 'prompts/extract-supplier.md', 'utf8'),
-  sources: [
-    {
-      name: 'supplier_notices',
-      query:
-        "SELECT id,payload_text,metadata FROM events WHERE semantic_type='market_source_document' AND metadata->>'document_type'='supplier_notice'",
-    },
-  ],
-  outputs: {
-    signals: {
-      event: 'market_risk_signal',
-      key: ['source_scope', 'source_record_key', 'statement_slot', 'source_revision'],
     },
   },
 });

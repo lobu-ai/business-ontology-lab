@@ -24,7 +24,11 @@
     "verify:readonly": "node scripts/verify-readonly.mjs",
     "verify:feedback": "node profiles/marketplace/tests/feedback.mjs",
     "verify:source-binding": "node profiles/marketplace/tests/source-binding.mjs",
-    "eval:score": "node evals/supplier-risk/score.mjs"
+    "verify:repair": "node profiles/marketplace/tests/repair.mjs",
+    "verify:governed-eval": "node profiles/marketplace/tests/governed-eval.mjs",
+    "eval:score": "node evals/supplier-risk/score.mjs",
+    "eval:compare": "node evals/supplier-risk/compare.mjs",
+    "eval:govern": "node evals/supplier-risk/govern.mjs"
   },
   "devDependencies": {
     "@lobu/cli": "24.1.1",

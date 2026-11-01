@@ -62,15 +62,23 @@ test('scorer CLI fails a bad response even from a path containing spaces and has
       path.join(scorerDir, 'score.mjs'),
     );
     await copyFile(
+      fileURLToPath(new URL('../evals/supplier-risk/fixtures.mjs', import.meta.url)),
+      path.join(scorerDir, 'fixtures.mjs'),
+    );
+    await copyFile(
       fileURLToPath(new URL('../profiles/marketplace/agent-input.mjs', import.meta.url)),
       path.join(helperDir, 'agent-input.mjs'),
     );
     await writeFile(path.join(scorerDir, 'cases.json'), JSON.stringify({ cases: [c] }));
     const response = path.join(root, 'response.json');
     await writeFile(response, JSON.stringify({ signals: [] }));
-    const run = spawnSync(process.execPath, [path.join(scorerDir, 'score.mjs'), response], {
-      encoding: 'utf8',
-    });
+    const run = spawnSync(
+      process.execPath,
+      [path.join(scorerDir, 'score.mjs'), response, '--sets', 'v1'],
+      {
+        encoding: 'utf8',
+      },
+    );
     assert.equal(run.status, 1);
     assert.equal(JSON.parse(run.stdout).passed, false);
   } finally {
