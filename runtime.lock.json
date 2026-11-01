@@ -1,9 +1,9 @@
 {
-  "image": "ghcr.io/lobu-ai/lobu-app@sha256:3601f581ddf6dfda595a930170d078ee112182bd30a80ec3769faac8f4efc681",
+  "image": "ghcr.io/lobu-ai/lobu-app@sha256:1fadea5f95c9ebda2c5cf3729126e21f311937fde6cec7ce4ddd327f313b0943",
   "node_runtime": "22.23.4",
-  "reference": "Published Lobu 24.4.0 app image; external Postgres 18 with pgvector",
+  "reference": "Smoke-tested multi-architecture main app image (24.4.0 package version); external Postgres 18 with pgvector",
   "catalog_release": "master_2026Q3",
   "catalog_commit": "2d73435a4419b66b7c9f44cb9763e35fe8ac7890",
   "version": "24.4.0",
-  "source_commit": "df4f455f67bb98f33505c479cab717db093a2d74"
+  "source_commit": "20ca2a3930af6460c7cfe0626c800b5dabd556d7"
 }

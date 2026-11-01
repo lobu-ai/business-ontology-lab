@@ -112,7 +112,10 @@ def readonly_schema(props, key):
 
 
 def upsert_type(client, spec):
-    old = client.call("entitySchema.getType", spec["slug"]).get("entity_type")
+    # getType can resolve an inherited public definition; only a locally owned
+    # type can be updated. A hosted workspace must create its own definition.
+    owned = client.call("entitySchema.listTypes", {"list_scope": "organization"})["entity_types"]
+    old = next((row for row in owned if row["slug"] == spec["slug"]), None)
     result = client.call("entitySchema.updateType" if old else "entitySchema.createType", spec, True)
     log("type", slug=spec["slug"], updated=bool(old))
     return result
@@ -377,6 +380,22 @@ def resolve_metadata(metadata, ids):
     return result
 
 
+def existing_link(client, label, source_id, source_type, target_id, target_type):
+    # Local identity files are optional: recover the exact native edge before
+    # creating it, including source-backed endpoints whose keys are strings.
+    page = client.call("entities.listLinks", {"entity_id": source_id, "entity_type": source_type,
+        "direction": "outbound", "relationship_type_slug": label, "limit": 100})
+    if page.get("metadata", {}).get("has_more") or page.get("relationship_failures"):
+        raise RuntimeError("Cannot safely reconstruct an incomplete fixture relationship page")
+    matches = [row for row in page.get("relationships", [])
+        if row["relationship_type_slug"] == label
+        and str(row["from_entity_id"]) == str(source_id) and row["from_entity_type"] == source_type
+        and str(row["to_entity_id"]) == str(target_id) and row["to_entity_type"] == target_type]
+    if len(matches) > 1:
+        raise RuntimeError("Multiple active fixture relationships share the same endpoints")
+    return matches[0]["id"] if matches else None
+
+
 def data(client, fixture, state_path):
     state = json.loads(state_path.read_text()) if state_path.exists() else {"entities": {}, "events": {}, "logical_events": {}, "relationships": {}}
     existing = client.query("SELECT id,slug,entity_type FROM entities LIMIT 1000")
@@ -444,8 +463,14 @@ def data(client, fixture, state_path):
         previous_in_fixture[row["logical_key"]] = events[row["key"]]
         write_state(state_path, state)
     log("observations", versions=len(fixture["observations"]), logical=len({x["logical_key"] for x in fixture["observations"]}))
+    entity_types = {entity["key"]: entity["type"] for entity in fixture["entities"]}
     for rel in fixture["relationships"]:
         meta = {**resolve_metadata(rel["metadata"], ids), "source_event_id": events[rel["evidence_document_key"]]}
+        if rel["key"] not in state["relationships"]:
+            relationship_id = existing_link(client, rel["type"], ids[rel["from_key"]], entity_types[rel["from_key"]],
+                ids[rel["to_key"]], entity_types[rel["to_key"]])
+            if relationship_id is not None:
+                state["relationships"][rel["key"]] = relationship_id
         if rel["key"] in state["relationships"]:
             result = client.call("entities.updateLink", {"relationship_id": state["relationships"][rel["key"]], "metadata": meta}, True)
         else:
@@ -497,6 +522,10 @@ def finish(client, fixture, state_path, catalog_path):
     def link(label, source_id, source_type, target_id, target_type, metadata):
         key = f"{label}|{source_type}:{source_id}|{target_type}:{target_id}"
         metadata = {"synthetic": True, "demo_suite": VERSION, **metadata}
+        if key not in native_links:
+            relationship_id = existing_link(client, label, source_id, source_type, target_id, target_type)
+            if relationship_id is not None:
+                native_links[key] = relationship_id
         if key in native_links:
             result = client.call("entities.updateLink", {"relationship_id": native_links[key], "metadata": metadata}, True)
         else:
