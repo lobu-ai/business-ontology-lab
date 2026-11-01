@@ -23,7 +23,11 @@ jobs:
       - run: npm run validate
       - run: npm run format:check
   runtime:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
     timeout-minutes: 25
     env:
       LOBU_LOCAL_INIT: '1'
