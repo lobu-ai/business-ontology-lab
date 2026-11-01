@@ -14,7 +14,7 @@ services:
       timeout: 3s
       retries: 30
   runtime:
-    image: ghcr.io/lobu-ai/lobu-app@sha256:3601f581ddf6dfda595a930170d078ee112182bd30a80ec3769faac8f4efc681
+    image: ghcr.io/lobu-ai/lobu-app@sha256:1fadea5f95c9ebda2c5cf3729126e21f311937fde6cec7ce4ddd327f313b0943
     command:
       ['sh', '-c', 'socat TCP-LISTEN:8788,fork,reuseaddr TCP:127.0.0.1:8787 & exec /app/start.sh']
     env_file: .runtime/runtime.env
