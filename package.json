@@ -31,7 +31,7 @@
     "eval:govern": "node evals/supplier-risk/govern.mjs"
   },
   "devDependencies": {
-    "@lobu/cli": "24.1.1",
+    "@lobu/cli": "24.4.0",
     "esbuild": "0.28.1",
     "prettier": "3.6.2"
   }

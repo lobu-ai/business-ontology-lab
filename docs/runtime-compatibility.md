@@ -1,12 +1,16 @@
 # Runtime compatibility
 
-The runtime is pinned by digest in runtime.lock.json. The CLI is pinned separately to 24.1.1.
+The app and CLI are pinned to Lobu 24.4.0. `runtime.lock.json` records the app image digest and release source commit. Compose runs the published app with a separate Postgres 18/pgvector database; the app entrypoint applies migrations before starting. The app image serves the native web UI, so no development Vite service is needed.
 
-## Registry cache
+## Registry freshness and extraction
 
-The pinned runtime can reject a newly declared event kind for up to 60 seconds. The installer retries only this specific validation error, only after verifying the kind in the committed registry, and only within 75 seconds. It never accepts an undeclared kind or suppresses other errors.
+The pinned release includes the authoritative event-kind registry fixes and Automation dispatch deadlock repair. The installer retains a bounded compatibility retry for older servers: only a newly declared kind, only after verifying its committed declaration, and only within 75 seconds. It never accepts an undeclared kind or suppresses other errors.
 
-An upstream authoritative-registry patch was developed separately with five red/green regression cases. This repository does not claim that patch is merged or deployed. Its bounded compatibility path is part of the clean-install test.
+Lobu issue #4651 tracks event-kind metadata missing from external Automation extraction schemas. The pinned 24.4.0 release still exposes generic event metadata in that schema; writes enforce the declared kind contract. The supplier prompt therefore explicitly names `reported` and `retracted`, and the handoff validates the exact source and status before completing a window. A later core fix must be released and pinned before claiming the extraction schema itself includes the enum.
+
+## Fresh installs and existing volumes
+
+This Compose definition is for a fresh disposable installation. Its database volume is `ontology_pgdata`; it does not migrate an earlier embedded-Postgres `ontology_data` volume. Preserve the old volume and export/restore through Postgres before evaluating an upgrade. Never use `docker compose down -v` on data you want to retain. Runtime CI removes only its own disposable volumes.
 
 ## Source ordering
 

@@ -89,7 +89,7 @@ The bootstrap command is the full installer. Native lobu.config.ts declarations 
 
 All business data is synthetic. No payments, shipments, stock reservations or sanctions are executed. Approval tests leave real human decisions pending and never impersonate a reviewer. Tests mutate only the selected demo workspace. Reports and session state belong in ignored .runtime directories, never public source control.
 
-Re-running bootstrap must not duplicate records. Runtime upgrades, multi-replica deployments, real credentials and production capacity need separate evaluation. The pinned runtime's known event-kind cache delay has a bounded compatibility retry; see [runtime compatibility](docs/runtime-compatibility.md).
+Re-running bootstrap must not duplicate records. Runtime upgrades, multi-replica deployments, real credentials and production capacity need separate evaluation. The published app runs with a separate Postgres database. Earlier embedded-database volumes require an explicit export/restore; see [runtime compatibility](docs/runtime-compatibility.md).
 
 ## References
 
@@ -105,4 +105,4 @@ The evaluation suite checks native feedback persistence, next-run learning conte
 
 Accepted native feedback is now carried into the domain graph by a repair Automation. It supersedes the affected claim with a corrected or retracted revision and reconciles the decision, while the evidence and earlier claims stay in history. Candidate Automation versions are evaluated against the active version on held-out cases. Eligible candidates are proposed through Lobu's existing approval queue, and rollback uses the same gate. Nothing in this project approves its own request.
 
-Measured on 40 synthetic cases with three runs per arm, the candidate prompt beat the baseline by one case for claude-sonnet-5-5 (39 → 40) and by an unstable fraction of a case for claude-haiku-5-5 (39.33 → 40). Neither model regressed a case. That is a small one-case effect, **not measured self-improvement**. The active baseline prompt also fails on live windows: every model tried emitted an out-of-contract status, and the validator refused it before publication. See [coverage](docs/coverage.md) and [results](evals/supplier-risk/results/2026-11-01.json).
+Measured on 40 synthetic cases with three runs per arm, the candidate prompt beat the baseline by one case for claude-sonnet-5-5 (39 → 40) and by an unstable fraction of a case for claude-haiku-5-5 (39.33 → 40). Neither model regressed a case. That is a small one-case effect, **not measured self-improvement**. Earlier live windows with the old baseline prompt failed: the models emitted an out-of-contract status, and the validator refused it before publication. The current prompt explicitly names the allowed statuses; this change requires fresh real-model window verification. See [coverage](docs/coverage.md) and [results](evals/supplier-risk/results/2026-11-01.json).
